@@ -11,7 +11,10 @@ struct ContentView: View {
     @State private var timeRemaining = 5
     let timer = Timer.publish(every: 60, on: .main, in: .common).autoconnect()
     
-    let nextScheduled = "01:41p"
+    @State var currentTime = Date.now.formatted(.dateTime.hour().minute())
+    @State var nextScheduled = Date.now.formatted(.dateTime.hour().minute())
+    
+    let nextScheduledString = "3:49"
     
     
     var body: some View {
@@ -19,6 +22,10 @@ struct ContentView: View {
             Color.green.ignoresSafeArea()
             
             VStack {
+                Text(currentTime)
+                    .foregroundColor(.white)
+                Spacer()
+                
                 Text("\(timeRemaining) minutes")
                     .font(.largeTitle.bold())
                     .foregroundColor(.white)
@@ -30,6 +37,8 @@ struct ContentView: View {
                 
                 Text("Scheduled to arrive at \(nextScheduled)")
                     .foregroundColor(.white)
+                
+                Spacer()
                 
                 Button() {
                     dateFormatter()
@@ -43,7 +52,6 @@ struct ContentView: View {
                     timeRemaining -= 1
                 }
             }
-            
             .padding()
         }
     }
@@ -52,12 +60,19 @@ struct ContentView: View {
         
         let dateFormatter = DateFormatter()
         
-            // Set Date Format
+            //            // Set Date Format
         dateFormatter.dateFormat = "hh:mm"
         
-            // Convert String to Date
-        dateFormatter.date(from: nextScheduled)
+            //            // Convert String to Date
+        nextScheduled = dateFormatter.date(from: nextScheduledString)?.formatted(.dateTime.hour().minute()) ?? Date.now.formatted(.dateTime.hour().minute())
+        
+        currentTime = Date.now.formatted(.dateTime.hour().minute())
+        
     }
+    
+//    func dateComparison() {
+//        
+//    }
     
     
     

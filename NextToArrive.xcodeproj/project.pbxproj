@@ -13,12 +13,27 @@
 		DCF0B8CC29646EDD00DC7EAC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DCF0B8CB29646EDD00DC7EAC /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		DCF0B8ED2964BB7400DC7EAC /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		DCF0B8C129646EDC00DC7EAC /* NextToArrive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NextToArrive.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCF0B8C429646EDC00DC7EAC /* NextToArriveApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextToArriveApp.swift; sourceTree = "<group>"; };
 		DCF0B8C629646EDC00DC7EAC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		DCF0B8C829646EDD00DC7EAC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DCF0B8CB29646EDD00DC7EAC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		DCF0B8DA2964BB7300DC7EAC /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		DCF0B8DC2964BB7300DC7EAC /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,6 +51,7 @@
 			isa = PBXGroup;
 			children = (
 				DCF0B8C329646EDC00DC7EAC /* NextToArrive */,
+				DCF0B8D92964BB7300DC7EAC /* Frameworks */,
 				DCF0B8C229646EDC00DC7EAC /* Products */,
 			);
 			sourceTree = "<group>";
@@ -67,6 +83,15 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		DCF0B8D92964BB7300DC7EAC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DCF0B8DA2964BB7300DC7EAC /* WidgetKit.framework */,
+				DCF0B8DC2964BB7300DC7EAC /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -77,6 +102,7 @@
 				DCF0B8BD29646EDC00DC7EAC /* Sources */,
 				DCF0B8BE29646EDC00DC7EAC /* Frameworks */,
 				DCF0B8BF29646EDC00DC7EAC /* Resources */,
+				DCF0B8ED2964BB7400DC7EAC /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
