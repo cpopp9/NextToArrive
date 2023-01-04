@@ -11,8 +11,8 @@ struct ContentView: View {
     @State private var timeRemaining = 5
     let timer = Timer.publish(every: 60, on: .main, in: .common).autoconnect()
     
-    @State var currentTime = Date.now.formatted(.dateTime.hour().minute())
-    @State var nextScheduled = Date.now.formatted(.dateTime.hour().minute())
+    @State var currentTime = Date().displayFormat
+    @State var nextScheduled = Date().displayFormat
     
     let nextScheduledString = "3:49"
     
@@ -22,8 +22,8 @@ struct ContentView: View {
             Color.green.ignoresSafeArea()
             
             VStack {
-                Text(currentTime)
-                    .foregroundColor(.white)
+//                Text(currentTime)
+//                    .foregroundColor(.white)
                 Spacer()
                 
                 Text("\(timeRemaining) minutes")
@@ -35,7 +35,8 @@ struct ContentView: View {
                 Text("-")
                     .foregroundColor(.white)
                 
-                Text("Scheduled to arrive at \(nextScheduled)")
+//                Text("Scheduled to arrive at \(nextScheduled)")
+                Text("Scheduled to arrive at 9:41am")
                     .foregroundColor(.white)
                 
                 Spacer()
@@ -70,10 +71,6 @@ struct ContentView: View {
         
     }
     
-//    func dateComparison() {
-//        
-//    }
-    
     
     
     
@@ -82,5 +79,11 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+    }
+}
+
+extension Date {
+    var displayFormat: String {
+        self.formatted(.dateTime.hour().minute())
     }
 }
