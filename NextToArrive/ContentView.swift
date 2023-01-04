@@ -14,7 +14,7 @@ struct ContentView: View {
     @State var currentTime = Date().displayFormat
     @State var nextScheduled = Date().displayFormat
     
-    let nextScheduledString = "3:49"
+    let nextScheduledString = "9:49"
     
     
     var body: some View {
@@ -22,8 +22,7 @@ struct ContentView: View {
             Color.green.ignoresSafeArea()
             
             VStack {
-//                Text(currentTime)
-//                    .foregroundColor(.white)
+                
                 Spacer()
                 
                 Text("\(timeRemaining) minutes")
@@ -35,8 +34,10 @@ struct ContentView: View {
                 Text("-")
                     .foregroundColor(.white)
                 
-//                Text("Scheduled to arrive at \(nextScheduled)")
-                Text("Scheduled to arrive at 9:41am")
+                Text("next scheduled: \(nextScheduled)")
+                    .foregroundColor(.white)
+                
+                Text("current time: \(currentTime)")
                     .foregroundColor(.white)
                 
                 Spacer()
@@ -46,6 +47,9 @@ struct ContentView: View {
                 } label: {
                     Text("Format Date")
                         .foregroundColor(.white)
+                }
+                Button("Compare") {
+                    compareTimes()
                 }
             }
             .onReceive(timer) { time in
@@ -65,10 +69,18 @@ struct ContentView: View {
         dateFormatter.dateFormat = "hh:mm"
         
             //            // Convert String to Date
-        nextScheduled = dateFormatter.date(from: nextScheduledString)?.formatted(.dateTime.hour().minute()) ?? Date.now.formatted(.dateTime.hour().minute())
+        nextScheduled = dateFormatter.date(from: nextScheduledString)?.displayFormat ?? Date().displayFormat
         
-        currentTime = Date.now.formatted(.dateTime.hour().minute())
+        currentTime = Date.now.displayFormat
         
+    }
+    
+    func compareTimes() {
+        if currentTime < nextScheduled {
+            print("True")
+        } else {
+            print("False")
+        }
     }
     
     
@@ -84,6 +96,9 @@ struct ContentView_Previews: PreviewProvider {
 
 extension Date {
     var displayFormat: String {
-        self.formatted(.dateTime.hour().minute())
+        self.formatted(
+            .dateTime
+            .hour(.conversationalDefaultDigits(amPM: .abbreviated))
+            .minute())
     }
 }
