@@ -7,15 +7,10 @@
 
 import SwiftUI
 
+
 struct ContentView: View {
-    @State private var timeRemaining = 5
-    let timer = Timer.publish(every: 60, on: .main, in: .common).autoconnect()
     
-    @State var currentTime = Date().displayFormat
-    @State var nextScheduled = Date().displayFormat
-    
-    let nextScheduledString = "9:49"
-    
+    var busTime = "01:18p"
     
     var body: some View {
         ZStack {
@@ -25,80 +20,26 @@ struct ContentView: View {
                 
                 Spacer()
                 
-                Text("\(timeRemaining) minutes")
-                    .font(.largeTitle.bold())
-                    .foregroundColor(.white)
+                HStack {
+                    Text(String(compareTimes(busTime: busTime)))
+                        .font(.system(size: 100).bold())
+                    Text("Minutes")
+
+                        .font(.title3.bold())
+                }
                 Text("Until the next bus")
-                    .foregroundColor(.white)
-                
-                Text("-")
-                    .foregroundColor(.white)
-                
-                Text("next scheduled: \(nextScheduled)")
-                    .foregroundColor(.white)
-                
-                Text("current time: \(currentTime)")
-                    .foregroundColor(.white)
                 
                 Spacer()
                 
-                Button() {
-                    dateFormatter()
-                } label: {
-                    Text("Format Date")
-                        .foregroundColor(.white)
-                }
-                Button("Compare") {
-                    compareTimes()
-                }
-            }
-            .onReceive(timer) { time in
-                if timeRemaining > 0 {
-                    timeRemaining -= 1
-                }
+                Text("Scheduled to arrive at \(busTime)")
             }
             .padding()
         }
     }
-    
-    func dateFormatter() {
-        
-        let dateFormatter = DateFormatter()
-        
-            //            // Set Date Format
-        dateFormatter.dateFormat = "hh:mm"
-        
-            //            // Convert String to Date
-        nextScheduled = dateFormatter.date(from: nextScheduledString)?.displayFormat ?? Date().displayFormat
-        
-        currentTime = Date.now.displayFormat
-        
-    }
-    
-    func compareTimes() {
-        if currentTime < nextScheduled {
-            print("True")
-        } else {
-            print("False")
-        }
-    }
-    
-    
-    
-    
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
-    }
-}
-
-extension Date {
-    var displayFormat: String {
-        self.formatted(
-            .dateTime
-            .hour(.conversationalDefaultDigits(amPM: .abbreviated))
-            .minute())
     }
 }
