@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		DC88040729674AEA00DB09CB /* ContentViewVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC88040629674AEA00DB09CB /* ContentViewVM.swift */; };
+		DC88040929674D8B00DB09CB /* BusSchedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC88040829674D8B00DB09CB /* BusSchedule.swift */; };
 		DCF0B8C529646EDC00DC7EAC /* NextToArriveApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF0B8C429646EDC00DC7EAC /* NextToArriveApp.swift */; };
 		DCF0B8C729646EDC00DC7EAC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF0B8C629646EDC00DC7EAC /* ContentView.swift */; };
 		DCF0B8C929646EDD00DC7EAC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DCF0B8C829646EDD00DC7EAC /* Assets.xcassets */; };
@@ -29,6 +30,7 @@
 
 /* Begin PBXFileReference section */
 		DC88040629674AEA00DB09CB /* ContentViewVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewVM.swift; sourceTree = "<group>"; };
+		DC88040829674D8B00DB09CB /* BusSchedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusSchedule.swift; sourceTree = "<group>"; };
 		DCF0B8C129646EDC00DC7EAC /* NextToArrive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NextToArrive.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCF0B8C429646EDC00DC7EAC /* NextToArriveApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextToArriveApp.swift; sourceTree = "<group>"; };
 		DCF0B8C629646EDC00DC7EAC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -52,6 +54,7 @@
 		DC88040329674A8200DB09CB /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				DC88040829674D8B00DB09CB /* BusSchedule.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -193,6 +196,7 @@
 				DC88040729674AEA00DB09CB /* ContentViewVM.swift in Sources */,
 				DCF0B8C729646EDC00DC7EAC /* ContentView.swift in Sources */,
 				DCF0B8C529646EDC00DC7EAC /* NextToArriveApp.swift in Sources */,
+				DC88040929674D8B00DB09CB /* BusSchedule.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
