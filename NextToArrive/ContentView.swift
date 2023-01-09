@@ -12,48 +12,41 @@ struct ContentView: View {
     
     @State var currentT = Date()
     
-    @State var busTimes: [String] = ["2:53p", "3:00p", "3:20p", "5:00p"]
+    @State var busTimes: [String] = ["8:40a", "8:59a", "2:53p", "3:00p", "3:20p", "5:00p"]
     
-        // Convert both the current time and next upcoming scheduled bus into total number of minutes
+        // Convert current time into total number of minutes
     var currentTime: Int {
-        60*Calendar.current.component(.hour, from: currentT) + Calendar.current.component(.minute, from: currentT)
+        60 * Calendar.current.component(.hour, from: currentT) + Calendar.current.component(.minute, from: currentT)
     }
     
+    // Convert next scheduled bus into total number of minutes
+    // Checks that there are upcoming times before accessing the first index in busTimes array
     var nextTime: Int {
-        60*Calendar.current.component(.hour, from: dateFormatter(nextScheduled: busTimes[0])) + Calendar.current.component(.minute, from: dateFormatter(nextScheduled: busTimes[0]))
+        if !busTimes.isEmpty {
+            return 60 * Calendar.current.component(.hour, from: dateFormatter(nextScheduled: busTimes[0])) + Calendar.current.component(.minute, from: dateFormatter(nextScheduled: busTimes[0]))
+        }
+        return -999
     }
     
+        // Calculate the number of minutes between now and when the bus arrives
     var TimeDiff: Int {
-        
-            // Calculate the number of minutes between now and when the bus arrives
-        var timeDifference: Int {
-            nextTime - currentTime
-        }
-        
-        return timeDifference
-        
+        nextTime - currentTime
     }
     
     var body: some View {
         NavigationView {
             ZStack {
                 Color.green.ignoresSafeArea()
-                
                 VStack {
-                    
                     Spacer()
-                    
                     HStack {
                         Text(String(TimeDiff))
                             .font(.system(size: 100).bold())
                         Text("Minutes")
                             .font(.title3.bold())
                     }
-                    
                     Text("Until the next bus")
-                    
                     Spacer()
-                    
                     Text("Scheduled to arrive at \(busTimes[0])")
                 }
                 .padding()
@@ -61,7 +54,7 @@ struct ContentView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button() {
-                        removeTimes()
+                        removeExpiredTimes()
                     } label: {
                         Image(systemName: "plus")
                             .foregroundColor(.white)
@@ -81,9 +74,8 @@ struct ContentView: View {
     }
     
     
-    func removeTimes() {
+    func removeExpiredTimes() {
         for time in busTimes {
-            
             if 60*Calendar.current.component(.hour, from: dateFormatter(nextScheduled: time)) + Calendar.current.component(.minute, from: dateFormatter(nextScheduled: time)) < currentTime {
                 busTimes.remove(at: 0)
             }
