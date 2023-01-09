@@ -12,15 +12,17 @@ struct ContentView: View {
     
     @State var currentT = Date()
     
-    @State var busTimes: [String] = ["8:40a", "8:59a", "2:53p", "3:00p", "3:20p", "5:00p"]
+    @State var busTimes: [String] = []
+    
+    var stopID = 3046
     
         // Convert current time into total number of minutes
     var currentTime: Int {
         60 * Calendar.current.component(.hour, from: currentT) + Calendar.current.component(.minute, from: currentT)
     }
     
-    // Convert next scheduled bus into total number of minutes
-    // Checks that there are upcoming times before accessing the first index in busTimes array
+        // Convert next scheduled bus into total number of minutes
+        // Checks that there are upcoming times before accessing the first index in busTimes array
     var nextTime: Int {
         if !busTimes.isEmpty {
             return 60 * Calendar.current.component(.hour, from: dateFormatter(nextScheduled: busTimes[0])) + Calendar.current.component(.minute, from: dateFormatter(nextScheduled: busTimes[0]))
@@ -47,7 +49,7 @@ struct ContentView: View {
                     }
                     Text("Until the next bus")
                     Spacer()
-                    Text("Scheduled to arrive at \(busTimes[0])")
+                        //                    Text("Scheduled to arrive at \(busTimes[0])")
                 }
                 .padding()
             }
@@ -64,6 +66,11 @@ struct ContentView: View {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button() {
                         currentT = Date()
+                        removeExpiredTimes()
+                        Task {
+                                await downloadSchedule(stopID: stopID)
+                        }
+                        
                     } label: {
                         Image(systemName: "arrow.clockwise")
                             .foregroundColor(.white)
@@ -78,6 +85,32 @@ struct ContentView: View {
         for time in busTimes {
             if 60*Calendar.current.component(.hour, from: dateFormatter(nextScheduled: time)) + Calendar.current.component(.minute, from: dateFormatter(nextScheduled: time)) < currentTime {
                 busTimes.remove(at: 0)
+            }
+        }
+    }
+    
+    func downloadSchedule(stopID: Int) async {
+        // If there are no bus times available, attempt to download new ones
+        
+        if busTimes.isEmpty {
+            
+            guard let url = URL(string: "https://www3.septa.org/api/BusSchedules/index.php?stop_id=\(stopID)") else {
+                print("Invalid URL")
+                return
+            }
+            
+            do {
+                let (data, _) = try await URLSession.shared.data(from: url)
+                
+                if let decodedResponse = try? JSONDecoder().decode(BusSchedule.self, from: data) {
+                    for time in decodedResponse.two {
+                        busTimes.append(time.date)
+                    }
+                    print("downloaded schedule")
+                }
+                
+            } catch let error {
+                print("Invalid Data \(error)")
             }
         }
     }
