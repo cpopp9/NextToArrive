@@ -27,7 +27,7 @@ struct ContentView: View {
         if !busTimes.isEmpty {
             return 60 * Calendar.current.component(.hour, from: dateFormatter(nextScheduled: busTimes[0])) + Calendar.current.component(.minute, from: dateFormatter(nextScheduled: busTimes[0]))
         }
-        return -999
+        return -99
     }
     
         // Calculate the number of minutes between now and when the bus arrives
@@ -40,6 +40,15 @@ struct ContentView: View {
             ZStack {
                 Color.green.ignoresSafeArea()
                 VStack {
+                    VStack(alignment: .leading) {
+                            Text("Route 2")
+                                .font(.largeTitle.bold())
+                            Text("16th St & Mifflin St")
+                                .font(.subheadline)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    
+                    
                     Spacer()
                     HStack {
                         Text(String(TimeDiff))
@@ -49,7 +58,9 @@ struct ContentView: View {
                     }
                     Text("Until the next bus")
                     Spacer()
-                        //                    Text("Scheduled to arrive at \(busTimes[0])")
+                    if !busTimes.isEmpty {
+                        Text("Scheduled to arrive at \(busTimes[0])")
+                    }
                 }
                 .padding()
             }
@@ -68,7 +79,7 @@ struct ContentView: View {
                         currentT = Date()
                         removeExpiredTimes()
                         Task {
-                                await downloadSchedule(stopID: stopID)
+                            await downloadSchedule(stopID: stopID)
                         }
                         
                     } label: {
@@ -77,6 +88,9 @@ struct ContentView: View {
                     }
                 }
             }
+        }
+        .task {
+            await downloadSchedule(stopID: stopID)
         }
     }
     
@@ -90,7 +104,7 @@ struct ContentView: View {
     }
     
     func downloadSchedule(stopID: Int) async {
-        // If there are no bus times available, attempt to download new ones
+            // If there are no bus times available, attempt to download new ones
         
         if busTimes.isEmpty {
             

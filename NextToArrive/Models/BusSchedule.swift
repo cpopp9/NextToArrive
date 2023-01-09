@@ -13,6 +13,8 @@ import Foundation
 
 struct BusSchedule: Codable {
     var two: [StopDetails]
+    
+    // Coding keys to allow an int to be read as a string
     enum CodingKeys: String, CodingKey {
             case two = "2"
         }
@@ -21,8 +23,8 @@ struct BusSchedule: Codable {
 
 struct StopDetails: Codable {
     
-//    let StopName: String
-//    let Route: String
+    let StopName: String
+    let Route: String
     let date: String
 //    let day: String
 //    let Direction: String
