@@ -14,6 +14,9 @@ struct ContentView: View {
     
     @State var busTimes: [String] = []
     
+    @State var displayText = "Downloading bus schedule..."
+    
+    
     var stopID = 3046
     
         // Convert current time into total number of minutes
@@ -27,7 +30,7 @@ struct ContentView: View {
         if !busTimes.isEmpty {
             return 60 * Calendar.current.component(.hour, from: dateFormatter(nextScheduled: busTimes[0])) + Calendar.current.component(.minute, from: dateFormatter(nextScheduled: busTimes[0]))
         }
-        return -99
+        return currentTime
     }
     
         // Calculate the number of minutes between now and when the bus arrives
@@ -35,16 +38,18 @@ struct ContentView: View {
         nextTime - currentTime
     }
     
+    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    
     var body: some View {
         NavigationView {
             ZStack {
                 Color.green.ignoresSafeArea()
                 VStack {
                     VStack(alignment: .leading) {
-                            Text("Route 2")
-                                .font(.largeTitle.bold())
-                            Text("16th St & Mifflin St")
-                                .font(.subheadline)
+                        Text("Route 2")
+                            .font(.largeTitle.bold())
+                        Text("16th St & Mifflin St")
+                            .font(.subheadline)
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     
@@ -57,34 +62,25 @@ struct ContentView: View {
                             .font(.title3.bold())
                     }
                     Text("Until the next bus")
+                        .onReceive(timer) { time in
+                            refreshSchedule()
+                        }
                     Spacer()
-                    if !busTimes.isEmpty {
-                        Text("Scheduled to arrive at \(busTimes[0])")
-                    }
+                    Text(displayText)
+                        .animation(.easeIn)
                 }
                 .padding()
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button() {
-                        removeExpiredTimes()
-                    } label: {
-                        Image(systemName: "plus")
-                            .foregroundColor(.white)
-                    }
+                    Link("Find", destination: URL(string: "https://www5.septa.org/travel/find-my-stop/")!)
                 }
                 
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button() {
-                        currentT = Date()
-                        removeExpiredTimes()
-                        Task {
-                            await downloadSchedule(stopID: stopID)
-                        }
-                        
+                        displayText = "Scheduled to arrive at 1:42p"
                     } label: {
-                        Image(systemName: "arrow.clockwise")
-                            .foregroundColor(.white)
+                        Image(systemName: "plus")
                     }
                 }
             }
@@ -94,10 +90,18 @@ struct ContentView: View {
         }
     }
     
+    func refreshSchedule() {
+        removeExpiredTimes()
+        currentT = Date()
+        Task {
+            await downloadSchedule(stopID: stopID)
+        }
+        
+    }
     
     func removeExpiredTimes() {
         for time in busTimes {
-            if 60*Calendar.current.component(.hour, from: dateFormatter(nextScheduled: time)) + Calendar.current.component(.minute, from: dateFormatter(nextScheduled: time)) < currentTime {
+            if 60 * Calendar.current.component(.hour, from: dateFormatter(nextScheduled: time)) + Calendar.current.component(.minute, from: dateFormatter(nextScheduled: time)) < currentTime {
                 busTimes.remove(at: 0)
             }
         }
