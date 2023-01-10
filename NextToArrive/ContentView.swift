@@ -16,6 +16,8 @@ struct ContentView: View {
     
     @State var stopLocation = "--"
     
+    @State var routeID = "--"
+    
     var nextArrivingAt: String {
         if !busTimes.isEmpty {
             return "Scheduled to arrive at \(busTimes[0])"
@@ -52,8 +54,9 @@ struct ContentView: View {
                 Color.green.ignoresSafeArea()
                 VStack {
                     VStack(alignment: .leading) {
-                        Text("Route 2")
+                        Text("Route \(routeID)")
                             .font(.largeTitle.bold())
+                            .animation(.easeIn)
                         Text(stopLocation)
                             .font(.subheadline)
                             .animation(.easeIn)
@@ -65,6 +68,7 @@ struct ContentView: View {
                     HStack {
                         Text(String(TimeDiff))
                             .font(.system(size: 100).bold())
+                            .animation(.easeIn)
                         Text("Minutes")
                             .font(.title3.bold())
                     }
@@ -110,6 +114,7 @@ struct ContentView: View {
     func resetSchedule() {
         busTimes = []
         stopLocation = "--"
+        routeID = "--"
         
     }
     
@@ -140,8 +145,8 @@ struct ContentView: View {
                     }
                     
                     stopLocation = decodedResponse.two.first?.StopName ?? "--"
+                    routeID = decodedResponse.two.first?.Route ?? "--"
                     
-                    print("downloaded schedule")
                 }
                 
             } catch let error {

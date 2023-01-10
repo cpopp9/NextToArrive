@@ -7,10 +7,6 @@
 
 import Foundation
 
-
-
-
-
 struct BusSchedule: Codable {
     var two: [StopDetails]
     
