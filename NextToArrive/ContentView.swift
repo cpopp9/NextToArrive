@@ -14,8 +14,14 @@ struct ContentView: View {
     
     @State var busTimes: [String] = []
     
-    @State var displayText = "Downloading bus schedule..."
+    @State var stopLocation = "--"
     
+    var nextArrivingAt: String {
+        if !busTimes.isEmpty {
+            return "Scheduled to arrive at \(busTimes[0])"
+        }
+        return "Downloading bus schedule..."
+    }
     
     var stopID = 3046
     
@@ -48,8 +54,9 @@ struct ContentView: View {
                     VStack(alignment: .leading) {
                         Text("Route 2")
                             .font(.largeTitle.bold())
-                        Text("16th St & Mifflin St")
+                        Text(stopLocation)
                             .font(.subheadline)
+                            .animation(.easeIn)
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     
@@ -66,7 +73,7 @@ struct ContentView: View {
                             refreshSchedule()
                         }
                     Spacer()
-                    Text(displayText)
+                    Text(nextArrivingAt)
                         .animation(.easeIn)
                 }
                 .padding()
@@ -74,13 +81,15 @@ struct ContentView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Link("Find", destination: URL(string: "https://www5.septa.org/travel/find-my-stop/")!)
+                        .foregroundColor(.white)
                 }
                 
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button() {
-                        displayText = "Scheduled to arrive at 1:42p"
+                        resetSchedule()
                     } label: {
                         Image(systemName: "plus")
+                            .foregroundColor(.white)
                     }
                 }
             }
@@ -96,6 +105,11 @@ struct ContentView: View {
         Task {
             await downloadSchedule(stopID: stopID)
         }
+    }
+    
+    func resetSchedule() {
+        busTimes = []
+        stopLocation = "--"
         
     }
     
@@ -124,6 +138,9 @@ struct ContentView: View {
                     for time in decodedResponse.two {
                         busTimes.append(time.date)
                     }
+                    
+                    stopLocation = decodedResponse.two.first?.StopName ?? "--"
+                    
                     print("downloaded schedule")
                 }
                 
