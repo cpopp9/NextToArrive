@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		DC88040729674AEA00DB09CB /* ContentViewVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC88040629674AEA00DB09CB /* ContentViewVM.swift */; };
+		DC063C67296DE20A0028DDB8 /* ScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC063C66296DE20A0028DDB8 /* ScheduleViewModel.swift */; };
 		DC88040929674D8B00DB09CB /* BusSchedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC88040829674D8B00DB09CB /* BusSchedule.swift */; };
 		DCF0B8C529646EDC00DC7EAC /* NextToArriveApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF0B8C429646EDC00DC7EAC /* NextToArriveApp.swift */; };
 		DCF0B8C729646EDC00DC7EAC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF0B8C629646EDC00DC7EAC /* ContentView.swift */; };
@@ -29,7 +29,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		DC88040629674AEA00DB09CB /* ContentViewVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewVM.swift; sourceTree = "<group>"; };
+		DC063C66296DE20A0028DDB8 /* ScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewModel.swift; sourceTree = "<group>"; };
 		DC88040829674D8B00DB09CB /* BusSchedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusSchedule.swift; sourceTree = "<group>"; };
 		DCF0B8C129646EDC00DC7EAC /* NextToArrive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NextToArrive.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCF0B8C429646EDC00DC7EAC /* NextToArriveApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextToArriveApp.swift; sourceTree = "<group>"; };
@@ -51,6 +51,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DC063C65296DE1E70028DDB8 /* View Models */ = {
+			isa = PBXGroup;
+			children = (
+				DC063C66296DE20A0028DDB8 /* ScheduleViewModel.swift */,
+			);
+			path = "View Models";
+			sourceTree = "<group>";
+		};
 		DC88040329674A8200DB09CB /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -64,14 +72,6 @@
 			children = (
 			);
 			path = Data;
-			sourceTree = "<group>";
-		};
-		DC88040529674ACA00DB09CB /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				DC88040629674AEA00DB09CB /* ContentViewVM.swift */,
-			);
-			path = Extensions;
 			sourceTree = "<group>";
 		};
 		DCF0B8B829646EDC00DC7EAC = {
@@ -96,7 +96,7 @@
 			children = (
 				DCF0B8C429646EDC00DC7EAC /* NextToArriveApp.swift */,
 				DCF0B8C629646EDC00DC7EAC /* ContentView.swift */,
-				DC88040529674ACA00DB09CB /* Extensions */,
+				DC063C65296DE1E70028DDB8 /* View Models */,
 				DC88040429674A8700DB09CB /* Data */,
 				DC88040329674A8200DB09CB /* Models */,
 				DCF0B8C829646EDD00DC7EAC /* Assets.xcassets */,
@@ -193,7 +193,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DC88040729674AEA00DB09CB /* ContentViewVM.swift in Sources */,
+				DC063C67296DE20A0028DDB8 /* ScheduleViewModel.swift in Sources */,
 				DCF0B8C729646EDC00DC7EAC /* ContentView.swift in Sources */,
 				DCF0B8C529646EDC00DC7EAC /* NextToArriveApp.swift in Sources */,
 				DC88040929674D8B00DB09CB /* BusSchedule.swift in Sources */,
