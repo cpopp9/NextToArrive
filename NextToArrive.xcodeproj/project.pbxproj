@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		DC063C67296DE20A0028DDB8 /* ScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC063C66296DE20A0028DDB8 /* ScheduleViewModel.swift */; };
 		DC88040929674D8B00DB09CB /* BusSchedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC88040829674D8B00DB09CB /* BusSchedule.swift */; };
+		DCA36B9729771E4300616509 /* RouteSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA36B9629771E4300616509 /* RouteSelectorView.swift */; };
 		DCF0B8C529646EDC00DC7EAC /* NextToArriveApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF0B8C429646EDC00DC7EAC /* NextToArriveApp.swift */; };
 		DCF0B8C729646EDC00DC7EAC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF0B8C629646EDC00DC7EAC /* ContentView.swift */; };
 		DCF0B8C929646EDD00DC7EAC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DCF0B8C829646EDD00DC7EAC /* Assets.xcassets */; };
@@ -31,6 +32,7 @@
 /* Begin PBXFileReference section */
 		DC063C66296DE20A0028DDB8 /* ScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewModel.swift; sourceTree = "<group>"; };
 		DC88040829674D8B00DB09CB /* BusSchedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusSchedule.swift; sourceTree = "<group>"; };
+		DCA36B9629771E4300616509 /* RouteSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteSelectorView.swift; sourceTree = "<group>"; };
 		DCF0B8C129646EDC00DC7EAC /* NextToArrive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NextToArrive.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCF0B8C429646EDC00DC7EAC /* NextToArriveApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextToArriveApp.swift; sourceTree = "<group>"; };
 		DCF0B8C629646EDC00DC7EAC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -67,6 +69,15 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		DCA36B9529771E1B00616509 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				DCF0B8C629646EDC00DC7EAC /* ContentView.swift */,
+				DCA36B9629771E4300616509 /* RouteSelectorView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		DCF0B8B829646EDC00DC7EAC = {
 			isa = PBXGroup;
 			children = (
@@ -88,7 +99,7 @@
 			isa = PBXGroup;
 			children = (
 				DCF0B8C429646EDC00DC7EAC /* NextToArriveApp.swift */,
-				DCF0B8C629646EDC00DC7EAC /* ContentView.swift */,
+				DCA36B9529771E1B00616509 /* Views */,
 				DC063C65296DE1E70028DDB8 /* View Models */,
 				DC88040329674A8200DB09CB /* Models */,
 				DCF0B8C829646EDD00DC7EAC /* Assets.xcassets */,
@@ -185,6 +196,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DCA36B9729771E4300616509 /* RouteSelectorView.swift in Sources */,
 				DC063C67296DE20A0028DDB8 /* ScheduleViewModel.swift in Sources */,
 				DCF0B8C729646EDC00DC7EAC /* ContentView.swift in Sources */,
 				DCF0B8C529646EDC00DC7EAC /* NextToArriveApp.swift in Sources */,

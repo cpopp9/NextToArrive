@@ -12,9 +12,9 @@ class ScheduleViewModel: ObservableObject {
     @Published var stopLocation = "--"
     @Published var routeID = "--"
     @Published var timeUntilArrival = 0
-    private var busTimes: [String] = []
+    var busTimes: [String] = []
     private var stopID = 40
-    private var selectedRoute = "2"
+    private var selectedRoute = "17"
     
     
         // Display message for next scheduled bus
@@ -48,7 +48,9 @@ class ScheduleViewModel: ObservableObject {
         }
         
             // Calculate the number of minutes between now and when the bus arrives
-        timeUntilArrival = scheduledArrival - currentTime
+        DispatchQueue.main.async {
+            self.timeUntilArrival = scheduledArrival - currentTime
+        }
     }
     
     
@@ -95,7 +97,6 @@ class ScheduleViewModel: ObservableObject {
                             
                             for time in value {
                                 busTimes.append(time.date)
-
                             }
                         }
                     }
@@ -105,6 +106,8 @@ class ScheduleViewModel: ObservableObject {
                 print("Invalid Data \(error)")
             }
         }
+        
+        calculateTimeUntilArrival()
     }
     
     func dateFormatter(nextScheduled: String) -> Date {

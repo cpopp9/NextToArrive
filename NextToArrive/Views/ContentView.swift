@@ -11,8 +11,9 @@ import SwiftUI
 struct ContentView: View {
     
     @StateObject var scheduleVM = ScheduleViewModel()
+    @State private var showingSheet = false
     
-    let timer = Timer.publish(every: 2, on: .main, in: .common).autoconnect()
+    let timer = Timer.publish(every: 10, on: .main, in: .common).autoconnect()
     
     var body: some View {
         NavigationView {
@@ -52,14 +53,20 @@ struct ContentView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
 //                    Link("Find", destination: URL(string: "https://www5.septa.org/travel/find-my-stop/")!)
 //                        .foregroundColor(.white)
-                    Button("press") {
-                        print("\(scheduleVM.timeUntilArrival) minutes remaining")
+                    Button() {
+                        showingSheet.toggle()
+                    } label: {
+                        Image(systemName: "bus")
+                            .foregroundColor(.white)
+                    }
+                    .sheet(isPresented: $showingSheet) {
+                        RouteSelectorView()
                     }
                 }
                 
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button() {
-                        scheduleVM.resetSchedule()
+                        print(scheduleVM.busTimes)
                     } label: {
                         Image(systemName: "plus")
                             .foregroundColor(.white)
@@ -68,7 +75,7 @@ struct ContentView: View {
             }
         }
         .task {
-//            scheduleVM.refreshSchedule()
+            scheduleVM.refreshSchedule()
         }
     }
     
