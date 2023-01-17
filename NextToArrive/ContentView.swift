@@ -12,7 +12,7 @@ struct ContentView: View {
     
     @StateObject var scheduleVM = ScheduleViewModel()
     
-    let timer = Timer.publish(every: 5, on: .main, in: .common).autoconnect()
+    let timer = Timer.publish(every: 2, on: .main, in: .common).autoconnect()
     
     var body: some View {
         NavigationView {
@@ -32,7 +32,7 @@ struct ContentView: View {
                     
                     Spacer()
                     HStack {
-                        Text(String(scheduleVM.TimeDiff))
+                        Text(String(scheduleVM.timeUntilArrival))
                             .font(.system(size: 100).bold())
                             .animation(.easeIn)
                         Text("Minutes")
@@ -53,7 +53,7 @@ struct ContentView: View {
 //                    Link("Find", destination: URL(string: "https://www5.septa.org/travel/find-my-stop/")!)
 //                        .foregroundColor(.white)
                     Button("press") {
-                        print("\(scheduleVM.TimeDiff) minutes remaining")
+                        print("\(scheduleVM.timeUntilArrival) minutes remaining")
                     }
                 }
                 
