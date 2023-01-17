@@ -10,43 +10,9 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @State var currentT = Date()
+    @StateObject var scheduleVM = ScheduleViewModel()
     
-    @State var busTimes: [String] = []
-    
-    @State var stopLocation = "--"
-    
-    @State var routeID = "--"
-    
-    var nextArrivingAt: String {
-        if !busTimes.isEmpty {
-            return "Scheduled to arrive at \(busTimes[0])"
-        }
-        return "Downloading bus schedule..."
-    }
-    
-    var stopID = 3046
-    
-        // Convert current time into total number of minutes
-    var currentTime: Int {
-        60 * Calendar.current.component(.hour, from: currentT) + Calendar.current.component(.minute, from: currentT)
-    }
-    
-        // Convert next scheduled bus into total number of minutes
-        // Checks that there are upcoming times before accessing the first index in busTimes array
-    var nextTime: Int {
-        if !busTimes.isEmpty {
-            return 60 * Calendar.current.component(.hour, from: dateFormatter(nextScheduled: busTimes[0])) + Calendar.current.component(.minute, from: dateFormatter(nextScheduled: busTimes[0]))
-        }
-        return currentTime
-    }
-    
-        // Calculate the number of minutes between now and when the bus arrives
-    var TimeDiff: Int {
-        nextTime - currentTime
-    }
-    
-    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    let timer = Timer.publish(every: 5, on: .main, in: .common).autoconnect()
     
     var body: some View {
         NavigationView {
@@ -54,10 +20,10 @@ struct ContentView: View {
                 Color.green.ignoresSafeArea()
                 VStack {
                     VStack(alignment: .leading) {
-                        Text("Route \(routeID)")
+                        Text("Route \(scheduleVM.routeID)")
                             .font(.largeTitle.bold())
                             .animation(.easeIn)
-                        Text(stopLocation)
+                        Text(scheduleVM.stopLocation)
                             .font(.subheadline)
                             .animation(.easeIn)
                     }
@@ -66,7 +32,7 @@ struct ContentView: View {
                     
                     Spacer()
                     HStack {
-                        Text(String(TimeDiff))
+                        Text(String(scheduleVM.TimeDiff))
                             .font(.system(size: 100).bold())
                             .animation(.easeIn)
                         Text("Minutes")
@@ -74,23 +40,26 @@ struct ContentView: View {
                     }
                     Text("Until the next bus")
                         .onReceive(timer) { time in
-                            refreshSchedule()
+                            scheduleVM.refreshSchedule()
                         }
                     Spacer()
-                    Text(nextArrivingAt)
+                    Text(scheduleVM.nextArrivingAt)
                         .animation(.easeIn)
                 }
                 .padding()
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Link("Find", destination: URL(string: "https://www5.septa.org/travel/find-my-stop/")!)
-                        .foregroundColor(.white)
+//                    Link("Find", destination: URL(string: "https://www5.septa.org/travel/find-my-stop/")!)
+//                        .foregroundColor(.white)
+                    Button("press") {
+                        print("\(scheduleVM.TimeDiff) minutes remaining")
+                    }
                 }
                 
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button() {
-                        resetSchedule()
+                        scheduleVM.resetSchedule()
                     } label: {
                         Image(systemName: "plus")
                             .foregroundColor(.white)
@@ -99,59 +68,7 @@ struct ContentView: View {
             }
         }
         .task {
-            await downloadSchedule(stopID: stopID)
-        }
-    }
-    
-    func refreshSchedule() {
-        removeExpiredTimes()
-        currentT = Date()
-        Task {
-            await downloadSchedule(stopID: stopID)
-        }
-    }
-    
-    func resetSchedule() {
-        busTimes = []
-        stopLocation = "--"
-        routeID = "--"
-        
-    }
-    
-    func removeExpiredTimes() {
-        for time in busTimes {
-            if 60 * Calendar.current.component(.hour, from: dateFormatter(nextScheduled: time)) + Calendar.current.component(.minute, from: dateFormatter(nextScheduled: time)) < currentTime {
-                busTimes.remove(at: 0)
-            }
-        }
-    }
-    
-    func downloadSchedule(stopID: Int) async {
-            // If there are no bus times available, attempt to download new ones
-        
-        if busTimes.isEmpty {
-            
-            guard let url = URL(string: "https://www3.septa.org/api/BusSchedules/index.php?stop_id=\(stopID)") else {
-                print("Invalid URL")
-                return
-            }
-            
-            do {
-                let (data, _) = try await URLSession.shared.data(from: url)
-                
-                if let decodedResponse = try? JSONDecoder().decode(BusSchedule.self, from: data) {
-                    for time in decodedResponse.two {
-                        busTimes.append(time.date)
-                    }
-                    
-                    stopLocation = decodedResponse.two.first?.StopName ?? "--"
-                    routeID = decodedResponse.two.first?.Route ?? "--"
-                    
-                }
-                
-            } catch let error {
-                print("Invalid Data \(error)")
-            }
+            scheduleVM.refreshSchedule()
         }
     }
     
