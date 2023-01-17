@@ -13,7 +13,8 @@ class ScheduleViewModel: ObservableObject {
     @Published var routeID = "--"
     @Published var timeUntilArrival = 0
     private var busTimes: [String] = []
-    private var stopID = 3046
+    private var stopID = 40
+    private var selectedRoute = "2"
     
     
         // Display message for next scheduled bus
@@ -78,17 +79,24 @@ class ScheduleViewModel: ObservableObject {
             do {
                 let (data, _) = try await URLSession.shared.data(from: url)
                 
-                if let decodedResponse = try? JSONDecoder().decode(BusSchedule.self, from: data) {
+                print("ping server")
+                
+                if let decodedResponse = try? JSONDecoder().decode(StopData.self, from: data) {
                     
-                    if let response = decodedResponse.one ?? decodedResponse.two {
-                        for time in response {
-                            busTimes.append(time.date)
-                        }
+                    for (key, value) in decodedResponse {
                         
-                            // Published properties need to be updated on the main thread
-                        DispatchQueue.main.async {
-                            self.stopLocation = response.first?.StopName ?? "--"
-                            self.routeID = response.first?.Route ?? "--"
+                        if key == selectedRoute {
+                            
+                                // Published properties need to be updated on the main thread
+                            DispatchQueue.main.async {
+                                self.stopLocation = value.first?.StopName ?? "--"
+                                self.routeID = value.first?.Route ?? "--"
+                            }
+                            
+                            for time in value {
+                                busTimes.append(time.date)
+
+                            }
                         }
                     }
                 }

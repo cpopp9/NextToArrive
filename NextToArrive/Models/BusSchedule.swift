@@ -7,16 +7,18 @@
 
 import Foundation
 
-struct BusSchedule: Codable {
-    var one: [StopDetails]?
-    var two: [StopDetails]?
-    
-        // Coding keys to allow an int to be read as a string
-    enum CodingKeys: String, CodingKey {
-        case one = "1"
-        case two = "2"
-    }
-}
+typealias StopData = [String:[StopDetails]]
+
+//struct BusSchedule: Codable {
+//    var one: [StopDetails]?
+//    var two: [StopDetails]?
+//    
+//        // Coding keys to allow an int to be read as a string
+//    enum CodingKeys: String, CodingKey {
+//        case one = "1"
+//        case two = "2"
+//    }
+//}
 
 
 struct StopDetails: Codable {

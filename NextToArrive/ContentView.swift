@@ -68,7 +68,7 @@ struct ContentView: View {
             }
         }
         .task {
-            scheduleVM.refreshSchedule()
+//            scheduleVM.refreshSchedule()
         }
     }
     
