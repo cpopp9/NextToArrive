@@ -81,22 +81,20 @@ class ScheduleViewModel: ObservableObject {
             do {
                 let (data, _) = try await URLSession.shared.data(from: url)
                 
-                print("ping server")
+                print("pinging server")
                 
                 if let decodedResponse = try? JSONDecoder().decode(StopData.self, from: data) {
                     
-                    for (key, value) in decodedResponse {
-                        
-                        if key == selectedRoute {
-                            
-                                // Published properties need to be updated on the main thread
-                            DispatchQueue.main.async {
-                                self.stopLocation = value.first?.StopName ?? "--"
-                                self.routeID = value.first?.Route ?? "--"
-                            }
-                            
-                            for time in value {
-                                busTimes.append(time.date)
+                    for (_, value) in decodedResponse {
+                        for item in value {
+                            if item.Route == selectedRoute {
+                                busTimes.append(item.date)
+                                
+                                    // Published properties need to be updated on the main thread
+                                DispatchQueue.main.async {
+                                    self.stopLocation = value.first?.StopName ?? "--"
+                                    self.routeID = value.first?.Route ?? "--"
+                                }
                             }
                         }
                     }
