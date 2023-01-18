@@ -45,6 +45,9 @@ struct RouteSelectorView: View {
                     
                     Section("About") {
                         Text("About the developer")
+                        Button("Print StopID") {
+                            print(scheduleVM.stopID)
+                        }
                     }
                 }
             }
