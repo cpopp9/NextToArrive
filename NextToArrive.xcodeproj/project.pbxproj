@@ -10,6 +10,7 @@
 		DC063C67296DE20A0028DDB8 /* ScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC063C66296DE20A0028DDB8 /* ScheduleViewModel.swift */; };
 		DC88040929674D8B00DB09CB /* BusSchedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC88040829674D8B00DB09CB /* BusSchedule.swift */; };
 		DCA36B9729771E4300616509 /* RouteSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA36B9629771E4300616509 /* RouteSelectorView.swift */; };
+		DCD6391C297856C70042E13B /* BusStops.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD6391B297856C70042E13B /* BusStops.swift */; };
 		DCF0B8C529646EDC00DC7EAC /* NextToArriveApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF0B8C429646EDC00DC7EAC /* NextToArriveApp.swift */; };
 		DCF0B8C729646EDC00DC7EAC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF0B8C629646EDC00DC7EAC /* ContentView.swift */; };
 		DCF0B8C929646EDD00DC7EAC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DCF0B8C829646EDD00DC7EAC /* Assets.xcassets */; };
@@ -33,6 +34,7 @@
 		DC063C66296DE20A0028DDB8 /* ScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewModel.swift; sourceTree = "<group>"; };
 		DC88040829674D8B00DB09CB /* BusSchedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusSchedule.swift; sourceTree = "<group>"; };
 		DCA36B9629771E4300616509 /* RouteSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteSelectorView.swift; sourceTree = "<group>"; };
+		DCD6391B297856C70042E13B /* BusStops.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusStops.swift; sourceTree = "<group>"; };
 		DCF0B8C129646EDC00DC7EAC /* NextToArrive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NextToArrive.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCF0B8C429646EDC00DC7EAC /* NextToArriveApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextToArriveApp.swift; sourceTree = "<group>"; };
 		DCF0B8C629646EDC00DC7EAC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -65,6 +67,7 @@
 			isa = PBXGroup;
 			children = (
 				DC88040829674D8B00DB09CB /* BusSchedule.swift */,
+				DCD6391B297856C70042E13B /* BusStops.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -198,6 +201,7 @@
 			files = (
 				DCA36B9729771E4300616509 /* RouteSelectorView.swift in Sources */,
 				DC063C67296DE20A0028DDB8 /* ScheduleViewModel.swift in Sources */,
+				DCD6391C297856C70042E13B /* BusStops.swift in Sources */,
 				DCF0B8C729646EDC00DC7EAC /* ContentView.swift in Sources */,
 				DCF0B8C529646EDC00DC7EAC /* NextToArriveApp.swift in Sources */,
 				DC88040929674D8B00DB09CB /* BusSchedule.swift in Sources */,

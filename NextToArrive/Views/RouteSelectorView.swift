@@ -11,7 +11,6 @@ struct RouteSelectorView: View {
     @Environment(\.dismiss) var dismiss
     @ObservedObject var scheduleVM: ScheduleViewModel
     @State var routes = ["2", "17"]
-    @State var busStops = [40, 3046]
     
     var body: some View {
         NavigationView {
@@ -24,29 +23,32 @@ struct RouteSelectorView: View {
                     }
                     
                     Section("Your bus stop info") {
-                        Picker("Route", selection: $scheduleVM.selectedRoute) {
-                            ForEach(routes, id: \.self) { route in
-                                Text(route)
-                            }
-                        }
-                        .onChange(of: scheduleVM.selectedRoute) { _ in
-                            scheduleVM.resetSchedule()
-                        }
+//                        Picker("Route", selection: $scheduleVM.selectedRoute.Route) {
+//                            ForEach(routes, id: \.self) { route in
+//                                Text(route)
+//                            }
+//                        }
+//                        .onChange(of: scheduleVM.selectedRoute) { _ in
+//                            scheduleVM.resetSchedule()
+//                        }
                         
-                        Picker("Stop ID", selection: $scheduleVM.stopID) {
-                            ForEach(busStops, id: \.self) { stop in
-                                Text(String(stop))
+                        Picker("Your Bus Stop", selection: $scheduleVM.selectedStop) {
+                            ForEach(scheduleVM.busStops) { stop in
+                                Text(stop.stopname)
                             }
                         }
-                        .onChange(of: scheduleVM.stopID) { _ in
+                        .onChange(of: scheduleVM.selectedStop) { _ in
                             scheduleVM.resetSchedule()
                         }
                     }
                     
                     Section("About") {
                         Text("About the developer")
+                        Text(scheduleVM.selectedStop.stopid)
                         Button("Print StopID") {
-                            print(scheduleVM.stopID)
+                            Task {
+                                await scheduleVM.downloadStops()
+                            }
                         }
                     }
                 }

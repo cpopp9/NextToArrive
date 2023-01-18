@@ -9,12 +9,14 @@ import Foundation
 
 class ScheduleViewModel: ObservableObject {
     
-    @Published var stopLocation = "--"
-    @Published var routeID = "--"
+//    @Published var stopLocation = "--"
+//    @Published var routeID = "--"
     @Published var timeUntilArrival = 0
     var busTimes: [String] = []
-    @Published var stopID = 40
-    @Published var selectedRoute = "2"
+    @Published var selectedStop: BusStops = BusStops(lng: "-75.172321", lat: "39.927134", stopid: "3046", stopname: "16th St &amp; Mifflin St")
+    @Published var selectedRoute: StopDetails = StopDetails(StopName: "16th St &amp; Mifflin St", Route: "2", date: "1:04p")
+    var busStops: [BusStops] = []
+    
     
     
         // Display message for next scheduled bus
@@ -24,7 +26,6 @@ class ScheduleViewModel: ObservableObject {
         }
         return "Downloading bus schedule..."
     }
-    
     
         // Calculate the number of minutes between now and the next bus
     func calculateTimeUntilArrival() {
@@ -56,23 +57,24 @@ class ScheduleViewModel: ObservableObject {
     func refreshSchedule() {
         calculateTimeUntilArrival()
         Task {
-            await downloadSchedule(stopID: stopID)
+            await downloadSchedule()
+            await downloadStops()
         }
     }
     
     func resetSchedule() {
         busTimes = []
-        stopLocation = "--"
-        routeID = "--"
+        selectedRoute = StopDetails(StopName: "16th St &amp; Mifflin St", Route: "2", date: "1:04p")
+        selectedStop = BusStops(lng: "-75.172321", lat: "39.927134", stopid: "3046", stopname: "16th St &amp; Mifflin St")
         refreshSchedule()
     }
     
-    private func downloadSchedule(stopID: Int) async {
+    private func downloadSchedule() async {
         
             // If there are no bus times available, attempt to download new ones
         if busTimes.isEmpty {
             
-            guard let url = URL(string: "https://www3.septa.org/api/BusSchedules/index.php?stop_id=\(stopID)") else {
+            guard let url = URL(string: "https://www3.septa.org/api/BusSchedules/index.php?stop_id=\(selectedStop.stopid)") else {
                 print("Invalid URL")
                 return
             }
@@ -86,14 +88,8 @@ class ScheduleViewModel: ObservableObject {
                     
                     for (_, value) in decodedResponse {
                         for item in value {
-                            if item.Route == selectedRoute {
+                            if item.Route == selectedRoute.Route {
                                 busTimes.append(item.date)
-                                
-                                    // Published properties need to be updated on the main thread
-                                DispatchQueue.main.async {
-                                    self.stopLocation = value.first?.StopName ?? "--"
-                                    self.routeID = value.first?.Route ?? "--"
-                                }
                             }
                         }
                     }
@@ -105,6 +101,35 @@ class ScheduleViewModel: ObservableObject {
         }
         
         calculateTimeUntilArrival()
+    }
+    
+    func downloadStops() async {
+        
+            // If there are no bus times available, attempt to download new ones
+        if busStops.isEmpty {
+            
+            guard let url = URL(string: "https://www3.septa.org/api/Stops/index.php?req1=\(selectedRoute.Route)") else {
+                print("Invalid URL")
+                return
+            }
+            
+            do {
+                let (data, _) = try await URLSession.shared.data(from: url)
+                
+                print("pinging server")
+                
+                if let decodedResponse = try? JSONDecoder().decode([BusStops].self, from: data) {
+                    
+                    for stop in decodedResponse {
+                        busStops.append(stop)
+                    }
+                    
+                }
+                
+            } catch let error {
+                print("Invalid Data \(error)")
+            }
+        }
     }
     
     func dateFormatter(nextScheduled: String) -> Date {

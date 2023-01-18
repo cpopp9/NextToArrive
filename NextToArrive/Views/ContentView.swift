@@ -21,10 +21,10 @@ struct ContentView: View {
                 Color.green.ignoresSafeArea()
                 VStack {
                     VStack(alignment: .leading) {
-                        Text("Route \(scheduleVM.routeID)")
+                        Text("Route \(scheduleVM.selectedRoute.Route)")
                             .font(.largeTitle.bold())
                             .animation(.easeIn)
-                        Text(scheduleVM.stopLocation)
+                        Text(scheduleVM.selectedStop.stopname)
                             .font(.subheadline)
                             .animation(.easeIn)
                     }

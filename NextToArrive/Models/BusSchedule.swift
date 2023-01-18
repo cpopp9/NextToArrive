@@ -9,9 +9,7 @@ import Foundation
 
 typealias StopData = [String:[StopDetails]]
 
-
-struct StopDetails: Codable {
-    
+struct StopDetails: Codable, Equatable, Hashable {
     let StopName: String
     let Route: String
     let date: String
