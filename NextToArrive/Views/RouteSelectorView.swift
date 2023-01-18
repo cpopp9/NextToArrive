@@ -17,7 +17,13 @@ struct RouteSelectorView: View {
         NavigationView {
             VStack {
                 List {
-                    Section {
+                    
+                    Section("Find your stop ID") {
+                        Link("Find", destination: URL(string: "https://www5.septa.org/travel/find-my-stop/")!)
+                            .foregroundColor(.white)
+                    }
+                    
+                    Section("Your bus stop info") {
                         Picker("Route", selection: $scheduleVM.selectedRoute) {
                             ForEach(routes, id: \.self) { route in
                                 Text(route)
@@ -37,14 +43,14 @@ struct RouteSelectorView: View {
                         }
                     }
                     
-                    Section {
+                    Section("About") {
                         Text("About the developer")
                     }
                 }
             }
             .navigationTitle("Settings")
             .toolbar {
-                Button("dismiss") {
+                Button("Dismiss") {
                     dismiss()
                 }
                 .foregroundColor(.white)

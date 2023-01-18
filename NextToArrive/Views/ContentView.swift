@@ -51,8 +51,6 @@ struct ContentView: View {
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-//                    Link("Find", destination: URL(string: "https://www5.septa.org/travel/find-my-stop/")!)
-//                        .foregroundColor(.white)
                     Button() {
                         showingSheet.toggle()
                     } label: {
@@ -61,15 +59,6 @@ struct ContentView: View {
                     }
                     .sheet(isPresented: $showingSheet) {
                         RouteSelectorView(scheduleVM: scheduleVM)
-                    }
-                }
-                
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button() {
-                        print(scheduleVM.busTimes)
-                    } label: {
-                        Image(systemName: "plus")
-                            .foregroundColor(.white)
                     }
                 }
             }

@@ -53,7 +53,6 @@ class ScheduleViewModel: ObservableObject {
         }
     }
     
-    
     func refreshSchedule() {
         calculateTimeUntilArrival()
         Task {
