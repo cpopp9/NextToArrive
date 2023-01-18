@@ -60,7 +60,7 @@ struct ContentView: View {
                             .foregroundColor(.white)
                     }
                     .sheet(isPresented: $showingSheet) {
-                        RouteSelectorView()
+                        RouteSelectorView(scheduleVM: scheduleVM)
                     }
                 }
                 

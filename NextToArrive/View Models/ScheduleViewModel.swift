@@ -13,8 +13,8 @@ class ScheduleViewModel: ObservableObject {
     @Published var routeID = "--"
     @Published var timeUntilArrival = 0
     var busTimes: [String] = []
-    private var stopID = 40
-    private var selectedRoute = "17"
+    var stopID = 40
+    var selectedRoute = "2"
     
     
         // Display message for next scheduled bus
@@ -62,10 +62,11 @@ class ScheduleViewModel: ObservableObject {
     }
     
     func resetSchedule() {
+        print("resetting schedule")
         busTimes = []
         stopLocation = "--"
         routeID = "--"
-        
+
     }
     
     private func downloadSchedule(stopID: Int) async {
