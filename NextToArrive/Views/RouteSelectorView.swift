@@ -46,7 +46,7 @@ struct RouteSelectorView: View {
                         Text("About the developer")
                         Text(scheduleVM.selectedStop.stopid)
                         Button("Print StopID") {
-                            print(scheduleVM.selectedStop)
+                            scheduleVM.resetSchedule()
                         }
                     }
                 }
@@ -57,6 +57,9 @@ struct RouteSelectorView: View {
                     dismiss()
                 }
                 .foregroundColor(.white)
+            }
+            .task {
+                await scheduleVM.downloadStops()
             }
         }
     }

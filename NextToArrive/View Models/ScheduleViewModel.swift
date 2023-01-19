@@ -55,17 +55,21 @@ class ScheduleViewModel: ObservableObject {
     }
     
     func refreshSchedule() {
-        calculateTimeUntilArrival()
         Task {
             await downloadSchedule()
-            await downloadStops()
         }
+        calculateTimeUntilArrival()
     }
     
     func resetSchedule() {
         busTimes = []
-        selectedRoute = StopDetails(StopName: "16th St &amp; Mifflin St", Route: "2", date: "1:04p")
-        selectedStop = BusStops(lng: "-75.172321", lat: "39.927134", stopid: "3046", stopname: "16th St &amp; Mifflin St")
+//        selectedRoute = StopDetails(StopName: "16th St &amp; Mifflin St", Route: "2", date: "1:04p")
+//        selectedStop = BusStops(lng: "-75.172321", lat: "39.927134", stopid: "3046", stopname: "16th St &amp; Mifflin St")
+        refreshSchedule()
+    }
+    
+    func clearTimes() {
+        busTimes = []
         refreshSchedule()
     }
     
