@@ -32,7 +32,7 @@ struct RouteSelectorView: View {
                         }
                         
                         Picker("Your Bus Stop", selection: $scheduleVM.selectedStop) {
-                            ForEach(self.scheduleVM.busStops, id:\.id) { (stop: BusStops) in
+                            ForEach(self.scheduleVM.busStops, id:\.stopid) { (stop: BusStops) in
                                 Text(stop.stopname).tag(stop)
                             }
                         }
