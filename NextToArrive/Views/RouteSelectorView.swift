@@ -33,8 +33,8 @@ struct RouteSelectorView: View {
 //                        }
                         
                         Picker("Your Bus Stop", selection: $scheduleVM.selectedStop) {
-                            ForEach(scheduleVM.busStops) { stop in
-                                Text(stop.stopname)
+                            ForEach(self.scheduleVM.busStops, id:\.id) { (stop: BusStops) in
+                                Text(stop.stopname).tag(stop)
                             }
                         }
                         .onChange(of: scheduleVM.selectedStop) { _ in
@@ -46,9 +46,7 @@ struct RouteSelectorView: View {
                         Text("About the developer")
                         Text(scheduleVM.selectedStop.stopid)
                         Button("Print StopID") {
-                            Task {
-                                await scheduleVM.downloadStops()
-                            }
+                            print(scheduleVM.selectedStop)
                         }
                     }
                 }
