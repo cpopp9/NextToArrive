@@ -131,11 +131,15 @@ class ScheduleViewModel: ObservableObject {
                 
                 if let decodedResponse = try? JSONDecoder().decode([BusStops].self, from: data) {
                     
-                    for stop in decodedResponse {
+                    
+                    for var stop in decodedResponse {
+                        stop.stopname = stop.stopname.replacingOccurrences(of: "&amp;", with: "&")
+                        
                         busStops.append(stop)
                     }
+
                     
-                    if let first = decodedResponse.first {
+                    if let first = busStops.first {
                         DispatchQueue.main.async {
                             self.selectedStop = first
                         }

@@ -54,7 +54,7 @@ struct ContentView: View {
                     Button() {
                         showingSheet.toggle()
                     } label: {
-                        Image(systemName: "bus")
+                        Image(systemName: "slider.horizontal.3")
                             .foregroundColor(.white)
                     }
                     .sheet(isPresented: $showingSheet) {
