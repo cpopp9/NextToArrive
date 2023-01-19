@@ -21,7 +21,7 @@ struct ContentView: View {
                 Color.green.ignoresSafeArea()
                 VStack {
                     VStack(alignment: .leading) {
-                        Text("Route \(scheduleVM.selectedRoute.Route)")
+                        Text("Route \(scheduleVM.selectedRoute)")
                             .font(.largeTitle.bold())
                             .animation(.easeIn)
                         Text(scheduleVM.selectedStop.stopname)

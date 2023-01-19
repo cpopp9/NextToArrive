@@ -9,12 +9,11 @@ import Foundation
 
 class ScheduleViewModel: ObservableObject {
     
-//    @Published var stopLocation = "--"
-//    @Published var routeID = "--"
+    var routes = ["2", "17"]
+    @Published var selectedRoute = "2"
     @Published var timeUntilArrival = 0
     var busTimes: [String] = []
     @Published var selectedStop: BusStops = BusStops(lng: "-75.172321", lat: "39.927134", stopid: "3046", stopname: "16th St &amp; Mifflin St")
-    @Published var selectedRoute: StopDetails = StopDetails(StopName: "16th St &amp; Mifflin St", Route: "2", date: "1:04p")
     var busStops: [BusStops] = []
     
     
@@ -61,10 +60,15 @@ class ScheduleViewModel: ObservableObject {
         calculateTimeUntilArrival()
     }
     
+    func resetBusStops() {
+        busStops = []
+        Task {
+            await downloadStops()
+        }
+    }
+    
     func resetSchedule() {
         busTimes = []
-//        selectedRoute = StopDetails(StopName: "16th St &amp; Mifflin St", Route: "2", date: "1:04p")
-//        selectedStop = BusStops(lng: "-75.172321", lat: "39.927134", stopid: "3046", stopname: "16th St &amp; Mifflin St")
         refreshSchedule()
     }
     
@@ -86,13 +90,13 @@ class ScheduleViewModel: ObservableObject {
             do {
                 let (data, _) = try await URLSession.shared.data(from: url)
                 
-                print("pinging server")
+                print("Downloading schedule for \(selectedStop.stopname) on Route \(selectedRoute)")
                 
                 if let decodedResponse = try? JSONDecoder().decode(StopData.self, from: data) {
                     
                     for (_, value) in decodedResponse {
                         for item in value {
-                            if item.Route == selectedRoute.Route {
+                            if item.Route == selectedRoute {
                                 busTimes.append(item.date)
                             }
                         }
@@ -104,6 +108,10 @@ class ScheduleViewModel: ObservableObject {
             }
         }
         
+        if !busTimes.isEmpty {
+            
+        }
+        
         calculateTimeUntilArrival()
     }
     
@@ -112,7 +120,7 @@ class ScheduleViewModel: ObservableObject {
             // If there are no bus times available, attempt to download new ones
         if busStops.isEmpty {
             
-            guard let url = URL(string: "https://www3.septa.org/api/Stops/index.php?req1=\(selectedRoute.Route)") else {
+            guard let url = URL(string: "https://www3.septa.org/api/Stops/index.php?req1=\(selectedRoute)") else {
                 print("Invalid URL")
                 return
             }
@@ -120,14 +128,13 @@ class ScheduleViewModel: ObservableObject {
             do {
                 let (data, _) = try await URLSession.shared.data(from: url)
                 
-                print("pinging server")
+                print("Downloaded bus stops for Route \(selectedRoute)")
                 
                 if let decodedResponse = try? JSONDecoder().decode([BusStops].self, from: data) {
                     
                     for stop in decodedResponse {
                         busStops.append(stop)
                     }
-                    
                 }
                 
             } catch let error {

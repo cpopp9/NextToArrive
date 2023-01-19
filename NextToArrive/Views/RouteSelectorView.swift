@@ -10,7 +10,6 @@ import SwiftUI
 struct RouteSelectorView: View {
     @Environment(\.dismiss) var dismiss
     @ObservedObject var scheduleVM: ScheduleViewModel
-    @State var routes = ["2", "17"]
     
     var body: some View {
         NavigationView {
@@ -23,14 +22,14 @@ struct RouteSelectorView: View {
                     }
                     
                     Section("Your bus stop info") {
-//                        Picker("Route", selection: $scheduleVM.selectedRoute.Route) {
-//                            ForEach(routes, id: \.self) { route in
-//                                Text(route)
-//                            }
-//                        }
-//                        .onChange(of: scheduleVM.selectedRoute) { _ in
-//                            scheduleVM.resetSchedule()
-//                        }
+                        Picker("Route", selection: $scheduleVM.selectedRoute) {
+                            ForEach(scheduleVM.routes, id: \.self) { route in
+                                Text(route)
+                            }
+                        }
+                        .onChange(of: scheduleVM.selectedRoute) { _ in
+                            scheduleVM.resetBusStops()
+                        }
                         
                         Picker("Your Bus Stop", selection: $scheduleVM.selectedStop) {
                             ForEach(self.scheduleVM.busStops, id:\.id) { (stop: BusStops) in
