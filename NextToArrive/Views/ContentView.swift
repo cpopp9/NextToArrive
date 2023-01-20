@@ -41,7 +41,11 @@ struct ContentView: View {
                     }
                     Text("Until the next bus")
                         .onReceive(timer) { time in
-                            scheduleVM.refreshSchedule()
+                            if showingSheet == false {
+                                Task {
+                                    await scheduleVM.downloadSchedule()
+                                }
+                            }
                         }
                     Spacer()
                     Text(scheduleVM.nextArrivingAt)
@@ -64,8 +68,8 @@ struct ContentView: View {
             }
         }
         .task {
-            scheduleVM.refreshSchedule()
             await scheduleVM.downloadStops()
+            await scheduleVM.downloadSchedule()
         }
     }
     

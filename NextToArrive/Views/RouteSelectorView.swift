@@ -16,12 +16,7 @@ struct RouteSelectorView: View {
             VStack {
                 List {
                     
-                    Section("Find your stop ID") {
-                        Link("Find", destination: URL(string: "https://www5.septa.org/travel/find-my-stop/")!)
-                            .foregroundColor(.white)
-                    }
-                    
-                    Section("Your bus stop info") {
+                    Section("Select Your Local Bus Stop") {
                         Picker("Route", selection: $scheduleVM.selectedRoute) {
                             ForEach(scheduleVM.routes, id: \.self) { route in
                                 Text(route)
@@ -42,11 +37,14 @@ struct RouteSelectorView: View {
                     }
                     
                     Section("About") {
-                        Text("About the developer")
-                        Text(scheduleVM.selectedStop.stopid)
-                        Button("Print StopID") {
+                        Link("About the Developer", destination: URL(string: "https://www.linkedin.com/in/coryjpopp/")!)
+                            .foregroundColor(.white)
+                        
+                        Button("Reset Data") {
                             scheduleVM.resetSchedule()
+                            scheduleVM.resetBusStops()
                         }
+                        .foregroundColor(.white)
                     }
                 }
             }

@@ -9,9 +9,9 @@ import Foundation
 
 class ScheduleViewModel: ObservableObject {
     
-    @Published var selectedRoute = "2"
+    @Published var selectedRoute = "4"
     @Published var timeUntilArrival = 0
-    @Published var selectedStop: BusStops = BusStops(lng: "--", lat: "--", stopid: "3046", stopname: "--")
+    @Published var selectedStop: BusStops = BusStops(lng: "--", lat: "--", stopid: "515", stopname: "--")
     var busTimes: [String] = []
     var busStops: [BusStops] = []
     
@@ -50,17 +50,12 @@ class ScheduleViewModel: ObservableObject {
         DispatchQueue.main.async {
             self.timeUntilArrival = scheduledArrival - currentTime
         }
-    }
     
-    func refreshSchedule() {
-        Task {
-            await downloadSchedule()
-        }
-        calculateTimeUntilArrival()
     }
     
     func resetBusStops() {
         busStops = []
+        
         Task {
             await downloadStops()
         }
@@ -68,15 +63,13 @@ class ScheduleViewModel: ObservableObject {
     
     func resetSchedule() {
         busTimes = []
-        refreshSchedule()
+        
+        Task {
+            await downloadSchedule()
+        }
     }
     
-    func clearTimes() {
-        busTimes = []
-        refreshSchedule()
-    }
-    
-    private func downloadSchedule() async {
+    func downloadSchedule() async {
         
             // If there are no bus times available, attempt to download new ones
         if busTimes.isEmpty {
@@ -106,11 +99,6 @@ class ScheduleViewModel: ObservableObject {
                 print("Invalid Data \(error)")
             }
         }
-        
-        if !busTimes.isEmpty {
-            
-        }
-        
         calculateTimeUntilArrival()
     }
     
@@ -144,7 +132,6 @@ class ScheduleViewModel: ObservableObject {
                             self.selectedStop = first
                         }
                     }
-                    
                 }
                 
             } catch let error {
