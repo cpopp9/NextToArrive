@@ -15,7 +15,6 @@ struct RouteSelectorView: View {
         NavigationView {
             VStack {
                 List {
-                    
                     Section("Select Your Local Bus Stop") {
                         Picker("Route", selection: $scheduleVM.selectedRoute) {
                             ForEach(scheduleVM.routes, id: \.self) { route in

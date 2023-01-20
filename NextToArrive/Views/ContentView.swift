@@ -30,7 +30,6 @@ struct ContentView: View {
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     
-                    
                     Spacer()
                     HStack {
                         Text(String(scheduleVM.timeUntilArrival))
