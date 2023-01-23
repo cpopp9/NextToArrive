@@ -12,7 +12,7 @@ class ScheduleViewModel: ObservableObject {
     let defaults = UserDefaults.standard
     @Published var selectedRoute = "4"
     @Published var timeUntilArrival = 0
-    @Published var selectedStop: BusStops = BusStops(lng: "--", lat: "--", stopid: "515", stopname: "--")
+    @Published var selectedStop: BusStops = BusStops(lng: "--", lat: "--", stopid: "5281", stopname: "Broad St & Pine St")
     var busTimes: [String] = []
     var busStops: [BusStops] = []
     
@@ -156,13 +156,13 @@ class ScheduleViewModel: ObservableObject {
     }
     
     func reassignSelectedStop() {
-        if !busStops.isEmpty {
+//        if !busStops.isEmpty {
             for stop in busStops {
                 if stop.stopid == selectedStop.stopid {
                     selectedStop = stop
                 }
             }
-        }
+//        }
     }
     
     func downloadStops() async {

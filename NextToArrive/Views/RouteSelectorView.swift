@@ -56,7 +56,6 @@ struct RouteSelectorView: View {
                 .foregroundColor(.white)
             }
             .task {
-                await scheduleVM.downloadStops()
                 scheduleVM.reassignSelectedStop()
             }
         }
