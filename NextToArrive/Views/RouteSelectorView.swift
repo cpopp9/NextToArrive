@@ -22,6 +22,7 @@ struct RouteSelectorView: View {
                             }
                         }
                         .onChange(of: scheduleVM.selectedRoute) { _ in
+                            print(scheduleVM.selectedRoute)
                             scheduleVM.resetBusStops()
                         }
                         

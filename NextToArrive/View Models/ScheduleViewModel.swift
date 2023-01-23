@@ -9,6 +9,7 @@ import Foundation
 
 class ScheduleViewModel: ObservableObject {
     
+    let defaults = UserDefaults.standard
     @Published var selectedRoute = "4"
     @Published var timeUntilArrival = 0
     @Published var selectedStop: BusStops = BusStops(lng: "--", lat: "--", stopid: "515", stopname: "--")
@@ -23,6 +24,25 @@ class ScheduleViewModel: ObservableObject {
             return "Scheduled to arrive at \(busTimes[0])"
         }
         return "Downloading bus schedule..."
+    }
+    
+    init() {
+        selectedRoute = defaults.string(forKey: "route") ?? "4"
+        
+        if let selected = defaults.data(forKey: "stop") {
+            
+            do {
+                let decoder = JSONDecoder()
+                
+                selectedStop = try decoder.decode(BusStops.self, from: selected)
+            } catch {
+                print("Error decoding \(error)")
+            }
+            
+            
+        }
+//        selectedStop = defaults.data(forKey: "stop")
+//        selectedStop = defaults.string
     }
     
         // Calculate the number of minutes between now and the next bus
@@ -54,15 +74,35 @@ class ScheduleViewModel: ObservableObject {
     }
     
     func resetBusStops() {
+        
+        // Save route number in userdefaults
+        defaults.set(selectedRoute, forKey: "route")
+        
+        // Clear existing bus stops
         busStops = []
         
+        // Download new route stops
         Task {
             await downloadStops()
         }
     }
     
     func resetSchedule() {
+        
+        // Clear existing bus times
         busTimes = []
+        
+        // Save bus stop in userdefaults
+        do {
+            let encoder = JSONEncoder()
+            
+            let data = try encoder.encode(selectedStop)
+            
+            defaults.set(data, forKey: "stop")
+            
+        } catch {
+            print("Couldn't encode \(error)")
+        }
         
         Task {
             await downloadSchedule()
