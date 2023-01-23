@@ -27,8 +27,11 @@ class ScheduleViewModel: ObservableObject {
     }
     
     init() {
+        
+        // read selectedRoute from userdefaults
         selectedRoute = defaults.string(forKey: "route") ?? "4"
         
+        // read selectedStop from userdefaults
         if let selected = defaults.data(forKey: "stop") {
             
             do {
@@ -38,11 +41,21 @@ class ScheduleViewModel: ObservableObject {
             } catch {
                 print("Error decoding \(error)")
             }
+        }
+        
+        // read bus stops from userdefaults
+        if let savedStops = defaults.data(forKey: "busStops") {
+            
+            do {
+                let decoder = JSONDecoder()
+                
+                busStops = try decoder.decode([BusStops].self, from: savedStops)
+            } catch {
+                print("Error decoding \(error)")
+            }
             
             
         }
-//        selectedStop = defaults.data(forKey: "stop")
-//        selectedStop = defaults.string
     }
     
         // Calculate the number of minutes between now and the next bus
@@ -142,6 +155,16 @@ class ScheduleViewModel: ObservableObject {
         calculateTimeUntilArrival()
     }
     
+    func reassignSelectedStop() {
+        if !busStops.isEmpty {
+            for stop in busStops {
+                if stop.stopid == selectedStop.stopid {
+                    selectedStop = stop
+                }
+            }
+        }
+    }
+    
     func downloadStops() async {
         
             // If there are no bus times available, attempt to download new ones
@@ -172,6 +195,18 @@ class ScheduleViewModel: ObservableObject {
                             self.selectedStop = first
                         }
                     }
+                    
+                    do {
+                        let encoder = JSONEncoder()
+                        
+                        let data = try encoder.encode(busStops)
+                        
+                        defaults.set(data, forKey: "busStops")
+                        
+                    } catch {
+                        print("Couldn't encode bus stops \(error)")
+                    }
+                    
                 }
                 
             } catch let error {

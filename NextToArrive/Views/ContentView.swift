@@ -67,7 +67,6 @@ struct ContentView: View {
             }
         }
         .task {
-            await scheduleVM.downloadStops()
             await scheduleVM.downloadSchedule()
         }
     }

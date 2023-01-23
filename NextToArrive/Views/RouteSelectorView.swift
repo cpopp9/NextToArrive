@@ -57,6 +57,7 @@ struct RouteSelectorView: View {
             }
             .task {
                 await scheduleVM.downloadStops()
+                scheduleVM.reassignSelectedStop()
             }
         }
     }
