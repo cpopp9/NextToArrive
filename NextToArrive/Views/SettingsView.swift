@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct RouteSelectorView: View {
+struct SettingsView: View {
     @Environment(\.dismiss) var dismiss
     @ObservedObject var scheduleVM: ScheduleViewModel
     
@@ -53,8 +53,8 @@ struct RouteSelectorView: View {
     }
 }
 
-struct RouteSelectorView_Previews: PreviewProvider {
+struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        RouteSelectorView(scheduleVM: ScheduleViewModel())
+        SettingsView(scheduleVM: ScheduleViewModel())
     }
 }

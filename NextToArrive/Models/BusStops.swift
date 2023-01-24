@@ -7,7 +7,6 @@
 
 import Foundation
 
-    // List of stops by route
 struct BusStops: Codable, Identifiable, Equatable, Hashable {
     let id = UUID()
     let lng: String
