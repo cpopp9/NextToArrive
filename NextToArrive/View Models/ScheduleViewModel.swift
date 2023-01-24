@@ -19,7 +19,7 @@ class ScheduleViewModel: ObservableObject {
     
     
     
-    let routes = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "42", "43", "44", "45", "46", "47", "48", "49", "50", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "64", "65", "66", "67", "68", "70", "73", "75", "77", "78", "79", "80", "84", "88", "89", "90", "91", "92", "93", "94", "95", "96", "97", "98", "99", "101", "102", "103", "104", "105", "106", "107", "108", "109", "110", "111", "112", "113", "114", "115", "117", "118", "119", "120", "123", "124", "125", "126", "127", "128", "129", "130", "131", "132", "133", "135", "139", "150", "201", "204", "206", "310", "311", "406", "409", "411", "415", "426", "428", "433", "438", "439", "441", "442", "445", "446", "446", "447", "448", "446", "450", "452", "446", "461", "462", "475", "476", "477", "478", "484", "490", "492", "495"]
+    let routes = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "42", "43", "44", "45", "46", "47", "48", "49", "50", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "64", "65", "66", "67", "68", "70", "73", "75", "77", "78", "79", "80", "84", "88", "89", "90", "91", "92", "93", "94", "95", "96", "97", "98", "99", "101", "102", "103", "104", "105", "106", "107", "108", "109", "110", "111", "112", "113", "114", "115", "117", "118", "119", "120", "123", "124", "125", "126", "127", "128", "129", "130", "131", "132", "133", "135", "139", "150", "201", "204", "206", "310", "311", "406", "409", "411", "415", "426", "428", "433", "438", "439", "441", "442", "445", "446", "447", "448", "450", "452", "461", "462", "475", "476", "477", "478", "484", "490", "492", "495"]
     
         // Display message for next scheduled bus
     var nextArrivingAt: String {
@@ -31,10 +31,10 @@ class ScheduleViewModel: ObservableObject {
     
     init() {
         
-        // read selectedRoute from UserDefaults
+            // read selectedRoute from UserDefaults
         selectedRoute = defaults.string(forKey: "route") ?? "4"
         
-        // read selectedStop from UserDefaults
+            // read selectedStop from UserDefaults
         if let selected = defaults.data(forKey: "stop") {
             
             do {
@@ -46,7 +46,7 @@ class ScheduleViewModel: ObservableObject {
             }
         }
         
-        // read bus stops from UserDefaults
+            // read bus stops from UserDefaults
         if let savedStops = defaults.data(forKey: "busStops") {
             
             do {
@@ -64,6 +64,8 @@ class ScheduleViewModel: ObservableObject {
             await downloadSchedule()
             await downloadStops()
         }
+        
+        reassignSelectedStop()
     }
     
         // Calculate the number of minutes between now and the next bus
@@ -91,29 +93,31 @@ class ScheduleViewModel: ObservableObject {
         DispatchQueue.main.async {
             self.timeUntilArrival = scheduledArrival - currentTime
         }
-    
+        
     }
     
+        // Overwrite existing bus stops
     func resetBusStops() {
         
-        // Save route number in userdefaults
+            // Save route number in UserDefaults
         defaults.set(selectedRoute, forKey: "route")
         
-        // Clear existing bus stops
+            // Delete existing bus stops
         busStops = []
         
-        // Download new route stops
+            // Download new route stops
         Task {
             await downloadStops()
         }
     }
     
+        // Overwrite existing bus schedule
     func resetSchedule() {
         
-        // Clear existing bus times
+            // Delete existing bus times
         busTimes = []
         
-        // Save bus stop in userdefaults
+            // Save bus stop in UserDefaults
         do {
             let encoder = JSONEncoder()
             
@@ -125,11 +129,13 @@ class ScheduleViewModel: ObservableObject {
             print("Couldn't encode \(error)")
         }
         
+            //Download new schedules
         Task {
             await downloadSchedule()
         }
     }
     
+        // Download new schedule for selected Bus Stop
     func downloadSchedule() async {
         
             // If there are no bus times available, attempt to download new ones
@@ -163,16 +169,15 @@ class ScheduleViewModel: ObservableObject {
         calculateTimeUntilArrival()
     }
     
+        // Reassigns selected stop so prevent picker error -- "Picker: "" is invalid and does not have an associated tag, this will give undefined results.
     func reassignSelectedStop() {
-//        if !busStops.isEmpty {
-            for stop in busStops {
-                if stop.stopid == selectedStop.stopid {
-                    selectedStop = stop
-                }
+        for stop in busStops {
+            if stop.stopid == selectedStop.stopid {
+                selectedStop = stop
             }
-//        }
+        }
     }
-    
+        // Download new bus stops for selected Route
     func downloadStops() async {
         
             // If there are no bus times available, attempt to download new ones
@@ -196,7 +201,7 @@ class ScheduleViewModel: ObservableObject {
                         
                         busStops.append(stop)
                     }
-
+                    
                     
                     if let first = busStops.first {
                         DispatchQueue.main.async {

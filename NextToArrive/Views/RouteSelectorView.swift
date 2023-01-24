@@ -39,12 +39,6 @@ struct RouteSelectorView: View {
                     Section("About") {
                         Link("About the Developer", destination: URL(string: "https://www.linkedin.com/in/coryjpopp/")!)
                             .foregroundColor(.white)
-                        
-                        Button("Reset Data") {
-                            scheduleVM.resetSchedule()
-                            scheduleVM.resetBusStops()
-                        }
-                        .foregroundColor(.white)
                     }
                 }
             }
@@ -54,9 +48,6 @@ struct RouteSelectorView: View {
                     dismiss()
                 }
                 .foregroundColor(.white)
-            }
-            .task {
-                scheduleVM.reassignSelectedStop()
             }
         }
     }
