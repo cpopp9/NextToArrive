@@ -13,6 +13,7 @@ struct ContentView: View {
     @StateObject var scheduleVM = ScheduleViewModel()
     @State private var showingSheet = false
     
+    // Timer setup to trigger once ever 10 seconds
     let timer = Timer.publish(every: 10, on: .main, in: .common).autoconnect()
     
     var body: some View {
@@ -65,10 +66,6 @@ struct ContentView: View {
                     }
                 }
             }
-        }
-        .task {
-            await scheduleVM.downloadSchedule()
-            await scheduleVM.downloadStops()
         }
         .navigationViewStyle(StackNavigationViewStyle())
     }
