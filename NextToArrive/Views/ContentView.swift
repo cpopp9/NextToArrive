@@ -13,13 +13,14 @@ struct ContentView: View {
     @StateObject var scheduleVM = ScheduleViewModel()
     @State private var showingSheet = false
     
-    // Timer setup to trigger once ever 10 seconds
+        // Timer setup to trigger once ever 10 seconds
     let timer = Timer.publish(every: 10, on: .main, in: .common).autoconnect()
     
     var body: some View {
         NavigationView {
             ZStack {
-                Color.green.ignoresSafeArea()
+                ContainerRelativeShape()
+                    .fill(.green.gradient).ignoresSafeArea()
                 VStack {
                     VStack(alignment: .leading) {
                         Text("Route \(scheduleVM.selectedRoute)")
