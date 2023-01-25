@@ -84,9 +84,15 @@ class ScheduleViewModel: ObservableObject {
         let scheduledArrival = 60 * Calendar.current.component(.hour, from: nextScheduled) + Calendar.current.component(.minute, from: nextScheduled)
         
             // Remove times if they have already passed
-        if scheduledArrival < currentTime {
-            busTimes.remove(at: 0)
-        }
+        
+            if scheduledArrival < currentTime {
+                busTimes.remove(at: 0)
+                
+                // If top time has been deleted, recalculate to make sure other times haven't expired as well
+                calculateTimeUntilArrival()
+            }
+        
+        
         
             // Calculate the number of minutes between now and when the bus arrives
         DispatchQueue.main.async {
