@@ -14,16 +14,16 @@ class ScheduleViewModel: ObservableObject {
     @Published var selectedRoute = "4"
     @Published var timeUntilArrival = 0
     @Published var selectedStop: BusStops = BusStops(lng: "--", lat: "--", stopid: "5281", stopname: "Broad St & Pine St")
-    var busTimes: [String] = []
+    var busTimes: [Date] = []
     var busStops: [BusStops] = []
     
-    // Valid route numbers
+        // Valid route numbers
     let routes = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "42", "43", "44", "45", "46", "47", "48", "49", "50", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "64", "65", "66", "67", "68", "70", "73", "75", "77", "78", "79", "80", "84", "88", "89", "90", "91", "92", "93", "94", "95", "96", "97", "98", "99", "101", "102", "103", "104", "105", "106", "107", "108", "109", "110", "111", "112", "113", "114", "115", "117", "118", "119", "120", "123", "124", "125", "126", "127", "128", "129", "130", "131", "132", "133", "135", "139", "150", "201", "204", "206", "310", "311"]
     
         // Display message for next scheduled bus
     var nextArrivingAt: String {
         if !busTimes.isEmpty {
-            return "Scheduled to arrive at \(busTimes[0])"
+            return "Scheduled to arrive at \(busTimes[0].formatted(.dateTime.hour().minute()))"
         }
         return "Downloading bus schedule..."
     }
@@ -67,38 +67,12 @@ class ScheduleViewModel: ObservableObject {
         reassignSelectedStop()
     }
     
-        // Calculate the number of minutes between now and the next bus
     func calculateTimeUntilArrival() {
         
-        let nextScheduled: Date
-        
-            // Make sure there are upcoming times before calculating
         if !busTimes.isEmpty {
-            nextScheduled = dateFormatter(nextScheduled: busTimes[0])
-        } else {
-            nextScheduled = Date()
+            let timeUntil = Calendar.current.dateComponents([.minute], from: Date(), to: busTimes[0]).minute ?? 0
+            timeUntilArrival = timeUntil
         }
-        
-            // Convert current time and next scheduled times into total number of minutes
-        let currentTime = 60 * Calendar.current.component(.hour, from: Date()) + Calendar.current.component(.minute, from: Date())
-        let scheduledArrival = 60 * Calendar.current.component(.hour, from: nextScheduled) + Calendar.current.component(.minute, from: nextScheduled)
-        
-            // Remove times if they have already passed
-        
-            if scheduledArrival < currentTime {
-                busTimes.remove(at: 0)
-                
-                // If top time has been deleted, recalculate to make sure other times haven't expired as well
-                calculateTimeUntilArrival()
-            }
-        
-        
-        
-            // Calculate the number of minutes between now and when the bus arrives
-        DispatchQueue.main.async {
-            self.timeUntilArrival = scheduledArrival - currentTime
-        }
-        
     }
     
         // Overwrite existing bus stops
@@ -154,7 +128,13 @@ class ScheduleViewModel: ObservableObject {
             do {
                 let (data, _) = try await URLSession.shared.data(from: url)
                 
-                if let decodedResponse = try? JSONDecoder().decode(StopData.self, from: data) {
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "mm/dd/yy hh:mm aa"
+                
+                let decoder = JSONDecoder()
+                decoder.dateDecodingStrategy = .formatted(dateFormatter)
+                
+                if let decodedResponse = try? decoder.decode(StopData.self, from: data) {
                     
                     if decodedResponse.isEmpty {
                         print("Failed to download bus schedule - retrying")
@@ -163,7 +143,7 @@ class ScheduleViewModel: ObservableObject {
                     for (_, value) in decodedResponse {
                         for item in value {
                             if item.Route == selectedRoute {
-                                busTimes.append(item.date)
+                                busTimes.append(item.DateCalender)
                             }
                         }
                     }
@@ -173,6 +153,7 @@ class ScheduleViewModel: ObservableObject {
                 print("Invalid Data \(error)")
             }
         }
+        print(busTimes)
         calculateTimeUntilArrival()
     }
     
@@ -207,7 +188,7 @@ class ScheduleViewModel: ObservableObject {
                         busStops.append(stop)
                     }
                     
-                    // Automatically assign a selected stop on download so it has something to show to the user
+                        // Automatically assign a selected stop on download so it has something to show to the user
                     if let first = busStops.first {
                         DispatchQueue.main.async {
                             self.selectedStop = first

@@ -49,8 +49,8 @@ struct ContentView: View {
                             }
                         }
                     Spacer()
-                    Text(scheduleVM.nextArrivingAt)
-                        .animation(.easeIn)
+                        Text(scheduleVM.nextArrivingAt)
+                            .animation(.easeIn)
                 }
                 .padding()
             }

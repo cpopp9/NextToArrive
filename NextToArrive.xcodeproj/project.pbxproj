@@ -8,6 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		DC063C67296DE20A0028DDB8 /* ScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC063C66296DE20A0028DDB8 /* ScheduleViewModel.swift */; };
+		DC1A42162988613300B8F7A8 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCF0B8DA2964BB7300DC7EAC /* WidgetKit.framework */; };
+		DC1A42172988613300B8F7A8 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCF0B8DC2964BB7300DC7EAC /* SwiftUI.framework */; };
+		DC1A421A2988613300B8F7A8 /* nextoarrivewidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1A42192988613300B8F7A8 /* nextoarrivewidget.swift */; };
+		DC1A421D2988613500B8F7A8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC1A421C2988613500B8F7A8 /* Assets.xcassets */; };
+		DC1A421F2988613500B8F7A8 /* nextoarrivewidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = DC1A421B2988613300B8F7A8 /* nextoarrivewidget.intentdefinition */; };
+		DC1A42202988613500B8F7A8 /* nextoarrivewidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = DC1A421B2988613300B8F7A8 /* nextoarrivewidget.intentdefinition */; };
+		DC1A42232988613500B8F7A8 /* nextoarrivewidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = DC1A42152988613300B8F7A8 /* nextoarrivewidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		DC1A42272988620E00B8F7A8 /* BusSchedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC88040829674D8B00DB09CB /* BusSchedule.swift */; };
+		DC1A42282988621200B8F7A8 /* BusStops.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD6391B297856C70042E13B /* BusStops.swift */; };
+		DC1A422B2988663200B8F7A8 /* Date+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1A422A2988663200B8F7A8 /* Date+Ext.swift */; };
+		DC1A422C2988663A00B8F7A8 /* Date+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1A422A2988663200B8F7A8 /* Date+Ext.swift */; };
 		DC88040929674D8B00DB09CB /* BusSchedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC88040829674D8B00DB09CB /* BusSchedule.swift */; };
 		DCA36B9729771E4300616509 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA36B9629771E4300616509 /* SettingsView.swift */; };
 		DCD6391C297856C70042E13B /* BusStops.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD6391B297856C70042E13B /* BusStops.swift */; };
@@ -17,6 +28,16 @@
 		DCF0B8CC29646EDD00DC7EAC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DCF0B8CB29646EDD00DC7EAC /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		DC1A42212988613500B8F7A8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DCF0B8B929646EDC00DC7EAC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DC1A42142988613300B8F7A8;
+			remoteInfo = nextoarrivewidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		DCF0B8ED2964BB7400DC7EAC /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -24,6 +45,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				DC1A42232988613500B8F7A8 /* nextoarrivewidgetExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -32,6 +54,12 @@
 
 /* Begin PBXFileReference section */
 		DC063C66296DE20A0028DDB8 /* ScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewModel.swift; sourceTree = "<group>"; };
+		DC1A42152988613300B8F7A8 /* nextoarrivewidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = nextoarrivewidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC1A42192988613300B8F7A8 /* nextoarrivewidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nextoarrivewidget.swift; sourceTree = "<group>"; };
+		DC1A421B2988613300B8F7A8 /* nextoarrivewidget.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = nextoarrivewidget.intentdefinition; sourceTree = "<group>"; };
+		DC1A421C2988613500B8F7A8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		DC1A421E2988613500B8F7A8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DC1A422A2988663200B8F7A8 /* Date+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Ext.swift"; sourceTree = "<group>"; };
 		DC88040829674D8B00DB09CB /* BusSchedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusSchedule.swift; sourceTree = "<group>"; };
 		DCA36B9629771E4300616509 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		DCD6391B297856C70042E13B /* BusStops.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusStops.swift; sourceTree = "<group>"; };
@@ -45,6 +73,15 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		DC1A42122988613300B8F7A8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC1A42172988613300B8F7A8 /* SwiftUI.framework in Frameworks */,
+				DC1A42162988613300B8F7A8 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DCF0B8BE29646EDC00DC7EAC /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -61,6 +98,25 @@
 				DC063C66296DE20A0028DDB8 /* ScheduleViewModel.swift */,
 			);
 			path = "View Models";
+			sourceTree = "<group>";
+		};
+		DC1A42182988613300B8F7A8 /* nextoarrivewidget */ = {
+			isa = PBXGroup;
+			children = (
+				DC1A42192988613300B8F7A8 /* nextoarrivewidget.swift */,
+				DC1A421B2988613300B8F7A8 /* nextoarrivewidget.intentdefinition */,
+				DC1A421C2988613500B8F7A8 /* Assets.xcassets */,
+				DC1A421E2988613500B8F7A8 /* Info.plist */,
+			);
+			path = nextoarrivewidget;
+			sourceTree = "<group>";
+		};
+		DC1A42292988662300B8F7A8 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				DC1A422A2988663200B8F7A8 /* Date+Ext.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		DC88040329674A8200DB09CB /* Models */ = {
@@ -85,6 +141,8 @@
 			isa = PBXGroup;
 			children = (
 				DCF0B8C329646EDC00DC7EAC /* NextToArrive */,
+				DC1A42292988662300B8F7A8 /* Extensions */,
+				DC1A42182988613300B8F7A8 /* nextoarrivewidget */,
 				DCF0B8D92964BB7300DC7EAC /* Frameworks */,
 				DCF0B8C229646EDC00DC7EAC /* Products */,
 			);
@@ -94,6 +152,7 @@
 			isa = PBXGroup;
 			children = (
 				DCF0B8C129646EDC00DC7EAC /* NextToArrive.app */,
+				DC1A42152988613300B8F7A8 /* nextoarrivewidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -131,6 +190,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		DC1A42142988613300B8F7A8 /* nextoarrivewidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DC1A42262988613500B8F7A8 /* Build configuration list for PBXNativeTarget "nextoarrivewidgetExtension" */;
+			buildPhases = (
+				DC1A42112988613300B8F7A8 /* Sources */,
+				DC1A42122988613300B8F7A8 /* Frameworks */,
+				DC1A42132988613300B8F7A8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = nextoarrivewidgetExtension;
+			productName = nextoarrivewidgetExtension;
+			productReference = DC1A42152988613300B8F7A8 /* nextoarrivewidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		DCF0B8C029646EDC00DC7EAC /* NextToArrive */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = DCF0B8CF29646EDD00DC7EAC /* Build configuration list for PBXNativeTarget "NextToArrive" */;
@@ -143,6 +219,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				DC1A42222988613500B8F7A8 /* PBXTargetDependency */,
 			);
 			name = NextToArrive;
 			productName = NextToArrive;
@@ -159,6 +236,9 @@
 				LastSwiftUpdateCheck = 1400;
 				LastUpgradeCheck = 1400;
 				TargetAttributes = {
+					DC1A42142988613300B8F7A8 = {
+						CreatedOnToolsVersion = 14.0;
+					};
 					DCF0B8C029646EDC00DC7EAC = {
 						CreatedOnToolsVersion = 14.0;
 					};
@@ -178,11 +258,20 @@
 			projectRoot = "";
 			targets = (
 				DCF0B8C029646EDC00DC7EAC /* NextToArrive */,
+				DC1A42142988613300B8F7A8 /* nextoarrivewidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		DC1A42132988613300B8F7A8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC1A421D2988613500B8F7A8 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DCF0B8BF29646EDC00DC7EAC /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -195,12 +284,26 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		DC1A42112988613300B8F7A8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC1A42282988621200B8F7A8 /* BusStops.swift in Sources */,
+				DC1A421F2988613500B8F7A8 /* nextoarrivewidget.intentdefinition in Sources */,
+				DC1A42272988620E00B8F7A8 /* BusSchedule.swift in Sources */,
+				DC1A421A2988613300B8F7A8 /* nextoarrivewidget.swift in Sources */,
+				DC1A422C2988663A00B8F7A8 /* Date+Ext.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DCF0B8BD29646EDC00DC7EAC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				DCA36B9729771E4300616509 /* SettingsView.swift in Sources */,
 				DC063C67296DE20A0028DDB8 /* ScheduleViewModel.swift in Sources */,
+				DC1A42202988613500B8F7A8 /* nextoarrivewidget.intentdefinition in Sources */,
+				DC1A422B2988663200B8F7A8 /* Date+Ext.swift in Sources */,
 				DCD6391C297856C70042E13B /* BusStops.swift in Sources */,
 				DCF0B8C729646EDC00DC7EAC /* ContentView.swift in Sources */,
 				DCF0B8C529646EDC00DC7EAC /* NextToArriveApp.swift in Sources */,
@@ -210,7 +313,69 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		DC1A42222988613500B8F7A8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DC1A42142988613300B8F7A8 /* nextoarrivewidgetExtension */;
+			targetProxy = DC1A42212988613500B8F7A8 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		DC1A42242988613500B8F7A8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = R9SLYR2Y3N;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = nextoarrivewidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = nextoarrivewidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.coryjpopp.nexttoarrive.nextoarrivewidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		DC1A42252988613500B8F7A8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = R9SLYR2Y3N;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = nextoarrivewidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = nextoarrivewidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.coryjpopp.nexttoarrive.nextoarrivewidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		DCF0B8CD29646EDD00DC7EAC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -328,6 +493,7 @@
 		DCF0B8D029646EDD00DC7EAC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -357,6 +523,7 @@
 		DCF0B8D129646EDD00DC7EAC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -386,6 +553,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		DC1A42262988613500B8F7A8 /* Build configuration list for PBXNativeTarget "nextoarrivewidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DC1A42242988613500B8F7A8 /* Debug */,
+				DC1A42252988613500B8F7A8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		DCF0B8BC29646EDC00DC7EAC /* Build configuration list for PBXProject "NextToArrive" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

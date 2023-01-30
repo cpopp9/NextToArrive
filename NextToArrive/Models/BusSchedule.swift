@@ -7,10 +7,10 @@
 
 import Foundation
 
-typealias StopData = [String:[StopDetails]]
+typealias StopData = [String:[Schedule]]
 
-struct StopDetails: Decodable, Equatable, Hashable {
+struct Schedule: Decodable, Equatable, Hashable {
     let StopName: String
     let Route: String
-    let date: String
+    let DateCalender: Date
 }
