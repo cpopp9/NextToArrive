@@ -40,7 +40,7 @@ struct Provider: IntentTimelineProvider {
             let (data, _) = try await URLSession.shared.data(from: url)
             
             let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "mm/dd/yy hh:mm aa"
+            dateFormatter.dateFormat = "MM/dd/yy hh:mm aa"
             
             let decoder = JSONDecoder()
             decoder.dateDecodingStrategy = .formatted(dateFormatter)
@@ -53,6 +53,8 @@ struct Provider: IntentTimelineProvider {
                 
                 for (_, value) in decodedResponse {
                     
+                    print(decodedResponse)
+                    
                     for item in value {
                         let timeUntil = Calendar.current.dateComponents([.minute], from: previous, to: item.DateCalender).minute ?? 0
                         
@@ -60,7 +62,6 @@ struct Provider: IntentTimelineProvider {
                         let date = Date().zeroSeconds!
                         
                         for minuteOffset in 0...timeUntil {
-                            
                             
                             let entryDate = Calendar.current.date(byAdding: .minute, value: minuteOffset, to: date)!
                             

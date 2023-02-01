@@ -70,7 +70,7 @@ class ScheduleViewModel: ObservableObject {
     func calculateTimeUntilArrival() {
         
         if !busTimes.isEmpty {
-            let timeUntil = Calendar.current.dateComponents([.minute], from: Date(), to: busTimes[0]).minute ?? 0
+            let timeUntil = Calendar.current.dateComponents([.minute], from: .now, to: busTimes[0]).minute ?? 0
             DispatchQueue.main.async {
                 self.timeUntilArrival = timeUntil
             }
@@ -131,7 +131,7 @@ class ScheduleViewModel: ObservableObject {
                 let (data, _) = try await URLSession.shared.data(from: url)
                 
                 let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "mm/dd/yy hh:mm aa"
+                dateFormatter.dateFormat = "MM/dd/yy hh:mm aa"
                 
                 let decoder = JSONDecoder()
                 decoder.dateDecodingStrategy = .formatted(dateFormatter)
