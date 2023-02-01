@@ -60,6 +60,8 @@
 		DC1A421C2988613500B8F7A8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DC1A421E2988613500B8F7A8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DC1A422A2988663200B8F7A8 /* Date+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Ext.swift"; sourceTree = "<group>"; };
+		DC1A422F298AAA5A00B8F7A8 /* NextToArrive.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NextToArrive.entitlements; sourceTree = "<group>"; };
+		DC1A4230298AAA6700B8F7A8 /* nextoarrivewidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = nextoarrivewidgetExtension.entitlements; sourceTree = "<group>"; };
 		DC88040829674D8B00DB09CB /* BusSchedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusSchedule.swift; sourceTree = "<group>"; };
 		DCA36B9629771E4300616509 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		DCD6391B297856C70042E13B /* BusStops.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusStops.swift; sourceTree = "<group>"; };
@@ -140,6 +142,7 @@
 		DCF0B8B829646EDC00DC7EAC = {
 			isa = PBXGroup;
 			children = (
+				DC1A4230298AAA6700B8F7A8 /* nextoarrivewidgetExtension.entitlements */,
 				DCF0B8C329646EDC00DC7EAC /* NextToArrive */,
 				DC1A42292988662300B8F7A8 /* Extensions */,
 				DC1A42182988613300B8F7A8 /* nextoarrivewidget */,
@@ -160,6 +163,7 @@
 		DCF0B8C329646EDC00DC7EAC /* NextToArrive */ = {
 			isa = PBXGroup;
 			children = (
+				DC1A422F298AAA5A00B8F7A8 /* NextToArrive.entitlements */,
 				DCF0B8C429646EDC00DC7EAC /* NextToArriveApp.swift */,
 				DCA36B9529771E1B00616509 /* Views */,
 				DC063C65296DE1E70028DDB8 /* View Models */,
@@ -327,6 +331,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = nextoarrivewidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = R9SLYR2Y3N;
@@ -354,6 +359,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = nextoarrivewidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = R9SLYR2Y3N;
@@ -496,6 +502,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = NextToArrive/NextToArrive.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"NextToArrive/Preview Content\"";
@@ -526,6 +533,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = NextToArrive/NextToArrive.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"NextToArrive/Preview Content\"";
