@@ -71,7 +71,9 @@ class ScheduleViewModel: ObservableObject {
         
         if !busTimes.isEmpty {
             let timeUntil = Calendar.current.dateComponents([.minute], from: Date(), to: busTimes[0]).minute ?? 0
-            timeUntilArrival = timeUntil
+            DispatchQueue.main.async {
+                self.timeUntilArrival = timeUntil
+            }
         }
     }
     
