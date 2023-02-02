@@ -6,14 +6,12 @@
     //
 
 import Foundation
+import WidgetKit
 
 class ScheduleViewModel: ObservableObject {
     
-    
-    let defaults = UserDefaults.standard
-    @Published var selectedRoute = "4"
     @Published var timeUntilArrival = 0
-    @Published var selectedStop: BusStops = BusStops(lng: "--", lat: "--", stopid: "5281", stopname: "Broad St & Pine St")
+    @Published var selectedStop = Stop.exampleStop
     var busTimes: [Date] = []
     var busStops: [BusStops] = []
     
@@ -30,34 +28,7 @@ class ScheduleViewModel: ObservableObject {
     
     init() {
         
-            // read selectedRoute from UserDefaults
-        selectedRoute = defaults.string(forKey: "route") ?? "4"
-        
-            // read selectedStop from UserDefaults
-        if let selected = defaults.data(forKey: "stop") {
-            
-            do {
-                let decoder = JSONDecoder()
-                
-                selectedStop = try decoder.decode(BusStops.self, from: selected)
-            } catch {
-                print("Error decoding \(error)")
-            }
-        }
-        
-            // read bus stops from UserDefaults
-        if let savedStops = defaults.data(forKey: "busStops") {
-            
-            do {
-                let decoder = JSONDecoder()
-                
-                busStops = try decoder.decode([BusStops].self, from: savedStops)
-            } catch {
-                print("Error decoding \(error)")
-            }
-            
-            
-        }
+        selectedStop = decodeFromUserDefaults()
         
         Task {
             await downloadSchedule()
@@ -81,7 +52,7 @@ class ScheduleViewModel: ObservableObject {
     func resetBusStops() {
         
             // Save route number in UserDefaults
-        defaults.set(selectedRoute, forKey: "route")
+//        encodeToUserDefaults()
         
             // Delete existing bus stops
         busStops = []
@@ -90,6 +61,7 @@ class ScheduleViewModel: ObservableObject {
         Task {
             await downloadStops()
         }
+        WidgetCenter.shared.reloadAllTimelines()
     }
     
         // Overwrite existing bus schedule
@@ -99,21 +71,13 @@ class ScheduleViewModel: ObservableObject {
         busTimes = []
         
             // Save bus stop in UserDefaults
-        do {
-            let encoder = JSONEncoder()
-            
-            let data = try encoder.encode(selectedStop)
-            
-            defaults.set(data, forKey: "stop")
-            
-        } catch {
-            print("Couldn't encode \(error)")
-        }
+//        encodeToUserDefaults()
         
             //Download new schedules
         Task {
             await downloadSchedule()
         }
+        WidgetCenter.shared.reloadAllTimelines()
     }
     
         // Download new schedule for selected Bus Stop
@@ -122,7 +86,7 @@ class ScheduleViewModel: ObservableObject {
             // If there are no bus times available, attempt to download new ones
         if busTimes.isEmpty {
             
-            guard let url = URL(string: "https://www3.septa.org/api/BusSchedules/index.php?stop_id=\(selectedStop.stopid)") else {
+            guard let url = URL(string: "https://www3.septa.org/api/BusSchedules/index.php?stop_id=\(selectedStop.selectedStop.stopid)") else {
                 print("Invalid URL")
                 return
             }
@@ -144,7 +108,7 @@ class ScheduleViewModel: ObservableObject {
                     
                     for (_, value) in decodedResponse {
                         for item in value {
-                            if item.Route == selectedRoute {
+                            if item.Route == selectedStop.selectedRoute {
                                 busTimes.append(item.DateCalender)
                             }
                         }
@@ -155,15 +119,14 @@ class ScheduleViewModel: ObservableObject {
                 print("Invalid Data \(error)")
             }
         }
-        print(busTimes)
         calculateTimeUntilArrival()
     }
     
         // Reassigns selected stop so prevent picker error -- "Picker: "" is invalid and does not have an associated tag, this will give undefined results.
     func reassignSelectedStop() {
         for stop in busStops {
-            if stop.stopid == selectedStop.stopid {
-                selectedStop = stop
+            if stop.stopid == selectedStop.selectedStop.stopid {
+                selectedStop.selectedStop = stop
             }
         }
     }
@@ -172,9 +135,9 @@ class ScheduleViewModel: ObservableObject {
     func downloadStops() async {
         
             // If there are no bus times available, attempt to download new ones
-        if busStops.isEmpty && selectedStop.stopid != "--" {
+        if busStops.isEmpty && selectedStop.selectedStop.stopid != "--" {
             
-            guard let url = URL(string: "https://www3.septa.org/api/Stops/index.php?req1=\(selectedRoute)") else {
+            guard let url = URL(string: "https://www3.septa.org/api/Stops/index.php?req1=\(selectedStop.selectedRoute)") else {
                 print("Invalid URL")
                 return
             }
@@ -193,20 +156,11 @@ class ScheduleViewModel: ObservableObject {
                         // Automatically assign a selected stop on download so it has something to show to the user
                     if let first = busStops.first {
                         DispatchQueue.main.async {
-                            self.selectedStop = first
+                            self.selectedStop.selectedStop = first
                         }
                     }
                     
-                    do {
-                        let encoder = JSONEncoder()
-                        
-                        let data = try encoder.encode(busStops)
-                        
-                        defaults.set(data, forKey: "busStops")
-                        
-                    } catch {
-                        print("Couldn't encode bus stops \(error)")
-                    }
+                    encodeToUserDefaults()
                     
                 }
                 
@@ -224,6 +178,40 @@ class ScheduleViewModel: ObservableObject {
         
             // Convert String to Date and return
         return dateFormatter.date(from: nextScheduled) ?? Date.now
+    }
+    
+    func encodeToUserDefaults() {
+        
+        let stop = selectedStop
+        
+        do {
+            /* Since it's Codable, we can convert it to JSON using JSONEncoder */
+            let stopData = try JSONEncoder().encode(stop)
+            
+            /* ...and store it in your shared UserDefaults container */
+            UserDefaults(suiteName:
+            "group.com.coryjpopp.widget.test")!.set(stopData, forKey: "stop")
+            print("Encoding Successful")
+        } catch {
+            print("Error Encoding \(error)")
+        }
+    }
+    
+    func decodeFromUserDefaults() -> Stop {
+        /* Reading the encoded data from your shared App Group container storage */
+        let encodedData  = UserDefaults(suiteName: "group.com.coryjpopp.widget.test")!.object(forKey: "stop") as? Data
+        /* Decoding it using JSONDecoder*/
+        if let stopEncoded = encodedData {
+             let stopDecoded = try? JSONDecoder().decode(Stop.self, from: stopEncoded)
+            if let stop = stopDecoded {
+                print("Decoding Successful")
+                print(stop)
+                return stop
+            }
+        }
+        
+        print("Couldn't decode")
+        return Stop.exampleStop
     }
     
 }

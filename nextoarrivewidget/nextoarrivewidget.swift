@@ -10,6 +10,8 @@ import SwiftUI
 import Intents
 
 struct Provider: IntentTimelineProvider {
+    let scheduleVM = ScheduleViewModel()
+    
     func placeholder(in context: Context) -> SimpleEntry {
         SimpleEntry(date: Date(), configuration: ConfigurationIntent(), timeUntilArrival: 5, scheduleArrival: Date())
     }
@@ -26,12 +28,15 @@ struct Provider: IntentTimelineProvider {
             entries = try await downloadSchedule() ?? []
             let timeline = Timeline(entries: entries, policy: .atEnd)
             completion(timeline)
+            print("Timeline Reloaded")
         }
     }
     
     func downloadSchedule() async throws -> [SimpleEntry]? {
         
-        guard let url = URL(string: "https://www3.septa.org/api/BusSchedules/index.php?stop_id=3046") else {
+        let stop = scheduleVM.decodeFromUserDefaults()
+        
+        guard let url = URL(string: "https://www3.septa.org/api/BusSchedules/index.php?stop_id=\(stop.selectedStop.stopid)") else {
             print("Invalid URL")
             return nil
         }
@@ -52,8 +57,6 @@ struct Provider: IntentTimelineProvider {
                 var previous = Date()
                 
                 for (_, value) in decodedResponse {
-                    
-                    print(decodedResponse)
                     
                     for item in value {
                         let timeUntil = Calendar.current.dateComponents([.minute], from: previous, to: item.DateCalender).minute ?? 0

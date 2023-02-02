@@ -6,6 +6,7 @@
     //
 
 import SwiftUI
+import WidgetKit
 
 struct SettingsView: View {
     @Environment(\.dismiss) var dismiss
@@ -16,17 +17,17 @@ struct SettingsView: View {
             VStack {
                 List {
                     Section("Select Your Local Bus Stop") {
-                        Picker("Route", selection: $scheduleVM.selectedRoute) {
+                        Picker("Route", selection: $scheduleVM.selectedStop.selectedRoute) {
                             ForEach(scheduleVM.routes, id: \.self) { route in
                                 Text(route)
                             }
                         }
-                        .onChange(of: scheduleVM.selectedRoute) { _ in
-                            print(scheduleVM.selectedRoute)
+                        .onChange(of: scheduleVM.selectedStop.selectedRoute) { _ in
+                            print(scheduleVM.selectedStop.selectedRoute)
                             scheduleVM.resetBusStops()
                         }
                         
-                        Picker("Your Bus Stop", selection: $scheduleVM.selectedStop) {
+                        Picker("Your Bus Stop", selection: $scheduleVM.selectedStop.selectedStop) {
                             ForEach(self.scheduleVM.busStops, id:\.stopid) { (stop: BusStops) in
                                 Text(stop.stopname).tag(stop)
                             }
@@ -39,7 +40,17 @@ struct SettingsView: View {
                     Section("About") {
                         Link("About the Developer", destination: URL(string: "https://www.linkedin.com/in/coryjpopp/")!)
                             .foregroundColor(.white)
+                        Button("Reload Timelines") {
+                            WidgetCenter.shared.reloadAllTimelines()
+                        }
+                        Button("Encode") {
+                            scheduleVM.encodeToUserDefaults()
+                        }
+                        Button("Decode") {
+                            scheduleVM.decodeFromUserDefaults()
+                        }
                     }
+                    
                 }
             }
             .navigationTitle("Settings")

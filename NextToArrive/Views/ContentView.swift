@@ -23,10 +23,10 @@ struct ContentView: View {
                     .fill(.green.gradient).ignoresSafeArea()
                 VStack {
                     VStack(alignment: .leading) {
-                        Text("Route \(scheduleVM.selectedRoute)")
+                        Text("Route \(scheduleVM.selectedStop.selectedRoute)")
                             .font(.largeTitle.bold())
                             .animation(.easeIn)
-                        Text(scheduleVM.selectedStop.stopname)
+                        Text(scheduleVM.selectedStop.selectedStop.stopname)
                             .font(.subheadline)
                             .animation(.easeIn)
                     }
