@@ -10,6 +10,7 @@ import WidgetKit
 
 class ScheduleViewModel: ObservableObject {
     
+    let userDefaults = UserDefaults()
     @Published var timeUntilArrival = 0
     @Published var selectedStop = Stop.exampleStop
     var busTimes: [Date] = []
@@ -35,15 +36,13 @@ class ScheduleViewModel: ObservableObject {
         Task {
             await downloadStops()
         }
-        
-            //        reassignSelectedStop()
     }
     
         // Overwrite existing bus stops
     func resetBusStops() {
         
             // Save route number in UserDefaults
-            //        encodeToUserDefaults()
+        encodeToUserDefaults()
         
             // Delete existing bus stops
         busStops = []
@@ -99,7 +98,7 @@ class ScheduleViewModel: ObservableObject {
                         }
                     }
                 }
-                print("✅ Successfully downloaded Schedule - \(newTimes.count) new times added")
+                print("✅ Successfully downloaded Schedule for \(selectedStop.selectedRoute) - \(newTimes.count) new times added")
             }
             
         } catch let error {
@@ -115,28 +114,16 @@ class ScheduleViewModel: ObservableObject {
                 calculateTimeUntilNextArrival()
             }
         } else {
-            removeExpiredArrivals()
+                // Remove Expired Arrivals
+            for time in busTimes {
+                if Date() > time {
+                    print("🗑️ Expired time removed - \(time.formatted(.dateTime.hour().minute()))")
+                    busTimes.remove(at: 0)
+                }
+            }
             calculateTimeUntilNextArrival()
         }
     }
-    
-    func removeExpiredArrivals() {
-        let currentTime = Date()
-        
-        for time in busTimes {
-            if currentTime > time {
-                print("🗑️ Expired time removed - \(time)")
-                busTimes.remove(at: 0)
-            }
-        }
-    }
-    
-    
-    
-    
-    
-        //        - Check if there are still times remaining
-        //            - If yes, calculate the number of minutes between the first time and now
     
     func calculateTimeUntilNextArrival() {
         if !busTimes.isEmpty {
@@ -148,47 +135,49 @@ class ScheduleViewModel: ObservableObject {
     }
     
         // Reassigns selected stop so prevent picker error -- "Picker: "" is invalid and does not have an associated tag, this will give undefined results.
-    func reassignSelectedStop() {
-        for stop in busStops {
-            if stop.stopid == selectedStop.selectedStop.stopid {
-                selectedStop.selectedStop = stop
-            }
-        }
-    }
+    
     
         // Download new bus stops for selected Route
     func downloadStops() async {
         
-            // If there are no bus times available, attempt to download new ones
-        if busStops.isEmpty && selectedStop.selectedStop.stopid != "--" {
+        guard busStops.isEmpty else {
+            return
+        }
+        
+        guard let url = URL(string: "https://www3.septa.org/api/Stops/index.php?req1=\(selectedStop.selectedRoute)") else {
+            print("Invalid URL")
+            return
+        }
+        
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
             
-            guard let url = URL(string: "https://www3.septa.org/api/Stops/index.php?req1=\(selectedStop.selectedRoute)") else {
-                print("Invalid URL")
-                return
-            }
-            
-            do {
-                let (data, _) = try await URLSession.shared.data(from: url)
+            if let decodedResponse = try? JSONDecoder().decode([BusStops].self, from: data) {
                 
-                if let decodedResponse = try? JSONDecoder().decode([BusStops].self, from: data) {
+                for var stop in decodedResponse {
+                    stop.stopname = stop.stopname.replacingOccurrences(of: "&amp;", with: "&")
                     
-                    for var stop in decodedResponse {
-                        stop.stopname = stop.stopname.replacingOccurrences(of: "&amp;", with: "&")
-                        
-                        busStops.append(stop)
-                    }
-                    
-                        // Automatically assign a selected stop on download so it has something to show to the user
-                        //                    if let first = busStops.first {
-                        //                        DispatchQueue.main.async {
-                        //                            self.selectedStop.selectedStop = first
-                        //                        }
-                        //                    }
+                    busStops.append(stop)
                 }
                 
-            } catch let error {
-                print("Invalid Data \(error)")
+                
+                for stop in busStops {
+                    if stop.stopid == selectedStop.selectedStop.stopid {
+                        selectedStop.selectedStop = stop
+                        return
+                    }
+                }
+                
+                
+                if let first = busStops.first {
+                    DispatchQueue.main.async {
+                        self.selectedStop.selectedStop = first
+                    }
+                }
             }
+            
+        } catch let error {
+            print("Invalid Data \(error)")
         }
     }
     
@@ -226,8 +215,7 @@ class ScheduleViewModel: ObservableObject {
         if let stopEncoded = encodedData {
             let stopDecoded = try? JSONDecoder().decode(Stop.self, from: stopEncoded)
             if let stop = stopDecoded {
-                print("Decoding Successful")
-                print(stop)
+                print("✅ Decoding Successful")
                 return stop
             }
         }
