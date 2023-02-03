@@ -10,14 +10,13 @@ import SwiftUI
 import Intents
 
 struct Provider: IntentTimelineProvider {
-    let scheduleVM = ScheduleViewModel()
     
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), configuration: ConfigurationIntent(), timeUntilArrival: 5, scheduleArrival: Date())
+        SimpleEntry(date: Date(), configuration: ConfigurationIntent(), timeUntilArrival: 5, scheduleArrival: Date(), route: Stop.exampleStop.selectedRoute)
     }
     
     func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date(), configuration: configuration, timeUntilArrival: 5, scheduleArrival: Date())
+        let entry = SimpleEntry(date: Date(), configuration: configuration, timeUntilArrival: 5, scheduleArrival: Date(), route: Stop.exampleStop.selectedRoute)
         completion(entry)
     }
     
@@ -34,6 +33,7 @@ struct Provider: IntentTimelineProvider {
     
     func downloadSchedule() async throws -> [SimpleEntry]? {
         
+        let scheduleVM = ScheduleViewModel()
         let stop = scheduleVM.decodeFromUserDefaults()
         
         guard let url = URL(string: "https://www3.septa.org/api/BusSchedules/index.php?stop_id=\(stop.selectedStop.stopid)") else {
@@ -70,7 +70,7 @@ struct Provider: IntentTimelineProvider {
                             
                             let timeBefore = Calendar.current.dateComponents([.minute], from: entryDate, to: item.DateCalender).minute ?? 0
                             
-                            let newEntry = SimpleEntry(date: entryDate, configuration: ConfigurationIntent(), timeUntilArrival: timeBefore, scheduleArrival: item.DateCalender)
+                            let newEntry = SimpleEntry(date: entryDate, configuration: ConfigurationIntent(), timeUntilArrival: timeBefore, scheduleArrival: item.DateCalender, route: stop.selectedRoute)
                             entries.append(newEntry)
                         }
                     }
@@ -90,6 +90,7 @@ struct SimpleEntry: TimelineEntry {
     let configuration: ConfigurationIntent
     let timeUntilArrival: Int
     let scheduleArrival: Date
+    let route: String
 }
 
 struct SeptaWidgetTestWidgetEntryView : View {
@@ -101,7 +102,7 @@ struct SeptaWidgetTestWidgetEntryView : View {
                 .fill(.green.gradient).ignoresSafeArea()
             VStack {
                 HStack {
-                    Text("RTE 2")
+                    Text("RTE \(entry.route)")
                         .foregroundColor(.white)
                         .font(.caption)
                         .padding(.leading, 15)
@@ -141,7 +142,7 @@ struct SeptaWidgetTestWidget: Widget {
 
 struct SeptaWidgetTestWidget_Previews: PreviewProvider {
     static var previews: some View {
-        SeptaWidgetTestWidgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent(), timeUntilArrival: 5, scheduleArrival: Date()))
+        SeptaWidgetTestWidgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent(), timeUntilArrival: 5, scheduleArrival: Date(), route: Stop.exampleStop.selectedRoute))
             .previewContext(WidgetPreviewContext(family: .systemSmall))
     }
 }

@@ -43,14 +43,12 @@ struct ContentView: View {
                     Text("Until the next bus")
                         .onReceive(timer) { time in
                             if showingSheet == false {
-                                Task {
-                                    await scheduleVM.downloadSchedule()
-                                }
+                                scheduleVM.refreshSchedule()
                             }
                         }
                     Spacer()
-                        Text(scheduleVM.nextArrivingAt)
-                            .animation(.easeIn)
+                    Text(scheduleVM.nextArrivingAt)
+                        .animation(.easeIn)
                 }
                 .padding()
             }

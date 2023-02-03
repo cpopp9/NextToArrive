@@ -30,29 +30,20 @@ class ScheduleViewModel: ObservableObject {
         
         selectedStop = decodeFromUserDefaults()
         
+        refreshSchedule()
+        
         Task {
-            await downloadSchedule()
             await downloadStops()
         }
         
-        reassignSelectedStop()
-    }
-    
-    func calculateTimeUntilArrival() {
-        
-        if !busTimes.isEmpty {
-            let timeUntil = Calendar.current.dateComponents([.minute], from: .now, to: busTimes[0]).minute ?? 0
-            DispatchQueue.main.async {
-                self.timeUntilArrival = timeUntil
-            }
-        }
+            //        reassignSelectedStop()
     }
     
         // Overwrite existing bus stops
     func resetBusStops() {
         
             // Save route number in UserDefaults
-//        encodeToUserDefaults()
+            //        encodeToUserDefaults()
         
             // Delete existing bus stops
         busStops = []
@@ -71,7 +62,7 @@ class ScheduleViewModel: ObservableObject {
         busTimes = []
         
             // Save bus stop in UserDefaults
-//        encodeToUserDefaults()
+            //        encodeToUserDefaults()
         
             //Download new schedules
         Task {
@@ -80,46 +71,80 @@ class ScheduleViewModel: ObservableObject {
         WidgetCenter.shared.reloadAllTimelines()
     }
     
-        // Download new schedule for selected Bus Stop
-    func downloadSchedule() async {
+    func downloadSchedule() async -> [Date] {
         
-            // If there are no bus times available, attempt to download new ones
-        if busTimes.isEmpty {
+        var newTimes: [Date] = []
+        
+        guard let url = URL(string: "https://www3.septa.org/api/BusSchedules/index.php?stop_id=\(selectedStop.selectedStop.stopid)") else {
+            print("❌ Invalid URL")
+            return busTimes
+        }
+        
+        do {
             
-            guard let url = URL(string: "https://www3.septa.org/api/BusSchedules/index.php?stop_id=\(selectedStop.selectedStop.stopid)") else {
-                print("Invalid URL")
-                return
-            }
+            let (data, _) = try await URLSession.shared.data(from: url)
             
-            do {
-                let (data, _) = try await URLSession.shared.data(from: url)
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "MM/dd/yy hh:mm aa"
+            
+            let decoder = JSONDecoder()
+            decoder.dateDecodingStrategy = .formatted(dateFormatter)
+            
+            if let decodedResponse = try? decoder.decode(StopData.self, from: data) {
                 
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "MM/dd/yy hh:mm aa"
-                
-                let decoder = JSONDecoder()
-                decoder.dateDecodingStrategy = .formatted(dateFormatter)
-                
-                if let decodedResponse = try? decoder.decode(StopData.self, from: data) {
-                    
-                    if decodedResponse.isEmpty {
-                        print("Failed to download bus schedule - retrying")
-                    }
-                    
-                    for (_, value) in decodedResponse {
-                        for item in value {
-                            if item.Route == selectedStop.selectedRoute {
-                                busTimes.append(item.DateCalender)
-                            }
+                for (_, value) in decodedResponse {
+                    for item in value {
+                        if item.Route == selectedStop.selectedRoute {
+                            newTimes.append(item.DateCalender)
                         }
                     }
                 }
-                
-            } catch let error {
-                print("Invalid Data \(error)")
+                print("✅ Successfully downloaded Schedule - \(newTimes.count) new times added")
+            }
+            
+        } catch let error {
+            print("❌ Invalid Data \(error)")
+        }
+        return newTimes
+    }
+    
+    func refreshSchedule() {
+        if busTimes.isEmpty {
+            Task {
+                busTimes = await downloadSchedule()
+                calculateTimeUntilNextArrival()
+            }
+        } else {
+            removeExpiredArrivals()
+            calculateTimeUntilNextArrival()
+        }
+    }
+    
+    func removeExpiredArrivals() {
+        let currentTime = Date()
+        
+        for time in busTimes {
+            if currentTime > time {
+                print("🗑️ Expired time removed - \(time)")
+                busTimes.remove(at: 0)
             }
         }
-        calculateTimeUntilArrival()
+    }
+    
+    
+    
+    
+    
+        //        - Check if there are still times remaining
+        //            - If yes, calculate the number of minutes between the first time and now
+    
+    func calculateTimeUntilNextArrival() {
+        if !busTimes.isEmpty {
+            let timeUntil = Calendar.current.dateComponents([.minute], from: .now, to: busTimes[0]).minute ?? 0
+            DispatchQueue.main.async {
+                self.timeUntilArrival = timeUntil
+            }
+        }
     }
     
         // Reassigns selected stop so prevent picker error -- "Picker: "" is invalid and does not have an associated tag, this will give undefined results.
@@ -154,14 +179,11 @@ class ScheduleViewModel: ObservableObject {
                     }
                     
                         // Automatically assign a selected stop on download so it has something to show to the user
-                    if let first = busStops.first {
-                        DispatchQueue.main.async {
-                            self.selectedStop.selectedStop = first
-                        }
-                    }
-                    
-                    encodeToUserDefaults()
-                    
+                        //                    if let first = busStops.first {
+                        //                        DispatchQueue.main.async {
+                        //                            self.selectedStop.selectedStop = first
+                        //                        }
+                        //                    }
                 }
                 
             } catch let error {
@@ -190,8 +212,8 @@ class ScheduleViewModel: ObservableObject {
             
             /* ...and store it in your shared UserDefaults container */
             UserDefaults(suiteName:
-            "group.com.coryjpopp.widget.test")!.set(stopData, forKey: "stop")
-            print("Encoding Successful")
+                            "group.R9SLYR2Y3N..com.coryjpopp.nexttoarrive")!.set(stopData, forKey: "stop")
+            print("✅ Encoding Successful")
         } catch {
             print("Error Encoding \(error)")
         }
@@ -199,10 +221,10 @@ class ScheduleViewModel: ObservableObject {
     
     func decodeFromUserDefaults() -> Stop {
         /* Reading the encoded data from your shared App Group container storage */
-        let encodedData  = UserDefaults(suiteName: "group.com.coryjpopp.widget.test")!.object(forKey: "stop") as? Data
+        let encodedData  = UserDefaults(suiteName: "group.R9SLYR2Y3N..com.coryjpopp.nexttoarrive")!.object(forKey: "stop") as? Data
         /* Decoding it using JSONDecoder*/
         if let stopEncoded = encodedData {
-             let stopDecoded = try? JSONDecoder().decode(Stop.self, from: stopEncoded)
+            let stopDecoded = try? JSONDecoder().decode(Stop.self, from: stopEncoded)
             if let stop = stopDecoded {
                 print("Decoding Successful")
                 print(stop)
