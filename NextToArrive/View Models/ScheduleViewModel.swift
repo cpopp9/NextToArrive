@@ -51,22 +51,25 @@ class ScheduleViewModel: ObservableObject {
         Task {
             await downloadStops()
         }
+        
+            // Reload Widgets
         WidgetCenter.shared.reloadAllTimelines()
     }
     
         // Overwrite existing bus schedule
     func resetSchedule() {
         
+        encodeToUserDefaults()
+        
             // Delete existing bus times
         busTimes = []
-        
-            // Save bus stop in UserDefaults
-            //        encodeToUserDefaults()
         
             //Download new schedules
         Task {
             await downloadSchedule()
         }
+        
+            // Reload Widgets
         WidgetCenter.shared.reloadAllTimelines()
     }
     
@@ -98,7 +101,7 @@ class ScheduleViewModel: ObservableObject {
                         }
                     }
                 }
-                print("✅ Successfully downloaded Schedule for \(selectedStop.selectedRoute) - \(newTimes.count) new times added")
+                print("✅ Successfully downloaded Schedule for Route \(selectedStop.selectedRoute) - \(newTimes.count) new times added")
             }
             
         } catch let error {
@@ -160,7 +163,7 @@ class ScheduleViewModel: ObservableObject {
                     busStops.append(stop)
                 }
                 
-                
+                // Reassign selected stop so that it has the correct associated tag
                 for stop in busStops {
                     if stop.stopid == selectedStop.selectedStop.stopid {
                         selectedStop.selectedStop = stop
@@ -168,7 +171,7 @@ class ScheduleViewModel: ObservableObject {
                     }
                 }
                 
-                
+                // If selected stop id doesn't match list of stops, assign the first stop so we have something to display to the user
                 if let first = busStops.first {
                     DispatchQueue.main.async {
                         self.selectedStop.selectedStop = first
@@ -193,34 +196,33 @@ class ScheduleViewModel: ObservableObject {
     
     func encodeToUserDefaults() {
         
-        let stop = selectedStop
-        
         do {
             /* Since it's Codable, we can convert it to JSON using JSONEncoder */
-            let stopData = try JSONEncoder().encode(stop)
+            let stopData = try JSONEncoder().encode(selectedStop)
             
             /* ...and store it in your shared UserDefaults container */
-            UserDefaults(suiteName:
-                            "group.R9SLYR2Y3N..com.coryjpopp.nexttoarrive")!.set(stopData, forKey: "stop")
-            print("✅ Encoding Successful")
+            UserDefaults(suiteName: "group.com.coryjpopp.nexttoarrive")!.set(stopData, forKey: "stop")
+            print("✅ Encoding Successful - Saved stop as Route \(selectedStop.selectedRoute) at \(selectedStop.selectedStop.stopname)")
         } catch {
             print("Error Encoding \(error)")
         }
     }
     
     func decodeFromUserDefaults() -> Stop {
+        
         /* Reading the encoded data from your shared App Group container storage */
-        let encodedData  = UserDefaults(suiteName: "group.R9SLYR2Y3N..com.coryjpopp.nexttoarrive")!.object(forKey: "stop") as? Data
+        let encodedData = UserDefaults(suiteName: "group.com.coryjpopp.nexttoarrive")!.object(forKey: "stop") as? Data
+        
         /* Decoding it using JSONDecoder*/
         if let stopEncoded = encodedData {
+            
             let stopDecoded = try? JSONDecoder().decode(Stop.self, from: stopEncoded)
             if let stop = stopDecoded {
-                print("✅ Decoding Successful")
+                print("✅ Decoding Successful - loaded saved stop as Route \(stop.selectedRoute) at \(stop.selectedStop.stopname)")
                 return stop
             }
         }
         
-        print("Couldn't decode")
         return Stop.exampleStop
     }
     

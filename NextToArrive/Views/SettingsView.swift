@@ -47,7 +47,12 @@ struct SettingsView: View {
                             scheduleVM.encodeToUserDefaults()
                         }
                         Button("Decode") {
-                            scheduleVM.decodeFromUserDefaults()
+                            DispatchQueue.main.async {
+                                scheduleVM.selectedStop = scheduleVM.decodeFromUserDefaults()
+                            }
+                        }
+                        Button("Print selectedStop") {
+                            print(scheduleVM.selectedStop)
                         }
                     }
                     
