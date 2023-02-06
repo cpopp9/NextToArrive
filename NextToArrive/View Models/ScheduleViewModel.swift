@@ -28,14 +28,7 @@ class ScheduleViewModel: ObservableObject {
     }
     
     init() {
-        
         selectedStop = decodeFromUserDefaults()
-        
-        refreshSchedule()
-        
-        Task {
-            await downloadStops()
-        }
     }
     
         // Overwrite existing bus stops
@@ -53,7 +46,7 @@ class ScheduleViewModel: ObservableObject {
         }
         
             // Reload Widgets
-        WidgetCenter.shared.reloadAllTimelines()
+//        WidgetCenter.shared.reloadAllTimelines()
     }
     
         // Overwrite existing bus schedule
@@ -70,7 +63,7 @@ class ScheduleViewModel: ObservableObject {
         }
         
             // Reload Widgets
-        WidgetCenter.shared.reloadAllTimelines()
+//        WidgetCenter.shared.reloadAllTimelines()
     }
     
     func downloadSchedule() async -> [Date] {
@@ -222,7 +215,7 @@ class ScheduleViewModel: ObservableObject {
                 return stop
             }
         }
-        
+        print("Failed to Decode")
         return Stop.exampleStop
     }
     

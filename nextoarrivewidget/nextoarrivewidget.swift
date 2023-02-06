@@ -22,66 +22,34 @@ struct Provider: IntentTimelineProvider {
     
     func getTimeline(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         
+        let scheduleVM = ScheduleViewModel()
+        
         Task {
             var entries: [SimpleEntry] = []
-            entries = try await downloadSchedule() ?? []
+            var previousTime = Date()
+            
+            let busTimes = await scheduleVM.downloadSchedule()
+            
+            for time in busTimes {
+                let timeUntil = Calendar.current.dateComponents([.minute], from: previousTime, to: time).minute ?? 0
+                
+                previousTime = time
+                let date = Date().zeroSeconds!
+                
+                for minuteOffset in 0...timeUntil {
+                    let entryDate = Calendar.current.date(byAdding: .minute, value: minuteOffset, to: date)!
+                    let timeBefore = Calendar.current.dateComponents([.minute], from: entryDate, to: time).minute ?? 0
+                    let newEntry = SimpleEntry(date: entryDate, configuration: ConfigurationIntent(), timeUntilArrival: timeBefore, scheduleArrival: time, route: scheduleVM.selectedStop.selectedRoute)
+                    entries.append(newEntry)
+                }
+            }
+            
+            
             let timeline = Timeline(entries: entries, policy: .atEnd)
             completion(timeline)
             print("Timeline Reloaded")
         }
-    }
-    
-    func downloadSchedule() async throws -> [SimpleEntry]? {
         
-        let scheduleVM = ScheduleViewModel()
-        let stop = scheduleVM.decodeFromUserDefaults()
-        
-        guard let url = URL(string: "https://www3.septa.org/api/BusSchedules/index.php?stop_id=\(stop.selectedStop.stopid)") else {
-            print("Invalid URL")
-            return nil
-        }
-        
-        do {
-            let (data, _) = try await URLSession.shared.data(from: url)
-            
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "MM/dd/yy hh:mm aa"
-            
-            let decoder = JSONDecoder()
-            decoder.dateDecodingStrategy = .formatted(dateFormatter)
-            
-            if let decodedResponse = try? decoder.decode(StopData.self, from: data) {
-                
-                var entries: [SimpleEntry] = []
-                
-                var previous = Date()
-                
-                for (_, value) in decodedResponse {
-                    
-                    for item in value {
-                        let timeUntil = Calendar.current.dateComponents([.minute], from: previous, to: item.DateCalender).minute ?? 0
-                        
-                        previous = item.DateCalender
-                        let date = Date().zeroSeconds!
-                        
-                        for minuteOffset in 0...timeUntil {
-                            
-                            let entryDate = Calendar.current.date(byAdding: .minute, value: minuteOffset, to: date)!
-                            
-                            let timeBefore = Calendar.current.dateComponents([.minute], from: entryDate, to: item.DateCalender).minute ?? 0
-                            
-                            let newEntry = SimpleEntry(date: entryDate, configuration: ConfigurationIntent(), timeUntilArrival: timeBefore, scheduleArrival: item.DateCalender, route: stop.selectedRoute)
-                            entries.append(newEntry)
-                        }
-                    }
-                }
-                return entries
-            }
-            
-        } catch let error {
-            print("Invalid Data \(error)")
-        }
-        return nil
     }
 }
 
@@ -106,7 +74,7 @@ struct SeptaWidgetTestWidgetEntryView : View {
                         .foregroundColor(.white)
                         .font(.caption)
                         .padding(.leading, 15)
-
+                    
                     Spacer()
                     Text(entry.scheduleArrival.formatted(.dateTime.hour().minute()))
                         .foregroundColor(.white)

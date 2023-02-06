@@ -52,6 +52,10 @@ struct ContentView: View {
                 }
                 .padding()
             }
+            .task {
+                scheduleVM.refreshSchedule()
+                await scheduleVM.downloadStops()
+            }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button() {
