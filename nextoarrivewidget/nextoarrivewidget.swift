@@ -12,24 +12,24 @@ import Intents
 struct Provider: IntentTimelineProvider {
     
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), configuration: ConfigurationIntent(), timeUntilArrival: 5, scheduleArrival: Date(), route: Stop.exampleStop.selectedRoute)
+        SimpleEntry(date: Date(), configuration: ConfigurationIntent(), timeUntilArrival: 5, scheduleArrival: Date(), route: SelectedStop.exampleStop.route)
     }
     
     func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date(), configuration: configuration, timeUntilArrival: 5, scheduleArrival: Date(), route: Stop.exampleStop.selectedRoute)
+        let entry = SimpleEntry(date: Date(), configuration: configuration, timeUntilArrival: 5, scheduleArrival: Date(), route: SelectedStop.exampleStop.route)
         completion(entry)
     }
     
     func getTimeline(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         
         let scheduleVM = WidgetViewModel()
-        let stop = scheduleVM.decodeFromUserDefaults()
+        let selectedStop = scheduleVM.decodeFromUserDefaults()
         
         Task {
             var entries: [SimpleEntry] = []
             var previousTime = Date()
             
-            let busTimes = await scheduleVM.downloadSchedule(stopID: stop.selectedStop.stopid, route: stop.selectedRoute)
+            let busTimes = await scheduleVM.downloadSchedule(stopID: selectedStop.stop.stopid, route: selectedStop.route)
             
             for time in busTimes {
                 let timeUntil = Calendar.current.dateComponents([.minute], from: previousTime, to: time).minute ?? 0
@@ -40,7 +40,7 @@ struct Provider: IntentTimelineProvider {
                 for minuteOffset in 0..<timeUntil {
                     let entryDate = Calendar.current.date(byAdding: .minute, value: minuteOffset, to: date)!
                     let timeBefore = Calendar.current.dateComponents([.minute], from: entryDate, to: time).minute ?? 0
-                    let newEntry = SimpleEntry(date: entryDate, configuration: ConfigurationIntent(), timeUntilArrival: timeBefore, scheduleArrival: time, route: stop.selectedRoute)
+                    let newEntry = SimpleEntry(date: entryDate, configuration: ConfigurationIntent(), timeUntilArrival: timeBefore, scheduleArrival: time, route: selectedStop.route)
                     entries.append(newEntry)
                 }
             }
@@ -111,7 +111,7 @@ struct SeptaWidgetTestWidget: Widget {
 
 struct SeptaWidgetTestWidget_Previews: PreviewProvider {
     static var previews: some View {
-        SeptaWidgetTestWidgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent(), timeUntilArrival: 5, scheduleArrival: Date(), route: Stop.exampleStop.selectedRoute))
+        SeptaWidgetTestWidgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent(), timeUntilArrival: 5, scheduleArrival: Date(), route: SelectedStop.exampleStop.route))
             .previewContext(WidgetPreviewContext(family: .systemSmall))
     }
 }

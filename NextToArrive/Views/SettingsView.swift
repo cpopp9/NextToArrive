@@ -17,23 +17,23 @@ struct SettingsView: View {
             VStack {
                 List {
                     Section("Select Your Local Bus Stop") {
-                        Picker("Route", selection: $scheduleVM.selectedStop.selectedRoute) {
+                        Picker("Route", selection: $scheduleVM.selectedStop.route) {
                             ForEach(scheduleVM.routes, id: \.self) { route in
                                 Text(route)
                             }
                         }
-                        .onChange(of: scheduleVM.selectedStop.selectedRoute) { _ in
-                            print(scheduleVM.selectedStop.selectedRoute)
-                            scheduleVM.overwriteStops()
+                        .onChange(of: scheduleVM.selectedStop.route) { _ in
+                            print(scheduleVM.selectedStop.route)
+                            scheduleVM.overwriteSelectedRoute()
                         }
                         
-                        Picker("Your Bus Stop", selection: $scheduleVM.selectedStop.selectedStop) {
-                            ForEach(self.scheduleVM.busStops, id:\.stopid) { (stop: BusStops) in
+                        Picker("Your Bus Stop", selection: $scheduleVM.selectedStop.stop) {
+                            ForEach(self.scheduleVM.busStops, id:\.stopid) { (stop: BusStop) in
                                 Text(stop.stopname).tag(stop)
                             }
                         }
                         .onChange(of: scheduleVM.selectedStop) { _ in
-                            scheduleVM.overwriteRoute()
+                            scheduleVM.overwriteSelectedStop()
                         }
                     }
                     

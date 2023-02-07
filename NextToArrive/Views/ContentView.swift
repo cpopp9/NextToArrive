@@ -23,10 +23,10 @@ struct ContentView: View {
                     .fill(.green.gradient).ignoresSafeArea()
                 VStack {
                     VStack(alignment: .leading) {
-                        Text("Route \(scheduleVM.selectedStop.selectedRoute)")
+                        Text("Route \(scheduleVM.selectedStop.route)")
                             .font(.largeTitle.bold())
                             .animation(.easeIn)
-                        Text(scheduleVM.selectedStop.selectedStop.stopname)
+                        Text(scheduleVM.selectedStop.stop.stopname)
                             .font(.subheadline)
                             .animation(.easeIn)
                     }
@@ -54,7 +54,7 @@ struct ContentView: View {
             }
             .task {
                 scheduleVM.refreshSchedule()
-                await scheduleVM.downloadStops()
+                await scheduleVM.downloadBusStops()
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {

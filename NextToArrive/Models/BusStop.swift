@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct BusStops: Codable, Identifiable, Equatable, Hashable {
+struct BusStop: Codable, Identifiable, Equatable, Hashable {
     let id = UUID()
     let lng: String
     let lat: String
