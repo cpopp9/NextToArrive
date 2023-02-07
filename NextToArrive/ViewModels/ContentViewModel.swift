@@ -10,6 +10,7 @@ import WidgetKit
 
 class ContentViewModel: ObservableObject {
     
+    let widgetVM: WidgetViewModel
     @Published var timeUntilArrival = 0
     @Published var selectedStop = Stop.exampleStop
     var busTimes: [Date] = []
@@ -27,29 +28,25 @@ class ContentViewModel: ObservableObject {
     }
     
     init() {
-        selectedStop = decodeFromUserDefaults()
+        widgetVM = WidgetViewModel()
+        selectedStop = widgetVM.decodeFromUserDefaults()
     }
     
         // Overwrite existing bus stops
-    func resetBusStops() {
+    func overwriteStops() {
         
-            // Save route number in UserDefaults
         encodeToUserDefaults()
         
-            // Delete existing bus stops
         busStops = []
         
-            // Download new route stops
         Task {
             await downloadStops()
         }
         
-            // Reload Widgets
         WidgetCenter.shared.reloadAllTimelines()
     }
     
-        // Overwrite existing bus schedule
-    func resetSchedule() {
+    func overwriteRoute() {
         
         encodeToUserDefaults()
         
@@ -58,54 +55,17 @@ class ContentViewModel: ObservableObject {
         
             //Download new schedules
         Task {
-            await downloadSchedule()
+            await widgetVM.downloadSchedule(stopID: selectedStop.selectedStop.stopid, route: selectedStop.selectedRoute)
         }
         
             // Reload Widgets
         WidgetCenter.shared.reloadAllTimelines()
     }
     
-    func downloadSchedule() async -> [Date] {
-        
-        var newTimes: [Date] = []
-        
-        guard let url = URL(string: "https://www3.septa.org/api/BusSchedules/index.php?stop_id=\(selectedStop.selectedStop.stopid)") else {
-            print("❌ Invalid URL")
-            return busTimes
-        }
-        
-        do {
-            
-            let (data, _) = try await URLSession.shared.data(from: url)
-            
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "MM/dd/yy hh:mm aa"
-            
-            let decoder = JSONDecoder()
-            decoder.dateDecodingStrategy = .formatted(dateFormatter)
-            
-            if let decodedResponse = try? decoder.decode(StopData.self, from: data) {
-                
-                for (_, value) in decodedResponse {
-                    for item in value {
-                        if item.Route == selectedStop.selectedRoute {
-                            newTimes.append(item.DateCalender)
-                        }
-                    }
-                }
-                print("✅ Successfully downloaded Schedule for Route \(selectedStop.selectedRoute) - \(newTimes.count) new times added")
-            }
-            
-        } catch let error {
-            print("❌ Invalid Data \(error)")
-        }
-        return newTimes
-    }
-    
     func refreshSchedule() {
         if busTimes.isEmpty {
             Task {
-                busTimes = await downloadSchedule()
+                busTimes = await widgetVM.downloadSchedule(stopID: selectedStop.selectedStop.stopid, route: selectedStop.selectedRoute)
                 calculateTimeUntilNextArrival()
             }
         } else {
@@ -190,6 +150,13 @@ class ContentViewModel: ObservableObject {
         }
     }
     
+    
+    
+}
+
+
+class WidgetViewModel {
+    
     func decodeFromUserDefaults() -> Stop {
         
         /* Reading the encoded data from your shared App Group container storage */
@@ -206,6 +173,43 @@ class ContentViewModel: ObservableObject {
         }
         print("Failed to Decode")
         return Stop.exampleStop
+    }
+    
+    func downloadSchedule(stopID: String, route: String) async -> [Date] {
+        
+        var newTimes: [Date] = []
+        
+        guard let url = URL(string: "https://www3.septa.org/api/BusSchedules/index.php?stop_id=\(stopID)") else {
+            print("❌ Invalid URL")
+            return newTimes
+        }
+        
+        do {
+            
+            let (data, _) = try await URLSession.shared.data(from: url)
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "MM/dd/yy hh:mm aa"
+            
+            let decoder = JSONDecoder()
+            decoder.dateDecodingStrategy = .formatted(dateFormatter)
+            
+            if let decodedResponse = try? decoder.decode(StopData.self, from: data) {
+                
+                for (_, value) in decodedResponse {
+                    for item in value {
+                        if item.Route == route {
+                            newTimes.append(item.DateCalender)
+                        }
+                    }
+                }
+                print("✅ Successfully downloaded Schedule for Route \(route) - \(newTimes.count) new times added")
+            }
+            
+        } catch let error {
+            print("❌ Invalid Data \(error)")
+        }
+        return newTimes
     }
     
 }

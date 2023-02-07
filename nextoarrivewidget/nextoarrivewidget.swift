@@ -22,13 +22,14 @@ struct Provider: IntentTimelineProvider {
     
     func getTimeline(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         
-        let scheduleVM = ContentViewModel()
+        let scheduleVM = WidgetViewModel()
+        let stop = scheduleVM.decodeFromUserDefaults()
         
         Task {
             var entries: [SimpleEntry] = []
             var previousTime = Date()
             
-            let busTimes = await scheduleVM.downloadSchedule()
+            let busTimes = await scheduleVM.downloadSchedule(stopID: stop.selectedStop.stopid, route: stop.selectedRoute)
             
             for time in busTimes {
                 let timeUntil = Calendar.current.dateComponents([.minute], from: previousTime, to: time).minute ?? 0
@@ -39,7 +40,7 @@ struct Provider: IntentTimelineProvider {
                 for minuteOffset in 0..<timeUntil {
                     let entryDate = Calendar.current.date(byAdding: .minute, value: minuteOffset, to: date)!
                     let timeBefore = Calendar.current.dateComponents([.minute], from: entryDate, to: time).minute ?? 0
-                    let newEntry = SimpleEntry(date: entryDate, configuration: ConfigurationIntent(), timeUntilArrival: timeBefore, scheduleArrival: time, route: scheduleVM.selectedStop.selectedRoute)
+                    let newEntry = SimpleEntry(date: entryDate, configuration: ConfigurationIntent(), timeUntilArrival: timeBefore, scheduleArrival: time, route: stop.selectedRoute)
                     entries.append(newEntry)
                 }
             }

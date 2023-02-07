@@ -24,7 +24,7 @@ struct SettingsView: View {
                         }
                         .onChange(of: scheduleVM.selectedStop.selectedRoute) { _ in
                             print(scheduleVM.selectedStop.selectedRoute)
-                            scheduleVM.resetBusStops()
+                            scheduleVM.overwriteStops()
                         }
                         
                         Picker("Your Bus Stop", selection: $scheduleVM.selectedStop.selectedStop) {
@@ -33,27 +33,13 @@ struct SettingsView: View {
                             }
                         }
                         .onChange(of: scheduleVM.selectedStop) { _ in
-                            scheduleVM.resetSchedule()
+                            scheduleVM.overwriteRoute()
                         }
                     }
                     
                     Section("About") {
                         Link("About the Developer", destination: URL(string: "https://www.linkedin.com/in/coryjpopp/")!)
                             .foregroundColor(.white)
-                        Button("Reload Timelines") {
-                            WidgetCenter.shared.reloadAllTimelines()
-                        }
-                        Button("Encode") {
-                            scheduleVM.encodeToUserDefaults()
-                        }
-                        Button("Decode") {
-                            DispatchQueue.main.async {
-                                scheduleVM.selectedStop = scheduleVM.decodeFromUserDefaults()
-                            }
-                        }
-                        Button("Print selectedStop") {
-                            print(scheduleVM.selectedStop)
-                        }
                     }
                     
                 }
