@@ -10,7 +10,6 @@ import WidgetKit
 
 class ScheduleViewModel: ObservableObject {
     
-    let userDefaults = UserDefaults()
     @Published var timeUntilArrival = 0
     @Published var selectedStop = Stop.exampleStop
     var busTimes: [Date] = []
@@ -175,16 +174,6 @@ class ScheduleViewModel: ObservableObject {
         } catch let error {
             print("Invalid Data \(error)")
         }
-    }
-    
-        // Convert upcoming bus times from string to date
-    func dateFormatter(nextScheduled: String) -> Date {
-            // Create Date Formatter
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "hh:mma"
-        
-            // Convert String to Date and return
-        return dateFormatter.date(from: nextScheduled) ?? Date.now
     }
     
     func encodeToUserDefaults() {
