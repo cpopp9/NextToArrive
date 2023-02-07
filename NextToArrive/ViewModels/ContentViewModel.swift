@@ -8,7 +8,7 @@
 import Foundation
 import WidgetKit
 
-class ScheduleViewModel: ObservableObject {
+class ContentViewModel: ObservableObject {
     
     @Published var timeUntilArrival = 0
     @Published var selectedStop = Stop.exampleStop

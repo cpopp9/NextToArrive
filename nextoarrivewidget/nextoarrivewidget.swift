@@ -22,7 +22,7 @@ struct Provider: IntentTimelineProvider {
     
     func getTimeline(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         
-        let scheduleVM = ScheduleViewModel()
+        let scheduleVM = ContentViewModel()
         
         Task {
             var entries: [SimpleEntry] = []

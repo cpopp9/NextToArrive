@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @StateObject var scheduleVM = ScheduleViewModel()
+    @StateObject var scheduleVM = ContentViewModel()
     @State private var showingSheet = false
     
         // Timer setup to trigger once ever 10 seconds

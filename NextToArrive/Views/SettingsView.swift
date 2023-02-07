@@ -10,7 +10,7 @@ import WidgetKit
 
 struct SettingsView: View {
     @Environment(\.dismiss) var dismiss
-    @ObservedObject var scheduleVM: ScheduleViewModel
+    @ObservedObject var scheduleVM: ContentViewModel
     
     var body: some View {
         NavigationView {
@@ -71,6 +71,6 @@ struct SettingsView: View {
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsView(scheduleVM: ScheduleViewModel())
+        SettingsView(scheduleVM: ContentViewModel())
     }
 }

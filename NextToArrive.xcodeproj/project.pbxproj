@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		DC063C67296DE20A0028DDB8 /* ScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC063C66296DE20A0028DDB8 /* ScheduleViewModel.swift */; };
+		DC063C67296DE20A0028DDB8 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC063C66296DE20A0028DDB8 /* ContentViewModel.swift */; };
 		DC1A42162988613300B8F7A8 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCF0B8DA2964BB7300DC7EAC /* WidgetKit.framework */; };
 		DC1A42172988613300B8F7A8 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCF0B8DC2964BB7300DC7EAC /* SwiftUI.framework */; };
 		DC1A421A2988613300B8F7A8 /* nextoarrivewidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1A42192988613300B8F7A8 /* nextoarrivewidget.swift */; };
@@ -19,7 +19,7 @@
 		DC1A42282988621200B8F7A8 /* BusStops.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD6391B297856C70042E13B /* BusStops.swift */; };
 		DC1A422B2988663200B8F7A8 /* Date+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1A422A2988663200B8F7A8 /* Date+Ext.swift */; };
 		DC1A422C2988663A00B8F7A8 /* Date+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1A422A2988663200B8F7A8 /* Date+Ext.swift */; };
-		DC6797BC298C170B00CDF783 /* ScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC063C66296DE20A0028DDB8 /* ScheduleViewModel.swift */; };
+		DC6797BC298C170B00CDF783 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC063C66296DE20A0028DDB8 /* ContentViewModel.swift */; };
 		DC88040929674D8B00DB09CB /* BusSchedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC88040829674D8B00DB09CB /* BusSchedule.swift */; };
 		DCA36B9729771E4300616509 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA36B9629771E4300616509 /* SettingsView.swift */; };
 		DCD6391C297856C70042E13B /* BusStops.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD6391B297856C70042E13B /* BusStops.swift */; };
@@ -54,7 +54,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		DC063C66296DE20A0028DDB8 /* ScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewModel.swift; sourceTree = "<group>"; };
+		DC063C66296DE20A0028DDB8 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		DC1A42152988613300B8F7A8 /* nextoarrivewidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = nextoarrivewidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC1A42192988613300B8F7A8 /* nextoarrivewidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nextoarrivewidget.swift; sourceTree = "<group>"; };
 		DC1A421B2988613300B8F7A8 /* nextoarrivewidget.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = nextoarrivewidget.intentdefinition; sourceTree = "<group>"; };
@@ -95,12 +95,12 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		DC063C65296DE1E70028DDB8 /* View Models */ = {
+		DC063C65296DE1E70028DDB8 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				DC063C66296DE20A0028DDB8 /* ScheduleViewModel.swift */,
+				DC063C66296DE20A0028DDB8 /* ContentViewModel.swift */,
 			);
-			path = "View Models";
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		DC1A42182988613300B8F7A8 /* nextoarrivewidget */ = {
@@ -167,7 +167,7 @@
 				DC6797BB298C00FF00CDF783 /* NextToArriveRelease.entitlements */,
 				DCF0B8C429646EDC00DC7EAC /* NextToArriveApp.swift */,
 				DCA36B9529771E1B00616509 /* Views */,
-				DC063C65296DE1E70028DDB8 /* View Models */,
+				DC063C65296DE1E70028DDB8 /* ViewModels */,
 				DC88040329674A8200DB09CB /* Models */,
 				DCF0B8C829646EDD00DC7EAC /* Assets.xcassets */,
 				DCF0B8CA29646EDD00DC7EAC /* Preview Content */,
@@ -294,7 +294,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DC1A42282988621200B8F7A8 /* BusStops.swift in Sources */,
-				DC6797BC298C170B00CDF783 /* ScheduleViewModel.swift in Sources */,
+				DC6797BC298C170B00CDF783 /* ContentViewModel.swift in Sources */,
 				DC1A421F2988613500B8F7A8 /* nextoarrivewidget.intentdefinition in Sources */,
 				DC1A42272988620E00B8F7A8 /* BusSchedule.swift in Sources */,
 				DC1A421A2988613300B8F7A8 /* nextoarrivewidget.swift in Sources */,
@@ -307,7 +307,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DCA36B9729771E4300616509 /* SettingsView.swift in Sources */,
-				DC063C67296DE20A0028DDB8 /* ScheduleViewModel.swift in Sources */,
+				DC063C67296DE20A0028DDB8 /* ContentViewModel.swift in Sources */,
 				DC1A42202988613500B8F7A8 /* nextoarrivewidget.intentdefinition in Sources */,
 				DC1A422B2988663200B8F7A8 /* Date+Ext.swift in Sources */,
 				DCD6391C297856C70042E13B /* BusStops.swift in Sources */,
