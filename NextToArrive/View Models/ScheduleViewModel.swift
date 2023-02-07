@@ -46,7 +46,7 @@ class ScheduleViewModel: ObservableObject {
         }
         
             // Reload Widgets
-//        WidgetCenter.shared.reloadAllTimelines()
+        WidgetCenter.shared.reloadAllTimelines()
     }
     
         // Overwrite existing bus schedule
@@ -63,7 +63,7 @@ class ScheduleViewModel: ObservableObject {
         }
         
             // Reload Widgets
-//        WidgetCenter.shared.reloadAllTimelines()
+        WidgetCenter.shared.reloadAllTimelines()
     }
     
     func downloadSchedule() async -> [Date] {
@@ -123,15 +123,13 @@ class ScheduleViewModel: ObservableObject {
     
     func calculateTimeUntilNextArrival() {
         if !busTimes.isEmpty {
-            let timeUntil = Calendar.current.dateComponents([.minute], from: .now, to: busTimes[0]).minute ?? 0
+            var timeUntil = Calendar.current.dateComponents([.minute], from: .now, to: busTimes[0]).minute ?? 0
+            timeUntil += 1
             DispatchQueue.main.async {
                 self.timeUntilArrival = timeUntil
             }
         }
     }
-    
-        // Reassigns selected stop so prevent picker error -- "Picker: "" is invalid and does not have an associated tag, this will give undefined results.
-    
     
         // Download new bus stops for selected Route
     func downloadStops() async {
@@ -159,8 +157,10 @@ class ScheduleViewModel: ObservableObject {
                 // Reassign selected stop so that it has the correct associated tag
                 for stop in busStops {
                     if stop.stopid == selectedStop.selectedStop.stopid {
-                        selectedStop.selectedStop = stop
-                        return
+                        DispatchQueue.main.async {
+                            self.selectedStop.selectedStop = stop
+                            return
+                        }
                     }
                 }
                 

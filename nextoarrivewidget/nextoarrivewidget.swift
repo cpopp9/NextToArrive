@@ -36,7 +36,7 @@ struct Provider: IntentTimelineProvider {
                 previousTime = time
                 let date = Date().zeroSeconds!
                 
-                for minuteOffset in 0...timeUntil {
+                for minuteOffset in 0..<timeUntil {
                     let entryDate = Calendar.current.date(byAdding: .minute, value: minuteOffset, to: date)!
                     let timeBefore = Calendar.current.dateComponents([.minute], from: entryDate, to: time).minute ?? 0
                     let newEntry = SimpleEntry(date: entryDate, configuration: ConfigurationIntent(), timeUntilArrival: timeBefore, scheduleArrival: time, route: scheduleVM.selectedStop.selectedRoute)
