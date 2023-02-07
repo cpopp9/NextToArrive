@@ -102,8 +102,8 @@ struct SeptaWidgetTestWidget: Widget {
         IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: Provider()) { entry in
             SeptaWidgetTestWidgetEntryView(entry: entry)
         }
-        .configurationDisplayName("My Widget")
-        .description("This is an example widget.")
+        .configurationDisplayName("Septa Tracker")
+        .description("Bus schedules at a quick glance")
         .supportedFamilies([.systemSmall])
     }
 }
