@@ -54,6 +54,8 @@ class ContentViewModel: ObservableObject {
             await widgetVM.downloadSchedule(stopID: selectedStop.stop.stopid, route: selectedStop.route)
         }
         
+        calculateTimeUntilNextArrival()
+        
         WidgetCenter.shared.reloadAllTimelines()
     }
     

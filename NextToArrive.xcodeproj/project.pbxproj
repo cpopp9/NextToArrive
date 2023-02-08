@@ -19,6 +19,7 @@
 		DC1A42282988621200B8F7A8 /* BusStop.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD6391B297856C70042E13B /* BusStop.swift */; };
 		DC1A422B2988663200B8F7A8 /* Date+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1A422A2988663200B8F7A8 /* Date+Ext.swift */; };
 		DC1A422C2988663A00B8F7A8 /* Date+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1A422A2988663200B8F7A8 /* Date+Ext.swift */; };
+		DC1E04712993EA3E002ABAA2 /* SelectedStop.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E04702993EA3E002ABAA2 /* SelectedStop.swift */; };
 		DC6797BC298C170B00CDF783 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC063C66296DE20A0028DDB8 /* ContentViewModel.swift */; };
 		DC88040929674D8B00DB09CB /* BusSchedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC88040829674D8B00DB09CB /* BusSchedule.swift */; };
 		DCA36B9729771E4300616509 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA36B9629771E4300616509 /* SettingsView.swift */; };
@@ -61,6 +62,7 @@
 		DC1A421C2988613500B8F7A8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DC1A421E2988613500B8F7A8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DC1A422A2988663200B8F7A8 /* Date+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Ext.swift"; sourceTree = "<group>"; };
+		DC1E04702993EA3E002ABAA2 /* SelectedStop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedStop.swift; sourceTree = "<group>"; };
 		DC6797BA298C00F900CDF783 /* nextoarrivewidgetExtensionRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = nextoarrivewidgetExtensionRelease.entitlements; sourceTree = "<group>"; };
 		DC6797BB298C00FF00CDF783 /* NextToArriveRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NextToArriveRelease.entitlements; sourceTree = "<group>"; };
 		DC88040829674D8B00DB09CB /* BusSchedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusSchedule.swift; sourceTree = "<group>"; };
@@ -126,6 +128,7 @@
 			isa = PBXGroup;
 			children = (
 				DC88040829674D8B00DB09CB /* BusSchedule.swift */,
+				DC1E04702993EA3E002ABAA2 /* SelectedStop.swift */,
 				DCD6391B297856C70042E13B /* BusStop.swift */,
 			);
 			path = Models;
@@ -309,6 +312,7 @@
 				DCA36B9729771E4300616509 /* SettingsView.swift in Sources */,
 				DC063C67296DE20A0028DDB8 /* ContentViewModel.swift in Sources */,
 				DC1A42202988613500B8F7A8 /* nextoarrivewidget.intentdefinition in Sources */,
+				DC1E04712993EA3E002ABAA2 /* SelectedStop.swift in Sources */,
 				DC1A422B2988663200B8F7A8 /* Date+Ext.swift in Sources */,
 				DCD6391C297856C70042E13B /* BusStop.swift in Sources */,
 				DCF0B8C729646EDC00DC7EAC /* ContentView.swift in Sources */,
