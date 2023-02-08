@@ -5,6 +5,7 @@
     //  Created by Cory Popp on 1/3/23.
     //
 
+import MapKit
 import SwiftUI
 
 
@@ -26,9 +27,19 @@ struct ContentView: View {
                         Text("Route \(scheduleVM.selectedStop.route)")
                             .font(.largeTitle.bold())
                             .animation(.easeIn)
-                        Text(scheduleVM.selectedStop.stop.stopname)
-                            .font(.subheadline)
-                            .animation(.easeIn)
+                        
+                        NavigationLink {
+                            MapView(mapLocation: MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: Double(scheduleVM.selectedStop.stop.lat) ?? 0.0, longitude: Double(scheduleVM.selectedStop.stop.lng) ?? 0.0), span: MKCoordinateSpan(latitudeDelta: 0.001, longitudeDelta: 0.001)), location: CLLocationCoordinate2D(latitude: Double(scheduleVM.selectedStop.stop.lat) ?? 0.0, longitude: Double(scheduleVM.selectedStop.stop.lng) ?? 0.0))
+                        } label: {
+                            HStack {
+                                Text(scheduleVM.selectedStop.stop.stopname)
+                                    .font(.subheadline)
+                                    .animation(.easeIn)
+                                Image(systemName: "location.fill")
+                                    .font(.subheadline)
+                            }
+                            .foregroundColor(.primary)
+                        }
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     
