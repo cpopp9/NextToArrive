@@ -114,8 +114,8 @@ class ContentViewModel: ObservableObject {
                     if stop.stopid == selectedStop.stop.stopid {
                         DispatchQueue.main.async {
                             self.selectedStop.stop = stop
-                            return
                         }
+                        return
                     }
                 }
                 
