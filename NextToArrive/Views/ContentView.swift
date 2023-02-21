@@ -14,6 +14,8 @@ struct ContentView: View {
     @StateObject var scheduleVM = ContentViewModel()
     @State private var showingSheet = false
     
+    let test = false
+    
         // Timer setup to trigger once ever 10 seconds
     let timer = Timer.publish(every: 10, on: .main, in: .common).autoconnect()
     
@@ -21,7 +23,9 @@ struct ContentView: View {
         NavigationView {
             ZStack {
                 ContainerRelativeShape()
-                    .fill(.green.gradient).ignoresSafeArea()
+                    .fill(scheduleVM.networkSuccess ? .green : .red).ignoresSafeArea()
+                    .animation(.easeIn, value: scheduleVM.networkSuccess)
+//                    .fill(.red.gradient).ignoresSafeArea()
                 VStack {
                     VStack(alignment: .leading) {
                         Text("Route \(scheduleVM.selectedStop.route)")
@@ -50,9 +54,14 @@ struct ContentView: View {
                     
                     Spacer()
                     TimeView(timeUntil: scheduleVM.timeUntilArrival)
+                    Button("Reset") {
+                        scheduleVM.busTimes = []
+                        scheduleVM.calculateTimeUntilNextArrival()
+                    }
                     Spacer()
                     Text(scheduleVM.nextArrivingAt)
-                        .animation(.easeIn)
+                        .multilineTextAlignment(.center)
+                        .animation(.easeIn, value: scheduleVM.nextArrivingAt)
                 }
                 .padding()
             }

@@ -16,15 +16,25 @@ class ContentViewModel: ObservableObject {
     var busTimes: [Date] = []
     var busStops: [BusStop] = []
     
+    var containsTimes: Bool {
+        if busTimes.isEmpty {
+            return false
+        } else {
+            return true
+        }
+    }
+    
+    @Published var networkSuccess = true
+    
         // Valid route numbers
-    let routes = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "42", "43", "44", "45", "46", "47", "48", "49", "50", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "64", "65", "66", "67", "68", "70", "73", "75", "77", "78", "79", "80", "84", "88", "89", "90", "91", "92", "93", "94", "95", "96", "97", "98", "99", "101", "102", "103", "104", "105", "106", "107", "108", "109", "110", "111", "112", "113", "114", "115", "117", "118", "119", "120", "123", "124", "125", "126", "127", "128", "129", "130", "131", "132", "133", "135", "139", "150", "201", "204", "206", "310", "311"]
+    let routes = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "42", "43", "44", "45", "46", "47", "48", "49", "50", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "64", "65", "66", "67", "68", "70", "73", "75", "77", "78", "79", "80", "84", "88", "89", "90", "91", "92", "93", "94", "95", "96", "97", "98", "99", "101", "102", "103", "104", "105", "106", "107", "108", "109", "110", "111", "112", "113", "114", "115", "117", "118", "119", "120", "123", "124", "125", "126", "127", "128", "129", "130", "131", "132", "133", "135", "139", "150", "201", "204", "206", "310", "311"]
     
         // Display message for next scheduled bus
     var nextArrivingAt: String {
         if !busTimes.isEmpty {
             return "Scheduled to arrive at \(busTimes[0].formatted(.dateTime.hour().minute()))"
         }
-        return "Downloading bus schedule..."
+        return "No upcoming buses - try later or select another route"
     }
     
     init() {
@@ -64,6 +74,14 @@ class ContentViewModel: ObservableObject {
             Task {
                 busTimes = await widgetVM.downloadSchedule(stopID: selectedStop.stop.stopid, route: selectedStop.route)
                 calculateTimeUntilNextArrival()
+                
+                DispatchQueue.main.async {
+                    if !self.busTimes.isEmpty {
+                        self.networkSuccess = true
+                    } else {
+                        self.networkSuccess = false
+                    }
+                }
             }
         } else {
                 // Remove Expired Arrivals
@@ -83,6 +101,10 @@ class ContentViewModel: ObservableObject {
             timeUntil += 1
             DispatchQueue.main.async {
                 self.timeUntilArrival = timeUntil
+            }
+        } else {
+            DispatchQueue.main.async {
+                self.timeUntilArrival = nil
             }
         }
     }
