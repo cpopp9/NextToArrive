@@ -27,6 +27,11 @@ struct ContentView: View {
                         Text("Route \(scheduleVM.selectedStop.route)")
                             .font(.largeTitle.bold())
                             .animation(.easeIn)
+                            .onReceive(timer) { time in
+                                if showingSheet == false {
+                                    scheduleVM.refreshSchedule()
+                                }
+                            }
                         
                         NavigationLink {
                             MapView(mapLocation: MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: Double(scheduleVM.selectedStop.stop.lat) ?? 0.0, longitude: Double(scheduleVM.selectedStop.stop.lng) ?? 0.0), span: MKCoordinateSpan(latitudeDelta: 0.001, longitudeDelta: 0.001)), location: CLLocationCoordinate2D(latitude: Double(scheduleVM.selectedStop.stop.lat) ?? 0.0, longitude: Double(scheduleVM.selectedStop.stop.lng) ?? 0.0))
@@ -44,19 +49,7 @@ struct ContentView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     
                     Spacer()
-                    HStack {
-                        Text(String(scheduleVM.timeUntilArrival))
-                            .font(.system(size: 100).bold())
-                            .animation(.easeIn)
-                        Text("Minutes")
-                            .font(.title3.bold())
-                    }
-                    Text("Until the next bus")
-                        .onReceive(timer) { time in
-                            if showingSheet == false {
-                                scheduleVM.refreshSchedule()
-                            }
-                        }
+                    TimeView(timeUntil: scheduleVM.timeUntilArrival)
                     Spacer()
                     Text(scheduleVM.nextArrivingAt)
                         .animation(.easeIn)

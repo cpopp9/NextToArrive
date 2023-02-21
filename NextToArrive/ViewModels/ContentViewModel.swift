@@ -11,7 +11,7 @@ import WidgetKit
 class ContentViewModel: ObservableObject {
     
     let widgetVM: WidgetViewModel
-    @Published var timeUntilArrival = 0
+    @Published var timeUntilArrival: Int?
     @Published var selectedStop = SelectedStop.exampleStop
     var busTimes: [Date] = []
     var busStops: [BusStop] = []
