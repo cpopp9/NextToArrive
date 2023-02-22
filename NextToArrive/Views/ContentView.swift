@@ -54,10 +54,6 @@ struct ContentView: View {
                     
                     Spacer()
                     TimeView(timeUntil: scheduleVM.timeUntilArrival)
-                    Button("Reset") {
-                        scheduleVM.busTimes = []
-                        scheduleVM.calculateTimeUntilNextArrival()
-                    }
                     Spacer()
                     Text(scheduleVM.nextArrivingAt)
                         .multilineTextAlignment(.center)

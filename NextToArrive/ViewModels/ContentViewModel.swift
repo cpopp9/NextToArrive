@@ -16,6 +16,12 @@ class ContentViewModel: ObservableObject {
     var busTimes: [Date] = []
     var busStops: [BusStop] = []
     
+    enum downloadStatus {
+        case downloading, hasUpcomingSchedule, noUpcomingSchedule
+    }
+    
+    var networkStatus: downloadStatus = .downloading
+    
     var containsTimes: Bool {
         if busTimes.isEmpty {
             return false
@@ -31,10 +37,15 @@ class ContentViewModel: ObservableObject {
     
         // Display message for next scheduled bus
     var nextArrivingAt: String {
-        if !busTimes.isEmpty {
+        
+        switch networkStatus {
+        case .downloading:
+            return "Downloading upcoming schedule..."
+        case .hasUpcomingSchedule:
             return "Scheduled to arrive at \(busTimes[0].formatted(.dateTime.hour().minute()))"
+        case .noUpcomingSchedule:
+            return "No upcoming buses - try later or select another route"
         }
-        return "No upcoming buses - try later or select another route"
     }
     
     init() {
@@ -56,9 +67,17 @@ class ContentViewModel: ObservableObject {
     
     func overwriteSelectedStop() {
         
+        // Save new stop to user default
+        // reset bus times and network status
+        // download new schedule
+        // calculate new times
+        // reload widget timeline
+        
         encodeToUserDefaults()
         
         busTimes = []
+        
+        networkStatus = .downloading
         
         Task {
             await widgetVM.downloadSchedule(stopID: selectedStop.stop.stopid, route: selectedStop.route)
@@ -77,8 +96,10 @@ class ContentViewModel: ObservableObject {
                 
                 DispatchQueue.main.async {
                     if !self.busTimes.isEmpty {
+                        self.networkStatus = .hasUpcomingSchedule
                         self.networkSuccess = true
                     } else {
+                        self.networkStatus = .noUpcomingSchedule
                         self.networkSuccess = false
                     }
                 }
