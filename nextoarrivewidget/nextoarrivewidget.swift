@@ -97,7 +97,7 @@ struct SeptaWidgetTestWidgetEntryView : View {
 
 @main
 struct SeptaWidgetTestWidget: Widget {
-    let kind: String = "SeptaWidgetTestWidget"
+    let kind: String = "Next to Arrive"
     
     var body: some WidgetConfiguration {
         IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: Provider()) { entry in
