@@ -23,9 +23,8 @@ struct ContentView: View {
         NavigationView {
             ZStack {
                 ContainerRelativeShape()
-                    .fill(scheduleVM.networkSuccess ? .green : .red).ignoresSafeArea()
-                    .animation(.easeIn, value: scheduleVM.networkSuccess)
-//                    .fill(.red.gradient).ignoresSafeArea()
+                    .fill(scheduleVM.networkSuccess ? Color.green.gradient : Color.red.gradient)
+                    .ignoresSafeArea()
                 VStack {
                     VStack(alignment: .leading) {
                         Text("Route \(scheduleVM.selectedStop.route)")
