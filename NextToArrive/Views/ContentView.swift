@@ -37,7 +37,7 @@ struct ContentView: View {
                             }
                         
                         NavigationLink {
-                            MapView(mapLocation: MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: Double(scheduleVM.selectedStop.stop.lat) ?? 0.0, longitude: Double(scheduleVM.selectedStop.stop.lng) ?? 0.0), span: MKCoordinateSpan(latitudeDelta: 0.001, longitudeDelta: 0.001)), location: CLLocationCoordinate2D(latitude: Double(scheduleVM.selectedStop.stop.lat) ?? 0.0, longitude: Double(scheduleVM.selectedStop.stop.lng) ?? 0.0))
+                            MapView(mapLocation: scheduleVM.mapLocation, location: scheduleVM.location)
                         } label: {
                             HStack {
                                 Text(scheduleVM.selectedStop.stop.stopname)

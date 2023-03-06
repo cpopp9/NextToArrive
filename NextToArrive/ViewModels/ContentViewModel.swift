@@ -6,6 +6,7 @@
     //
 
 import Foundation
+import MapKit
 import WidgetKit
 
 class ContentViewModel: ObservableObject {
@@ -28,6 +29,14 @@ class ContentViewModel: ObservableObject {
         } else {
             return true
         }
+    }
+    
+    var location: CLLocationCoordinate2D {
+        CLLocationCoordinate2D(latitude: Double(selectedStop.stop.lat) ?? 0.0, longitude: Double(selectedStop.stop.lng) ?? 0.0)
+    }
+    
+    var mapLocation: MKCoordinateRegion {
+        MKCoordinateRegion(center: location, span: MKCoordinateSpan(latitudeDelta: 0.001, longitudeDelta: 0.001))
     }
     
     @Published var networkSuccess = true
