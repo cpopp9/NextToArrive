@@ -5,6 +5,7 @@
     //  Created by Cory Popp on 1/17/23.
     //
 
+import MapKit
 import SwiftUI
 import WidgetKit
 
@@ -12,10 +13,19 @@ struct SettingsView: View {
     @Environment(\.dismiss) var dismiss
     @ObservedObject var scheduleVM: ContentViewModel
     
+    @State private var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 51.507222, longitude: -0.1275), span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5))
+    
     var body: some View {
         NavigationView {
             VStack {
                 List {
+                    
+//                    MapView(mapLocation: scheduleVM.mapLocation, location: scheduleVM.location)
+//                        .listRowInsets(EdgeInsets(top: -20, leading: -20, bottom: -20, trailing: -20))
+//                        .frame(height: 200)
+                    
+                    MapSnapshot(location: scheduleVM.location)
+                    
                     Section("Select Your Local Bus Stop") {
                         Picker("Route", selection: $scheduleVM.selectedStop.route) {
                             ForEach(scheduleVM.routes, id: \.self) { route in
@@ -41,10 +51,10 @@ struct SettingsView: View {
                         Link("About the Developer", destination: URL(string: "https://www.linkedin.com/in/coryjpopp/")!)
                             .foregroundColor(.white)
                     }
-                    
                 }
+                
             }
-            .navigationTitle("Settings")
+            .navigationTitle("My Stop")
             .toolbar {
                 Button("Dismiss") {
                     dismiss()

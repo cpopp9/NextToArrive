@@ -24,6 +24,7 @@
 		DC1E047D29942B7D002ABAA2 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E047C29942B7D002ABAA2 /* Location.swift */; };
 		DC26B75B29A505FC0083AFD3 /* TimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC26B75A29A505FC0083AFD3 /* TimeView.swift */; };
 		DC2D0A1229942E1900D2AAA3 /* SelectedStop.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1E04702993EA3E002ABAA2 /* SelectedStop.swift */; };
+		DC40DCFF29B674B000542156 /* MapSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC40DCFE29B674B000542156 /* MapSnapshot.swift */; };
 		DC6797BC298C170B00CDF783 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC063C66296DE20A0028DDB8 /* ContentViewModel.swift */; };
 		DC88040929674D8B00DB09CB /* BusSchedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC88040829674D8B00DB09CB /* BusSchedule.swift */; };
 		DCA36B9729771E4300616509 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA36B9629771E4300616509 /* SettingsView.swift */; };
@@ -70,6 +71,7 @@
 		DC1E047A29942B4B002ABAA2 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		DC1E047C29942B7D002ABAA2 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		DC26B75A29A505FC0083AFD3 /* TimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeView.swift; sourceTree = "<group>"; };
+		DC40DCFE29B674B000542156 /* MapSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSnapshot.swift; sourceTree = "<group>"; };
 		DC6797BA298C00F900CDF783 /* nextoarrivewidgetExtensionRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = nextoarrivewidgetExtensionRelease.entitlements; sourceTree = "<group>"; };
 		DC6797BB298C00FF00CDF783 /* NextToArriveRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NextToArriveRelease.entitlements; sourceTree = "<group>"; };
 		DC88040829674D8B00DB09CB /* BusSchedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusSchedule.swift; sourceTree = "<group>"; };
@@ -149,6 +151,7 @@
 				DC26B75A29A505FC0083AFD3 /* TimeView.swift */,
 				DCA36B9629771E4300616509 /* SettingsView.swift */,
 				DC1E047A29942B4B002ABAA2 /* MapView.swift */,
+				DC40DCFE29B674B000542156 /* MapSnapshot.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -323,6 +326,7 @@
 				DCA36B9729771E4300616509 /* SettingsView.swift in Sources */,
 				DC063C67296DE20A0028DDB8 /* ContentViewModel.swift in Sources */,
 				DC1A42202988613500B8F7A8 /* nextoarrivewidget.intentdefinition in Sources */,
+				DC40DCFF29B674B000542156 /* MapSnapshot.swift in Sources */,
 				DC1E04712993EA3E002ABAA2 /* SelectedStop.swift in Sources */,
 				DC1A422B2988663200B8F7A8 /* Date+Ext.swift in Sources */,
 				DCD6391C297856C70042E13B /* BusStop.swift in Sources */,

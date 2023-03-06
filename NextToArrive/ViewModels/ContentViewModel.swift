@@ -36,7 +36,8 @@ class ContentViewModel: ObservableObject {
     }
     
     var mapLocation: MKCoordinateRegion {
-        MKCoordinateRegion(center: location, span: MKCoordinateSpan(latitudeDelta: 0.001, longitudeDelta: 0.001))
+        get { return MKCoordinateRegion(center: location, span: MKCoordinateSpan(latitudeDelta: 0.001, longitudeDelta: 0.001)) }
+        set { MKCoordinateRegion(center: location, span: MKCoordinateSpan(latitudeDelta: 0.001, longitudeDelta: 0.001)) }
     }
     
     @Published var networkSuccess = true
