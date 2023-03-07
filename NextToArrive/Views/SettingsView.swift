@@ -19,13 +19,6 @@ struct SettingsView: View {
         NavigationView {
             VStack {
                 List {
-                    
-//                    MapView(mapLocation: scheduleVM.mapLocation, location: scheduleVM.location)
-//                        .listRowInsets(EdgeInsets(top: -20, leading: -20, bottom: -20, trailing: -20))
-//                        .frame(height: 200)
-                    
-                    MapSnapshot(location: scheduleVM.location)
-                    
                     Section("Select Your Local Bus Stop") {
                         Picker("Route", selection: $scheduleVM.selectedStop.route) {
                             ForEach(scheduleVM.routes, id: \.self) { route in
@@ -46,6 +39,11 @@ struct SettingsView: View {
                             scheduleVM.overwriteSelectedStop()
                         }
                     }
+                        
+                        MapSnapshot(location: scheduleVM.location)
+                            .listRowInsets(EdgeInsets(top: -20, leading: -20, bottom: -20, trailing: -20))
+                            .frame(height: 200)
+                    
                     
                     Section("About") {
                         Link("About the Developer", destination: URL(string: "https://www.linkedin.com/in/coryjpopp/")!)

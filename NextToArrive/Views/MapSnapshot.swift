@@ -10,21 +10,25 @@ import SwiftUI
 
 struct MapSnapshot: View {
     @State var snapshotImage: UIImage?
+    var location: CLLocationCoordinate2D
     
     var body: some View {
-            Section("Map") {
-                if let image = snapshotImage {
-                    Image(uiImage: image)
-                        .frame(maxWidth: .infinity)
-                }
+        VStack {
+            if let image = snapshotImage {
+                Image(uiImage: image)
+                    .frame(maxWidth: .infinity)
             }
+        }
+        .task {
+            snapshotGenerator(width: 400, height: 200)
+        }
     }
     
-    func snapshotGenerator(location: CLLocationCoordinate2D, width: CGFloat, height: CGFloat) {
+    func snapshotGenerator(width: CGFloat, height: CGFloat) {
         
         let options = MKMapSnapshotter.Options()
         
-        options.camera = MKMapCamera(lookingAtCenter: location, fromDistance: 500, pitch: 0, heading: 0)
+        options.camera = MKMapCamera(lookingAtCenter: location, fromDistance: 250, pitch: 0, heading: 0)
         options.mapType = .standard
         options.size = CGSize(width: width, height: height)
         let snapshotter = MKMapSnapshotter(options: options)
@@ -38,7 +42,6 @@ struct MapSnapshot: View {
                 pinImage?.draw(at: point!)
             }
             self.snapshotImage = finalImage
-            print("Success")
         }
         
         
@@ -46,7 +49,9 @@ struct MapSnapshot: View {
     
     init(location: CLLocationCoordinate2D) {
         
-        snapshotGenerator(location: location, width: 600, height: 300)
+        self.location = location
+        
+        snapshotGenerator(width: 600, height: 300)
     }
     
 }
