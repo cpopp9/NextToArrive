@@ -17,7 +17,8 @@ struct SettingsView: View {
     
     var body: some View {
         NavigationView {
-            VStack {
+            VStack(alignment: .leading) {
+                
                 List {
                     Section("Select Your Local Bus Stop") {
                         Picker("Route", selection: $scheduleVM.selectedStop.route) {
@@ -39,10 +40,11 @@ struct SettingsView: View {
                             scheduleVM.overwriteSelectedStop()
                         }
                     }
-                        
-                        MapSnapshot(location: scheduleVM.location)
-                            .listRowInsets(EdgeInsets(top: -20, leading: 0, bottom: -20, trailing: 0))
                     
+                    
+                    MapSnapshot(snapshotImage: scheduleVM.snapshotImage)
+                        .listRowInsets(EdgeInsets(top: -20, leading: 0, bottom: -20, trailing: 0))
+                        .animation(.easeIn)
                     
                     Section("About") {
                         Link("About the Developer", destination: URL(string: "https://www.linkedin.com/in/coryjpopp/")!)

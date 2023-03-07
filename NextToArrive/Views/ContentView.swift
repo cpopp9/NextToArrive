@@ -62,6 +62,7 @@ struct ContentView: View {
             }
             .task {
                 scheduleVM.refreshSchedule()
+                scheduleVM.snapshotGenerator(width: 400, height: 200)
                 await scheduleVM.downloadBusStops()
             }
             .toolbar {
