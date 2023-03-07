@@ -41,8 +41,7 @@ struct SettingsView: View {
                     }
                         
                         MapSnapshot(location: scheduleVM.location)
-                            .listRowInsets(EdgeInsets(top: -20, leading: -20, bottom: -20, trailing: -20))
-                            .frame(height: 200)
+                            .listRowInsets(EdgeInsets(top: -20, leading: 0, bottom: -20, trailing: 0))
                     
                     
                     Section("About") {

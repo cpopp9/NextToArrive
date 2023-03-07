@@ -16,7 +16,6 @@ struct MapSnapshot: View {
         VStack {
             if let image = snapshotImage {
                 Image(uiImage: image)
-                    .frame(maxWidth: .infinity)
             }
         }
         .task {
@@ -38,8 +37,17 @@ struct MapSnapshot: View {
                 mapImage?.draw(at: .zero)
                 let pinView = MKPinAnnotationView(annotation: nil, reuseIdentifier: nil)
                 let pinImage = pinView.image
+                
+                pinView.centerOffset = CGPointMake(0,-15)
+                
                 let point = snapshot?.point(for: location)
+                
+                
+                
+                
+//                pinImage?.draw(at: CGPoint(x:190, y:65))
                 pinImage?.draw(at: point!)
+//                pinImage?.draw(at: pinView.center)
             }
             self.snapshotImage = finalImage
         }
@@ -51,7 +59,7 @@ struct MapSnapshot: View {
         
         self.location = location
         
-        snapshotGenerator(width: 600, height: 300)
+//        snapshotGenerator(width: 600, height: 300)
     }
     
 }
