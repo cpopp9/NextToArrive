@@ -48,7 +48,6 @@ struct SettingsView: View {
                     }
                     .listRowInsets(EdgeInsets(top: -20, leading: 0, bottom: -20, trailing: 0))
                     .animation(.easeIn)
-                    .foregroundColor(.white)
                     
                     Section("About") {
                         Link("About the Developer", destination: URL(string: "https://www.linkedin.com/in/coryjpopp/")!)
@@ -58,7 +57,6 @@ struct SettingsView: View {
                 
             }
             .navigationTitle("My Stop")
-            .foregroundColor(.white)
             .toolbar {
                 Button("Dismiss") {
                     dismiss()
@@ -66,6 +64,7 @@ struct SettingsView: View {
                 .foregroundColor(.white)
             }
         }
+        .accentColor(.white)
     }
 }
 
