@@ -69,6 +69,7 @@ class ContentViewModel: ObservableObject {
         let options: MKMapSnapshotter.Options = MKMapSnapshotter.Options()
         options.camera = MKMapCamera(lookingAtCenter: location, fromDistance: 250, pitch: 0, heading: 0)
         options.mapType = .standard
+        options.traitCollection = UITraitCollection(userInterfaceStyle: .dark)
         options.size = CGSize(width: 400, height: 200)
         let snapshotter = MKMapSnapshotter(options: options)
         snapshotter.start() { snapshot, _ in

@@ -11,17 +11,17 @@ import SwiftUI
 struct MapView: View {
     @State var mapLocation: MKCoordinateRegion
     var location: CLLocationCoordinate2D
-
+    
     var locations: [Location] {
         [Location(name: "", coordinate: location)]
     }
-
+    
     var body: some View {
         Map(coordinateRegion: $mapLocation, showsUserLocation: true, userTrackingMode: .constant(.follow), annotationItems: locations) { _ in
             MapMarker(coordinate: location)
-        }
+        }.ignoresSafeArea()
     }
-
+    
 }
 
 struct MapView_Previews: PreviewProvider {

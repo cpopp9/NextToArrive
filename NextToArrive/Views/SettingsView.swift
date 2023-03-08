@@ -41,9 +41,14 @@ struct SettingsView: View {
                         }
                     }
                     
+                    NavigationLink {
+                        MapView(mapLocation: scheduleVM.mapLocation, location: scheduleVM.location)
+                    } label: {
                         MapSnapshot(snapshotImage: scheduleVM.snapshotImage)
-                            .listRowInsets(EdgeInsets(top: -20, leading: 0, bottom: -20, trailing: 0))
-                            .animation(.easeIn)
+                    }
+                    .listRowInsets(EdgeInsets(top: -20, leading: 0, bottom: -20, trailing: 0))
+                    .animation(.easeIn)
+                    .foregroundColor(.white)
                     
                     Section("About") {
                         Link("About the Developer", destination: URL(string: "https://www.linkedin.com/in/coryjpopp/")!)
@@ -53,6 +58,7 @@ struct SettingsView: View {
                 
             }
             .navigationTitle("My Stop")
+            .foregroundColor(.white)
             .toolbar {
                 Button("Dismiss") {
                     dismiss()
