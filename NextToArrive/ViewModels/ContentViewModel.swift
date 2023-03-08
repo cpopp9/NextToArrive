@@ -64,12 +64,12 @@ class ContentViewModel: ObservableObject {
         selectedStop = widgetVM.decodeFromUserDefaults()
     }
     
-    func snapshotGenerator(width: CGFloat, height: CGFloat) {
+    func snapshotGenerator() {
         
         let options: MKMapSnapshotter.Options = MKMapSnapshotter.Options()
         options.camera = MKMapCamera(lookingAtCenter: location, fromDistance: 250, pitch: 0, heading: 0)
         options.mapType = .standard
-        options.size = CGSize(width: width, height: height)
+        options.size = CGSize(width: 400, height: 200)
         let snapshotter = MKMapSnapshotter(options: options)
         snapshotter.start() { snapshot, _ in
             let mapImage = snapshot?.image
@@ -77,9 +77,10 @@ class ContentViewModel: ObservableObject {
                 mapImage?.draw(at: .zero)
                 
                 let pinView = MKPinAnnotationView(annotation: nil, reuseIdentifier: nil)
+                pinView.centerOffset = CGPointMake(192, 65)
                 let pinImage = pinView.image
                 let point = snapshot?.point(for: self.location)
-                pinImage?.draw(at: point!)
+                pinImage?.draw(at: pinView.centerOffset)
                 
             }
             self.snapshotImage = finalImage
@@ -108,7 +109,7 @@ class ContentViewModel: ObservableObject {
         
         encodeToUserDefaults()
         
-        snapshotGenerator(width: 400, height: 200)
+        snapshotGenerator()
         
         busTimes = []
         

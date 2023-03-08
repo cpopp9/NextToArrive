@@ -21,8 +21,8 @@ struct MapSnapshot: View {
     
 }
 
-//struct MapSnapshot_Previews: PreviewProvider {
-//    static var previews: some View {
-//        MapSnapshot()
-//    }
-//}
+struct MapSnapshot_Previews: PreviewProvider {
+    static var previews: some View {
+        MapSnapshot(snapshotImage: nil)
+    }
+}

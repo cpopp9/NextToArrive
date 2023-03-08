@@ -41,10 +41,9 @@ struct SettingsView: View {
                         }
                     }
                     
-                    
-                    MapSnapshot(snapshotImage: scheduleVM.snapshotImage)
-                        .listRowInsets(EdgeInsets(top: -20, leading: 0, bottom: -20, trailing: 0))
-                        .animation(.easeIn)
+                        MapSnapshot(snapshotImage: scheduleVM.snapshotImage)
+                            .listRowInsets(EdgeInsets(top: -20, leading: 0, bottom: -20, trailing: 0))
+                            .animation(.easeIn)
                     
                     Section("About") {
                         Link("About the Developer", destination: URL(string: "https://www.linkedin.com/in/coryjpopp/")!)
