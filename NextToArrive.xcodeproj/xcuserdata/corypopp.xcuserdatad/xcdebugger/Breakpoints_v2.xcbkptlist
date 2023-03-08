@@ -14,8 +14,8 @@
             filePath = "NextToArrive/ViewModels/ContentViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "198"
-            endingLineNumber = "198"
+            startingLineNumber = "206"
+            endingLineNumber = "206"
             landmarkName = "downloadBusStops()"
             landmarkType = "7">
          </BreakpointContent>

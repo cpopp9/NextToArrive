@@ -16,6 +16,9 @@ class ContentViewModel: ObservableObject {
     @Published var selectedStop = SelectedStop.exampleStop
     var busTimes: [Date] = []
     var busStops: [BusStop] = []
+//    var busStopsSorted = busStops.sorted {
+//        $0.stopname > $1.stopname
+//    }
     @Published var snapshotImage: UIImage?
     
     enum downloadStatus {
@@ -179,10 +182,15 @@ class ContentViewModel: ObservableObject {
             
             if let decodedResponse = try? JSONDecoder().decode([BusStop].self, from: data) {
                 
+                var busStopsUnsorted: [BusStop] = []
+                
                 for var stop in decodedResponse {
                     stop.stopname = stop.stopname.replacingOccurrences(of: "&amp;", with: "&")
                     
-                    busStops.append(stop)
+                    busStopsUnsorted.append(stop)
+                }
+                busStops = busStopsUnsorted.sorted {
+                    $0.stopname < $1.stopname
                 }
                 
                 // Reassign selected stop so that it has the correct associated tag
