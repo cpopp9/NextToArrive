@@ -131,6 +131,8 @@ class ContentViewModel: ObservableObject {
                 busTimes = await widgetVM.downloadSchedule(stopID: selectedStop.stop.stopid, route: selectedStop.route)
                 calculateTimeUntilNextArrival()
                 
+                
+                // Assign network status properties depending on whether download was successful or not
                 DispatchQueue.main.async {
                     if !self.busTimes.isEmpty {
                         self.networkStatus = .hasUpcomingSchedule
@@ -169,9 +171,7 @@ class ContentViewModel: ObservableObject {
     
     func downloadBusStops() async {
         
-        guard busStops.isEmpty else {
-            return
-        }
+        guard busStops.isEmpty else { return }
         
         guard let url = URL(string: "https://www3.septa.org/api/Stops/index.php?req1=\(selectedStop.route)") else {
             print("Invalid URL")
