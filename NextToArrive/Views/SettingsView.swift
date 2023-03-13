@@ -21,6 +21,7 @@ struct SettingsView: View {
                 
                 List {
                     Section("Select Your Local Bus Stop") {
+                        
                         Picker("Route", selection: $scheduleVM.selectedStop.route) {
                             ForEach(scheduleVM.routes, id: \.self) { route in
                                 Text(route)
@@ -31,7 +32,7 @@ struct SettingsView: View {
                             scheduleVM.overwriteSelectedRoute()
                         }
                         
-                        Picker("Your Bus Stop", selection: $scheduleVM.selectedStop.stop) {
+                        Picker("Stop", selection: $scheduleVM.selectedStop.stop) {
                             ForEach(self.scheduleVM.busStops, id:\.stopid) { (stop: BusStop) in
                                 Text(stop.stopname).tag(stop)
                             }

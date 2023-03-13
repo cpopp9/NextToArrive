@@ -14,10 +14,133 @@
             filePath = "NextToArrive/ViewModels/ContentViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "206"
-            endingLineNumber = "206"
+            startingLineNumber = "207"
+            endingLineNumber = "207"
             landmarkName = "downloadBusStops()"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A8BCF136-1133-42B6-9C34-5184B52CD029"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Next to Arrive_Tests/ContentViewModel_Tests.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "10"
+            endingLineNumber = "10"
+            landmarkName = "unknown"
+            landmarkType = "0">
+            <Locations>
+               <Location
+                  uuid = "A8BCF136-1133-42B6-9C34-5184B52CD029 - ae763e27e4253fc5"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Next_to_Arrive_Tests.ContentViewModel_Tests.__allocating_init(invocation: Swift.Optional&lt;__C.NSInvocation&gt;) -&gt; Next_to_Arrive_Tests.ContentViewModel_Tests"
+                  moduleName = "Next to Arrive_Tests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/corypopp/Documents/GitHub/NextToArrive/Next%20to%20Arrive_Tests/ContentViewModel_Tests.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "20">
+               </Location>
+               <Location
+                  uuid = "A8BCF136-1133-42B6-9C34-5184B52CD029 - df7a90a2775e7b23"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Next_to_Arrive_Tests.ContentViewModel_Tests.init(invocation: Swift.Optional&lt;__C.NSInvocation&gt;) -&gt; Next_to_Arrive_Tests.ContentViewModel_Tests"
+                  moduleName = "Next to Arrive_Tests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/corypopp/Documents/GitHub/NextToArrive/Next%20to%20Arrive_Tests/ContentViewModel_Tests.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "11"
+                  endingLineNumber = "11"
+                  offsetFromSymbolStart = "96">
+               </Location>
+               <Location
+                  uuid = "A8BCF136-1133-42B6-9C34-5184B52CD029 - 7d06413118a47384"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Next_to_Arrive_Tests.ContentViewModel_Tests.__allocating_init(selector: ObjectiveC.Selector) -&gt; Next_to_Arrive_Tests.ContentViewModel_Tests"
+                  moduleName = "Next to Arrive_Tests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/corypopp/Documents/GitHub/NextToArrive/Next%20to%20Arrive_Tests/ContentViewModel_Tests.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "20">
+               </Location>
+               <Location
+                  uuid = "A8BCF136-1133-42B6-9C34-5184B52CD029 - 3a42194aa6956143"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Next_to_Arrive_Tests.ContentViewModel_Tests.init(selector: ObjectiveC.Selector) -&gt; Next_to_Arrive_Tests.ContentViewModel_Tests"
+                  moduleName = "Next to Arrive_Tests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/corypopp/Documents/GitHub/NextToArrive/Next%20to%20Arrive_Tests/ContentViewModel_Tests.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "11"
+                  endingLineNumber = "11"
+                  offsetFromSymbolStart = "96">
+               </Location>
+               <Location
+                  uuid = "A8BCF136-1133-42B6-9C34-5184B52CD029 - 7b8fd0a3130e121a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Next_to_Arrive_Tests.ContentViewModel_Tests.__allocating_init() -&gt; Next_to_Arrive_Tests.ContentViewModel_Tests"
+                  moduleName = "Next to Arrive_Tests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/corypopp/Documents/GitHub/NextToArrive/Next%20to%20Arrive_Tests/ContentViewModel_Tests.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "12">
+               </Location>
+               <Location
+                  uuid = "A8BCF136-1133-42B6-9C34-5184B52CD029 - 5c056d55a93fdab7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Next_to_Arrive_Tests.ContentViewModel_Tests.init() -&gt; Next_to_Arrive_Tests.ContentViewModel_Tests"
+                  moduleName = "Next to Arrive_Tests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/corypopp/Documents/GitHub/NextToArrive/Next%20to%20Arrive_Tests/ContentViewModel_Tests.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "11"
+                  endingLineNumber = "11"
+                  offsetFromSymbolStart = "76">
+               </Location>
+               <Location
+                  uuid = "A8BCF136-1133-42B6-9C34-5184B52CD029 - ac9bee8dfc58354d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Next_to_Arrive_Tests.ContentViewModel_Tests.__deallocating_deinit"
+                  moduleName = "Next to Arrive_Tests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/corypopp/Documents/GitHub/NextToArrive/Next%20to%20Arrive_Tests/ContentViewModel_Tests.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "28">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

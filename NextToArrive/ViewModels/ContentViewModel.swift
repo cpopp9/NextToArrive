@@ -36,7 +36,7 @@ class ContentViewModel: ObservableObject {
     }
     
     var location: CLLocationCoordinate2D {
-        CLLocationCoordinate2D(latitude: Double(selectedStop.stop.lat) ?? 0.0, longitude: Double(selectedStop.stop.lng) ?? 0.0)
+        CLLocationCoordinate2D(latitude: Double(selectedStop.stop.lat) ?? 39.57484, longitude: Double(selectedStop.stop.lng) ?? -75.093001)
     }
     
     var mapLocation: MKCoordinateRegion {
@@ -83,7 +83,6 @@ class ContentViewModel: ObservableObject {
                 let pinView = MKPinAnnotationView(annotation: nil, reuseIdentifier: nil)
                 pinView.centerOffset = CGPointMake(192, 65)
                 let pinImage = pinView.image
-                let point = snapshot?.point(for: self.location)
                 pinImage?.draw(at: pinView.centerOffset)
                 
             }
@@ -126,6 +125,8 @@ class ContentViewModel: ObservableObject {
     
     func refreshSchedule() {
         if busTimes.isEmpty {
+            
+            // Try to download new times
             Task {
                 busTimes = await widgetVM.downloadSchedule(stopID: selectedStop.stop.stopid, route: selectedStop.route)
                 calculateTimeUntilNextArrival()
