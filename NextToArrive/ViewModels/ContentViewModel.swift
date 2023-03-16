@@ -16,9 +16,7 @@ class ContentViewModel: ObservableObject {
     @Published var selectedStop = SelectedStop.exampleStop
     var busTimes: [Date] = []
     var busStops: [BusStop] = []
-//    var busStopsSorted = busStops.sorted {
-//        $0.stopname > $1.stopname
-//    }
+
     @Published var snapshotImage: UIImage?
     
     enum downloadStatus {
@@ -124,9 +122,15 @@ class ContentViewModel: ObservableObject {
     }
     
     func refreshSchedule() {
+        /*
+         
+         If there are no upcoming bus times, attempt to download
+         If there are upcoming bus times, remove any that are expired
+         Recalculate time until next arrival
+         
+         */
+        
         if busTimes.isEmpty {
-            
-            // Try to download new times
             Task {
                 busTimes = await widgetVM.downloadSchedule(stopID: selectedStop.stop.stopid, route: selectedStop.route)
                 calculateTimeUntilNextArrival()
@@ -159,6 +163,7 @@ class ContentViewModel: ObservableObject {
         if !busTimes.isEmpty {
             var timeUntil = Calendar.current.dateComponents([.minute], from: .now, to: busTimes[0]).minute ?? 0
             timeUntil += 1
+            
             DispatchQueue.main.async {
                 self.timeUntilArrival = timeUntil
             }
