@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8BC8D4732A7162D800F50472 /* RouteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8D4722A7162D800F50472 /* RouteView.swift */; };
 		DC063C67296DE20A0028DDB8 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC063C66296DE20A0028DDB8 /* ContentViewModel.swift */; };
 		DC1A42162988613300B8F7A8 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCF0B8DA2964BB7300DC7EAC /* WidgetKit.framework */; };
 		DC1A42172988613300B8F7A8 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCF0B8DC2964BB7300DC7EAC /* SwiftUI.framework */; };
@@ -69,6 +70,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		8BC8D4722A7162D800F50472 /* RouteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteView.swift; sourceTree = "<group>"; };
 		DC063C66296DE20A0028DDB8 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		DC1A42152988613300B8F7A8 /* nextoarrivewidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = nextoarrivewidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC1A42192988613300B8F7A8 /* nextoarrivewidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nextoarrivewidget.swift; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 			isa = PBXGroup;
 			children = (
 				DCF0B8C629646EDC00DC7EAC /* ContentView.swift */,
+				8BC8D4722A7162D800F50472 /* RouteView.swift */,
 				DC26B75A29A505FC0083AFD3 /* TimeView.swift */,
 				DCA36B9629771E4300616509 /* SettingsView.swift */,
 				DC1E047A29942B4B002ABAA2 /* MapView.swift */,
@@ -400,6 +403,7 @@
 				DC1A422B2988663200B8F7A8 /* Date+Ext.swift in Sources */,
 				DCD6391C297856C70042E13B /* BusStop.swift in Sources */,
 				DCF0B8C729646EDC00DC7EAC /* ContentView.swift in Sources */,
+				8BC8D4732A7162D800F50472 /* RouteView.swift in Sources */,
 				DC1E047B29942B4B002ABAA2 /* MapView.swift in Sources */,
 				DCF0B8C529646EDC00DC7EAC /* NextToArriveApp.swift in Sources */,
 				DC1E047D29942B7D002ABAA2 /* Location.swift in Sources */,
