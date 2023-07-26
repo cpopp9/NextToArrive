@@ -43,7 +43,7 @@ struct SettingsView: View {
                     }
                     
                     NavigationLink {
-                        MapView(mapLocation: scheduleVM.mapLocation, location: scheduleVM.location)
+                        MapView(location: scheduleVM.location)
                     } label: {
                         MapSnapshot(snapshotImage: scheduleVM.snapshotImage)
                     }

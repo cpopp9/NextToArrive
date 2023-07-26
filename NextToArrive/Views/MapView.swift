@@ -12,6 +12,11 @@ struct MapView: View {
     @State var mapLocation: MKCoordinateRegion
     var location: CLLocationCoordinate2D
     
+    init(location: CLLocationCoordinate2D) {
+        self.mapLocation = MKCoordinateRegion(center: location, span: MKCoordinateSpan(latitudeDelta: 0.001, longitudeDelta: 0.001))
+        self.location = location
+    }
+    
     var locations: [Location] {
         [Location(name: "", coordinate: location)]
     }
@@ -26,7 +31,7 @@ struct MapView: View {
 
 struct MapView_Previews: PreviewProvider {
     static var previews: some View {
-        MapView(mapLocation: MKCoordinateRegion(), location: CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0))
+        MapView(location: Location.exampleLocation.coordinate)
     }
 }
 

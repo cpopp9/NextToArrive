@@ -20,32 +20,10 @@ struct ContentView: View {
     var body: some View {
         
         NavigationStack {
+            
             VStack {
-                VStack(alignment: .leading) {
-                    
-                    Text("Route \(scheduleVM.selectedStop.route)")
-                        .font(.largeTitle.bold())
-                        .animation(.easeIn)
-                        .onReceive(timer) { time in
-                            if showingOptionsSheet == false {
-                                scheduleVM.refreshSchedule()
-                            }
-                        }
-                    
-                    NavigationLink {
-                        MapView(mapLocation: scheduleVM.mapLocation, location: scheduleVM.location)
-                    } label: {
-                        HStack {
-                            Text(scheduleVM.selectedStop.stop.stopname)
-                                .font(.subheadline)
-                                .animation(.easeIn)
-                            Image(systemName: "location.fill")
-                                .font(.subheadline)
-                        }
-                    }
-                    
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
+                
+                RouteView(routeNumber: scheduleVM.selectedStop.route, stopName: scheduleVM.selectedStop.stop.stopname, location: scheduleVM.location)
                 
                 Spacer()
                 
@@ -59,7 +37,6 @@ struct ContentView: View {
                 
             }
             .foregroundColor(.white)
-            .padding()
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color.green.gradient)
             .toolbar {
