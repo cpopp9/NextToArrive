@@ -57,6 +57,13 @@ struct ContentView: View {
                 scheduleVM.snapshotGenerator()
                 await scheduleVM.downloadBusStops()
             }
+            
+            // Attempt refresh when timer is triggered
+            .onReceive(timer) { time in
+                if showingOptionsSheet == false {
+                    scheduleVM.refreshSchedule()
+                }
+            }
         }
     }
 }
